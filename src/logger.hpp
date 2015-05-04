@@ -1,5 +1,5 @@
 /*
-	liblogcpp: an simple, but highly customizable LGPL library for logging in C++.
+	liblogcpp: A simple, but highly customizable LGPL library for logging with C++.
 	Copyright (C) 2015 Sebastian Lau
 
 	This library is free software; you can redistribute it and/or
