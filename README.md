@@ -1,5 +1,5 @@
 # liblogcpp
-##### A simple, but highly customizable LGPL library for logging in C++.
+##### A simple, but highly customizable and intuitive LGPL library for logging in C++.
 ###### v0.0.1a
 
 So this library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
