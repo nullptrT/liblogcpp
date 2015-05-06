@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.0.1-1 **/
+/** File Version: 0.0.2-1 **/
 
 #pragma once
 
@@ -48,7 +48,7 @@ class logstreambuf
 		{}
 
 		virtual int sync() {
-			out << str() << "\n";
+			out << str();
 			str("");
 			out.flush();
 			return 0;
@@ -70,6 +70,10 @@ public:
 
 	const std::string get_buf() const {
 		return buf.str();
+	}
+
+	bool has_buffered_content() {
+		return ( buf.in_avail() > 0 );
 	}
 };
 

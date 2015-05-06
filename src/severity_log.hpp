@@ -20,7 +20,7 @@
 
 
 
-/** File Version: 0.0.1-1 **/
+/** File Version: 0.0.2-1 **/
 
 #pragma once
 
@@ -37,11 +37,22 @@ class severity_log
 		public severity_feature< severity_t >
 {
 private:
-
+	bool new_record;
 public:
+	inline severity_log& operator<<(severity_log& (*f)(severity_log&)) {
+		return f(*this);
+	}
+
+	template< typename T >
+	inline severity_log& operator<<(const T& t) {
+		log<T>(t);
+		return *this;
+	}
+
 	explicit severity_log( severity_t severity, std::streambuf* outbuf = std::cout.rdbuf())
 		:	basic_log(outbuf),
-			severity_feature< severity_t >(severity)
+			severity_feature< severity_t >(severity),
+			new_record(true)
 	{}
 	severity_log( const severity_log& ) = delete;
 
@@ -51,17 +62,25 @@ public:
 		} else {
 			stream.clear_buf();
 		}
+		new_record = true;
 	}
 
 	template< typename T > void log( const T& t) {
+		if( new_record ) {
+			stream << "<" << severity_name( this->current_severity ) << ">: ";
+			new_record = false;
+		}
 		basic_log::log<T>(t);
 	}
 
 	template< typename T >
 	void log( const severity_t& severity) {
-		this->end_record();	// Flush buffer with previous severity before changing the current
+		if( stream.has_buffered_content() ) {
+			this->end_record();	// Flush buffer with previous severity before changing the current
+		}
 		this->current_severity = severity;
-		stream << severity_name( this->current_severity ) << ": ";
+		stream << "<" << severity_name( this->current_severity ) << ">: ";
+		new_record = false;
 	}
 
 	typedef std::pair< severity_t, scope_t > severity_scope_t;
@@ -72,12 +91,14 @@ public:
 	template< typename T >
 	void log( const severity_scope_t& sev_scope ) {
 		this->log< severity_t >(sev_scope.first);
-		this->log< sev_scope.second_type >(sev_scope.second);
+		this->log< scope_t >(sev_scope.second);
 	}
 
 };
 
-#define SCOPE_SEVERITY(lvl_) log::severity_log::severity_scope(lvl_, SCOPE)
+
 
 } // namespace log
+
+
 

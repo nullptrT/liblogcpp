@@ -18,6 +18,9 @@
 	USA
 */
 
+/** File Version: 0.0.2-1 **/
+
+
 #pragma once
 
 #include <fstream>
@@ -33,9 +36,7 @@ class severity_logger
 	:	public severity_log< severity_level, severity_name >
 {
 public:
-	inline severity_logger& operator<<(severity_logger& (*f)(severity_logger& l)) {
-		return f(*this);
-	}
+
 
 	/*
 	 * Creates severity_logger logging to std::cout
@@ -64,12 +65,8 @@ public:
 	severity_logger( const severity_logger& ) = delete;
 };
 
+#define SCOPE_SEVERITY(lvl_) log::severity_log< log::severity_level, log::severity_name >::severity_scope(lvl_, SCOPE)
 
 } // namespace log
 
 
-template< typename T >
-inline log::severity_logger& operator<<(log::severity_logger& out, const T& t) {
-	out.log<T>(t);
-	return out;
-}

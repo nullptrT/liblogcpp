@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.0.1-1 **/
+/** File Version: 0.0.2-1 **/
 
 #pragma once
 
@@ -51,6 +51,12 @@ public:
 		return f(*this);
 	}
 
+	template< typename T >
+	inline log::basic_log& operator<<(const T& t) {
+		log<T>(t);
+		return *this;
+	}
+
 protected:
 	logstreambuf stream;
 
@@ -66,6 +72,7 @@ public:
 	~basic_log() {}
 
 	void end_record() {
+		stream << "\n";
 		stream.flush();
 	}
 
@@ -92,8 +99,6 @@ inline logger_t& endrec(logger_t& out) {
 	return out;
 }
 
-//template basic_log& endrec(basic_log&);
-
 template< typename logger_t >
 inline logger_t& endl(logger_t& out) {
 	out.end_line();
@@ -104,11 +109,4 @@ template basic_log& endl(basic_log&);
 
 } // namespace log
 
-
-
-template< typename T >
-inline log::basic_log& operator<<(log::basic_log& out, const T& t) {
-	out.log<T>(t);
-	return out;
-}
 

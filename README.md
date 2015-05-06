@@ -1,6 +1,6 @@
 # liblogcpp
 ##### A simple, but highly customizable and intuitive LGPL library for logging in C++.
-###### v0.0.1a
+###### v1.1.2
 
 So this library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
@@ -19,15 +19,16 @@ If you wrote additional datastructures or functions and you think it could be us
 
 #### Features for future releases
 
+* Abort program on critical warnings or throw a `log::critical_exception`.
 * A global default logger, which manages a console log and a file log. Both can be en- and disabled.
-* Using formatters <iomanip>
+* Using formatters from <iomanip>
 * Colorized output
 * Later on: A global channel logger, also usable via `operator<<`
 
 
 ## Usage
 
-At the moment, the library is under active development has no stable release.
+At the moment, the library is under active development. The included file `main.cpp` can be used and compiled as an additional example for its usage. For a more detailed reference, please read the following short documentation.
 
 However, you can use it by including `logger.hpp` to your file.
 This will give you the ability to create a `logger` object or a `file_logger` object and simply write to it:
