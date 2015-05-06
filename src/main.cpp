@@ -19,16 +19,21 @@
 */
 
 
-/** File Version: 0.1.2-1 **/
+/** File Version: 0.1.3-1 **/
 
 
 #include "severity_logger.hpp"
+#include "logmanip.hpp"
 
 int main(int argc, char** argv) {
 
 	log::severity_logger logger(log::verbose);
 
 	logger << "A Simple message" << log::endrec;
+
+	logger << std::setw(20) << "std::setw(20)" << log::endrec;
+
+	logger << "42 as hex:" << std::hex << 42 << log::endrec;
 
 	logger << "Message followed by std::endl" << log::endl << "Message after std::endl, followed by log::endrec" << log::endrec;
 
