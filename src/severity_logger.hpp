@@ -18,7 +18,7 @@
 	USA
 */
 
-/** File Version: 0.0.2-1 **/
+/** File Version: 0.0.2-2 **/
 
 
 #pragma once
@@ -51,14 +51,6 @@ public:
 	 */
 	explicit severity_logger( std::streambuf* stream, severity_level max_severity = normal )
 		:	severity_log< severity_level, severity_name >( max_severity, stream)
-	{
-		this->current_severity = normal;
-	}
-	/*
-	 * Creates severity_logger logging to file
-	 */
-	explicit severity_logger( std::string file, severity_level max_severity = normal )
-		:	severity_log< severity_level, severity_name >( max_severity, std::ofstream( file, std::ios_base::out | std::ios_base::app | std::ios_base::ate).rdbuf())
 	{
 		this->current_severity = normal;
 	}

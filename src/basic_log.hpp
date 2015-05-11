@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.0.2-1 **/
+/** File Version: 0.0.2-2 **/
 
 #pragma once
 
@@ -106,6 +106,8 @@ inline logger_t& endl(logger_t& out) {
 }
 
 template basic_log& endl(basic_log&);
+
+typedef basic_log logger;
 
 } // namespace log
 

@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.0.1-1 **/
+/** File Version: 0.0.1-2 **/
 
 #pragma once
 
@@ -50,7 +50,7 @@ const std::string names[] =
 };
 
 
-static const std::string severity_name(severity_level lvl) {
+inline const std::string severity_name(severity_level lvl) {
 	if( static_cast< std::size_t >(lvl) < sizeof(names)/sizeof(*names) ) {
 		return names[lvl];
 	} else {

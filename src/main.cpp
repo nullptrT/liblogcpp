@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.1.2-1 **/
+/** File Version: 0.1.2-2 **/
 
 
 #include "severity_logger.hpp"
@@ -47,6 +47,16 @@ int main(int argc, char** argv) {
 	logger << SCOPE << "A message with a SCOPE before" << log::endrec;
 
 	logger << SCOPE_SEVERITY(log::error) << "A message calling SCOPE_SEVERITY(log::error)" << log::endrec;
+
+	std::ofstream* ofs = new std::ofstream( "./flog_test.log", std::ofstream::out | std::ofstream::app | std::ofstream::ate);
+
+	log::logger flog( ofs->rdbuf() );
+
+	flog << SCOPE << "This log goes to a file" << log::endrec;
+
+	log::severity_logger sflog( ofs->rdbuf() );
+
+	sflog << log::error << SCOPE << "This is a second severity_logger to the same file" << log::endrec;
 
 	return 0;
 }
