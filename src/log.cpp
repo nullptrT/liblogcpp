@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.0.1-1 **/
+/** File Version: 0.0.2-1 **/
 
 
 #include "log.hpp"
@@ -38,7 +38,8 @@ globallog::globallog(std::ofstream* filestream)
 		console_log( new severity_logger() ),
 		file_log_enabled_(true),
 		ofs( filestream ),
-		file_log( new severity_logger( ofs->rdbuf() ) )
+		file_log( new severity_logger( ofs->rdbuf() ) ),
+		file_severity( normal )
 {}
 
 globallog& globallog::get() {
@@ -64,12 +65,20 @@ void globallog::end_record() {
 
 
 void globallog::set_max_console_severity(severity_level level) {
+	this->max_severity_lvl = level;
 	console_log->set_max_severity_level( level );
 }
 
 
 void globallog::set_max_file_severity(severity_level level) {
 	file_log->set_max_severity_level( level );
+	this->file_severity = level;
+}
+
+
+void globallog::set_max_severity_level(severity_level level) {
+	set_max_console_severity( level );
+	set_max_file_severity( level );
 }
 
 void globallog::set_logfile_impl() {
@@ -77,7 +86,7 @@ void globallog::set_logfile_impl() {
 		ofs->close();
 	}
 	ofs->open( globallog::logfile, std::ofstream::out | std::ofstream::app | std::ofstream::ate);
-	file_log.reset( new severity_logger( ofs->rdbuf(), this->max_severity_lvl ) );
+	file_log.reset( new severity_logger( ofs->rdbuf(), this->file_severity ) );
 }
 
 void globallog::set_logfile(const std::string file) {
@@ -103,7 +112,7 @@ void globallog::disable_console_log() {
 }
 
 void globallog::enable_file_log_impl() {
-	file_log->set_max_severity_level( this->max_severity_lvl );
+	file_log->set_max_severity_level( this->file_severity );
 	file_log_enabled_ = true;
 }
 
@@ -120,10 +129,19 @@ void globallog::disable_file_log() {
 	get().disable_file_log_impl();
 }
 
+bool globallog::console_log_enabled() const {
+	return ( console_log
+			 && console_log->severity_max() != off );
+}
 
-/*globallog& stdlog() {
-	return globallog::get();
-}*/
+bool globallog::file_log_enabled() const {
+	return (file_log_enabled_
+			&& file_log
+			&& file_log->severity_max() != off );
+}
+
+
+
 
 } // namespace log
 

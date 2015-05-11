@@ -19,11 +19,9 @@
 */
 
 
-/** File Version: 0.0.1-1 **/
+/** File Version: 0.0.2-1 **/
 
 #pragma once
-
-//#include <boost/smart_ptr/scoped_ptr.hpp>
 
 #include <memory>
 #include "severity_logger.hpp"
@@ -38,9 +36,11 @@ private:
 
 	static std::string logfile;
 	std::unique_ptr< severity_logger > console_log;
+
 	bool file_log_enabled_;
 	std::ofstream* ofs;
 	std::unique_ptr< severity_logger > file_log;
+	severity_level file_severity;
 
 	globallog(std::ofstream* filestream );
 	globallog(globallog const& another) = delete;
@@ -59,7 +59,6 @@ public:
 
 	inline log::globallog& operator<<(globallog& (*f)(globallog&)) {
 		return f(*this);
-		//return out;
 	}
 
 	template< typename T >
@@ -85,6 +84,11 @@ public:
 	void set_max_file_severity( severity_level level );
 
 	/*
+	 * Sets the maximum severity for both logs (console and file)
+	 */
+	void set_max_severity_level( severity_level level);
+
+	/*
 	 * Enables logging to console
 	 */
 	static void enable_console_log();
@@ -103,6 +107,9 @@ public:
 	 * Disables logging to a file
 	 */
 	static void disable_file_log();
+
+	bool console_log_enabled() const;
+	bool file_log_enabled() const;
 
 	void end_record();
 
