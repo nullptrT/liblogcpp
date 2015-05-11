@@ -1,8 +1,8 @@
 # liblogcpp
 ##### A simple, but highly customizable and intuitive LGPL library for logging in C++.
-###### v1.1.2
+###### v1.2.7
 
-So this library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
+This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
 
 I know, there is the fantastic Boost.Log library, supporting all features one could need for logging to something. If you can't solve your demands by using this library or writing simple additional datastructures or deriving classes for this library, you probably should go here: http://www.boost.org/doc/libs/release/libs/log/ .
@@ -13,15 +13,16 @@ If you wrote additional datastructures or functions and you think it could be us
 #### Currently supported features
 
 * Creating loggers and simply writing to them via `operator<<`.
-* Specifying a streambuffer to log to (like ofstream.rdbuf() or similar; defaults to std::cout).
-* Logging the scope where the logstream comes from (identified by `__FILE__` and `__LINE__`) by simply inserting `SCOPE` into a log stream.
+* A global default logger (stdlog), which manages a console log and a file log. Both can be en- and disabled.
 * Logging by severity. There is a fully functional default severity_logger, but you also can use your own severities.
+* Using formatters from <iomanip>
+* Specifying a streambuffer to log to (like ofstream->rdbuf() or similar; defaults to std::cout.rdbuf).
+* Logging the scope where the logstream comes from (identified by `__FILE__` and `__LINE__`) by simply inserting `SCOPE` into a log stream.
 
 #### Features for future releases
 
 * Abort program on critical warnings or throw a `log::critical_exception`.
-* A global default logger, which manages a console log and a file log. Both can be en- and disabled.
-* Using formatters from <iomanip>
+* Timestamp support
 * Colorized output
 * Later on: A global channel logger, also usable via `operator<<`
 
@@ -30,17 +31,25 @@ If you wrote additional datastructures or functions and you think it could be us
 
 At the moment, the library is under active development. The included file `main.cpp` can be used and compiled as an additional example for its usage. For a more detailed reference, please read the following short documentation.
 
-However, you can use it by including `logger.hpp` to your file.
-This will give you the ability to create a `logger` object or a `file_logger` object and simply write to it:
-
+However, you can use it by including `log.hpp` to your file.
+This will give you the ability to use stdlog, which offers you a console logger and a file logger. You can write to an enabled logger by using `<<` once:
 ```c++
-#include <logger.hpp>
-
-log::logger lg;
-lg << "A sample message";
+#include <log.hpp>
+stdlog::set_logfile("/path/to/file");   // Without this line, stdlog would log to ./globallog.log
+stdlog::enable_file_log();              // Without this line, the file logger would not be called (default behaviour)
+stdlog << "A sample message to std::cout and /path/to/file" << log::endrec
 ```
 
-Note, that using such as `std::endl` or `std::setw` is not supported at the moment.
+On the other hand you can create more loggers by simply passing a `std::streambuf` pointer to the constructor. If you omit this pointer, the logger will log to `std::cout`.
+
+```c++
+#include <basic_log.hpp>
+
+log::logger lg;
+lg << "A sample message to std::cout with the use of an own logger object";
+```
+
+Note, that using such as `std::endl` is not supported and probably won't be because of its flush behaviour.
 Instead one may use `log::endl` for buffering a `"\n"` and `log::endrec` to flush the buffer to whatever the buffer(s) point to and begin a new record.
 
 For example
@@ -60,7 +69,7 @@ would not print at all, because the logstream is not flushed with `log::endrec`
 
 #### Logging with severities
 
-Simply include `severity_logger.hpp` in your file.
+Simply include `severity_logger.hpp` in your file or use the global logger from `log.hpp`.
 The usage is the same as with the simple logger, but you can do
 ```c++
 lg << "The standard severity defaults to log::normal" << log::endrec;
@@ -69,10 +78,19 @@ lg << "However, this is still a message with severity log::verbose" << log::endr
 lg << log::debug << "Until changed to some other severity_level" << log::endrec;
 ```
 The maximal severity of a severity_logger defaults to `log::normal`, but can be changed by passing a `log::severity_level` to the constructor or invoking `lg->set_max_severity(log::severity_level)`.
+When using stdlog, you can also use `set_max_{console,file}_severity(log::severity_level)` for controlling only one of them.
 The severity_logger will also flush its stream on `log::endrec`, but in case, the max severity level is less than the current severity (last severity inserted into stream), it just clears its internal buffer and does not log anything.
 Assuming the max_severity of `lg` in the example above is `log::verbose`, everything would get logged except the last line, which hast `log::debug` as current `severity_level`.
 
-The avaiable
+
+#### More features
+
+* You can use manipulators from `<iomanip>` like this (output: `002a`)
+```c++
+#include <logmanip.hpp>
+...
+lg << std::setw(4) << std::setfill('0') << std::hex << 42 << log::endrec;
+```
 
 
 ### Creating own loggers
