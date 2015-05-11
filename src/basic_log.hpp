@@ -19,7 +19,9 @@
 */
 
 
-/** File Version: 0.0.2-2 **/
+
+/** File Version: 0.0.3-2 **/
+
 
 #pragma once
 
@@ -55,6 +57,12 @@ public:
 	inline log::basic_log& operator<<(const T& t) {
 		log<T>(t);
 		return *this;
+	}
+
+	template< typename ret, typename param >
+	friend basic_log& operator<<(basic_log& logger, ret (*f)(param)) {
+		logger.stream << f;
+		return logger;
 	}
 
 protected:
