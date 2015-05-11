@@ -19,11 +19,12 @@
 */
 
 
-/** File Version: 0.1.3-1 **/
+/** File Version: 0.1.4-1 **/
 
 
 #include "severity_logger.hpp"
 #include "logmanip.hpp"
+#include "log.hpp"
 
 int main(int argc, char** argv) {
 
@@ -52,6 +53,28 @@ int main(int argc, char** argv) {
 	logger << SCOPE << "A message with a SCOPE before" << log::endrec;
 
 	logger << SCOPE_SEVERITY(log::error) << "A message calling SCOPE_SEVERITY(log::error)" << log::endrec;
+
+	log::globallog::get() << SCOPE << "This is the first message using the global logger" << log::endrec;
+
+	log::globallog::disable_file_log();
+
+	log::globallog::get() << "This second global message was send after disabling the file log." << log::endrec;
+
+	log::globallog::enable_file_log();
+
+	log::globallog::get() << "Re-enabled file log" << "log::endrec";
+
+	log::globallog::get().set_max_console_severity( log::critical );
+
+	log::globallog::get() << log::error << "This message goes to the file only, because console only accepts critical messages." << log::endrec;
+
+	log::globallog::get() << log::critical << "Did you notice the previous global error message?" << log::endrec;
+
+	stdlog << "This is sent with stdlog as alias for log::globallog::get()" << log::endrec;
+
+	stdlog << "And again, 42 as hex via stdlog: " << std::hex << 42 << log::endrec;
+
+	stdlog << "That's it for now." << log::endrec;
 
 	return 0;
 }

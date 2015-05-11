@@ -3,8 +3,8 @@ project(liblogcpp)
 cmake_minimum_required( VERSION 2.8 )
 
 set( LIBLOGCPP_STABLE_VERSION 1 )
-set( LIBLOGCPP_RELEASE 1 )
-set( LIBLOGCPP_DEV_VERSION 2 )
+set( LIBLOGCPP_RELEASE 2 )
+set( LIBLOGCPP_DEV_VERSION 5 )
 set( LIBLOGCPP_VERSION "${LIBLOGCPP_STABLE_VERSION}.${LIBLOGCPP_RELEASE}.${LIBLOGCPP_DEV_VERSION}" )
 
 set( LIBLOGCPP_SRC_DIR "${PROJECT_SOURCE_DIR}/src" )
@@ -21,10 +21,12 @@ endif()
 set(CMAKE_BUILD_TYPE "Debug")
 
 file (GLOB LIBLOGCPP_HEADERS "${LIBLOGCPP_SRC_DIR}/*.hpp" )
-#file (GLOB LIBLOGCPP_SOURCE "${LIBLOGCPP_SRC_DIR}/*.cpp" )
+file (GLOB LIBLOGCPP_SOURCE "${LIBLOGCPP_SRC_DIR}/log.cpp" )
 
+add_library( logcpp STATIC "${LIBLOGCPP_SOURCE}" )
 
 add_executable( logger_test "${LIBLOGCPP_SRC_DIR}/main.cpp" )
+target_link_libraries( logger_test logcpp )
 
 
 if( HEADER_INSTALL_DIR )
