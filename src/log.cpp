@@ -33,21 +33,19 @@ std::string globallog::logfile = std::string( "./globallog.log" );
 std::unique_ptr< globallog > globallog::log_;
 
 
-globallog::globallog(std::ofstream* filestream)
+globallog::globallog()
 	:	severity_log< severity_level, severity_name >( normal ),
 		console_log( new severity_logger() ),
-		file_log_enabled_(true),
-		ofs( filestream ),
-		file_log( new severity_logger( ofs->rdbuf() ) ),
+		file_log_enabled_(false),
+		ofs( new std::ofstream ),
+		file_log( nullptr ),
 		file_severity( normal )
 {}
 
 globallog& globallog::get() {
 
 	if( !log_ ) {
-		std::ofstream* ofs = new std::ofstream( globallog::logfile, std::ofstream::out | std::ofstream::app | std::ofstream::ate);
-
-		log_.reset( new globallog( ofs ) );
+		log_.reset( new globallog() );
 	}
 
 	return *log_;
@@ -112,6 +110,9 @@ void globallog::disable_console_log() {
 }
 
 void globallog::enable_file_log_impl() {
+	if( !file_log ) {
+		set_logfile_impl();
+	}
 	file_log->set_max_severity_level( this->file_severity );
 	file_log_enabled_ = true;
 }

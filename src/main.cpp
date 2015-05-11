@@ -65,15 +65,19 @@ int main(int argc, char** argv) {
 
 	sflog << log::error << SCOPE << "This is a second severity_logger to the same file" << log::endrec;
 
+	log::globallog::enable_file_log();
+
 	log::globallog::get() << SCOPE << "This is the first message using the global logger" << log::endrec;
 
 	log::globallog::disable_file_log();
 
 	log::globallog::get() << "This second global message was send after disabling the file log." << log::endrec;
 
-	log::globallog::enable_file_log();
+	if( !stdlog.file_log_enabled() ) {
+		log::globallog::enable_file_log();
+	}
 
-	log::globallog::get() << "Re-enabled file log" << "log::endrec";
+	log::globallog::get() << "Re-enabled file log" << log::endrec;
 
 	log::globallog::get().set_max_console_severity( log::critical );
 

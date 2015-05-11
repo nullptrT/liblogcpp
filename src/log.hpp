@@ -42,7 +42,7 @@ private:
 	std::unique_ptr< severity_logger > file_log;
 	severity_level file_severity;
 
-	globallog(std::ofstream* filestream );
+	globallog();
 	globallog(globallog const& another) = delete;
 	globallog& operator=(globallog const& another);
 
