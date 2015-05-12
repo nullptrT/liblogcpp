@@ -1,6 +1,6 @@
 # liblogcpp
 ##### A simple, but highly customizable and intuitive LGPL library for logging in C++.
-###### v1.2.7
+###### v1.3.10
 
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
@@ -18,11 +18,11 @@ If you wrote additional datastructures or functions and you think it could be us
 * Using formatters from <iomanip>
 * Specifying a streambuffer to log to (like ofstream->rdbuf() or similar; defaults to std::cout.rdbuf).
 * Logging the scope where the logstream comes from (identified by `__FILE__` and `__LINE__`) by simply inserting `SCOPE` into a log stream.
+* Timestamp support
 
 #### Features for future releases
 
 * Abort program on critical warnings or throw a `log::critical_exception`.
-* Timestamp support
 * Colorized output
 * Later on: A global channel logger, also usable via `operator<<`
 
@@ -91,6 +91,7 @@ Assuming the max_severity of `lg` in the example above is `log::verbose`, everyt
 ...
 lg << std::setw(4) << std::setfill('0') << std::hex << 42 << log::endrec;
 ```
+* You can enable a timestamp at the beginning of each record with `enable_timestamp()`. You can disable it with `disable_timestamp()`. The file logger of stdlog has timestamps enabled by default. For controlling only one of the loggers in stdlog there are the functions `use_timestamps_{console,file}(bool)`.  If you need a timestamp in your log message, you can insert the `TIME` macro into any logger.
 
 
 ### Creating own loggers
