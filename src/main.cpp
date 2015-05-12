@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.1.5-1 **/
+/** File Version: 0.1.5-2 **/
 
 
 #include "severity_logger.hpp"
@@ -89,7 +89,7 @@ int main(int argc, char** argv) {
 
 	stdlog << "And again, 42 as hex via stdlog: " << std::hex << 42 << log::endrec;
 
-	stdlog << "And the current time: " << TIME << log::endrec
+	stdlog << "And the current time: " << TIME << log::endrec;
 
 	stdlog << "That's it for now." << log::endrec;
 

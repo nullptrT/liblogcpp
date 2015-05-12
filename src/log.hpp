@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.0.2-2 **/
+/** File Version: 0.0.3-1 **/
 
 #pragma once
 
@@ -89,6 +89,23 @@ public:
 	 * Sets the maximum severity for both logs (console and file)
 	 */
 	void set_max_severity_level( severity_level level);
+
+	/*
+	 * Sets wether to use timestamps on console or not
+	 */
+	void use_timestamps_console( bool use = true );
+
+	/*
+	 * Sets wether to use timestamps on console or not
+	 */
+	void use_timestamps_file( bool use = true );
+
+	/*
+	 * Overrides of the two functions from basic_log
+	 * Enables or disables timestamps for both loggers - console and file
+	 */
+	void enable_timestamp();
+	void disable_timestamp();
 
 	/*
 	 * Enables logging to console

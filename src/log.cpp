@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.0.2-2 **/
+/** File Version: 0.0.3-1 **/
 
 
 #include "log.hpp"
@@ -91,6 +91,30 @@ void globallog::set_logfile(const std::string file) {
 	get().set_logfile_impl();
 }
 
+void globallog::use_timestamps_console(bool use) {
+	if(use) console_log-> enable_timestamp();
+	else console_log->disable_timestamp();
+}
+
+void globallog::use_timestamps_file(bool use) {
+	if( !file_log ) {
+		set_logfile_impl();
+	}
+	if(use) file_log-> enable_timestamp();
+	else file_log->disable_timestamp();
+}
+
+void globallog::enable_timestamp() {
+	use_timestamps_console();
+	use_timestamps_file();
+	basic_log::enable_timestamp();
+}
+
+void globallog::disable_timestamp() {
+	use_timestamps_console(false);
+	use_timestamps_file(false);
+	basic_log::disable_timestamp();
+}
 
 void globallog::enable_console_log_impl() {
 	console_log->set_max_severity_level( this->max_severity_lvl );
