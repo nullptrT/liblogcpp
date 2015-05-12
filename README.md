@@ -1,6 +1,6 @@
 # liblogcpp
 ##### A simple, but highly customizable and intuitive LGPL library for logging in C++.
-###### v1.3.10
+###### v1.4.11
 
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
@@ -17,12 +17,12 @@ If you wrote additional datastructures or functions and you think it could be us
 * Logging by severity. There is a fully functional default severity_logger, but you also can use your own severities.
 * Using formatters from <iomanip>
 * Specifying a streambuffer to log to (like ofstream->rdbuf() or similar; defaults to std::cout.rdbuf).
+* Optionally execute a function on critical warnings or throw a `log::critical_exception` (from `log_exception.hpp`).
 * Logging the scope where the logstream comes from (identified by `__FILE__` and `__LINE__`) by simply inserting `SCOPE` into a log stream.
 * Timestamp support
 
 #### Features for future releases
 
-* Abort program on critical warnings or throw a `log::critical_exception`.
 * Colorized output
 * Later on: A global channel logger, also usable via `operator<<`
 
@@ -92,13 +92,14 @@ Assuming the max_severity of `lg` in the example above is `log::verbose`, everyt
 lg << std::setw(4) << std::setfill('0') << std::hex << 42 << log::endrec;
 ```
 * You can enable a timestamp at the beginning of each record with `enable_timestamp()`. You can disable it with `disable_timestamp()`. The file logger of stdlog has timestamps enabled by default. For controlling only one of the loggers in stdlog there are the functions `use_timestamps_{console,file}(bool)`.  If you need a timestamp in your log message, you can insert the `TIME` macro into any logger.
+* You can pass a function to all instances of `severity_log`. If this function is not a `nullptr`, it will be executed at the end of a record with a severity value of 1. For a better usability its a `nullptr` by default, but it can be enabled with `set_critical_log_function(void(*crit_f)(void))` on each severity_log.
 
 
 ### Creating own loggers
 
 Simply inherit from `basic_log` (in `basic_log.hpp`) or `severity_log< typename severity_t, const std::string (*severity_name)(severity_t) >`, where `severity_t` is an enum type of your own severity and `severity_name` is a corresponding function taking your `severity_t` and returning a stream-qualified string.
 
-When defining an own `severity_t`, keep in mind, that backend (`severity_log`) treats the enum value `0` as `off` (this logger won't create any logs until its max_severity isn't changed to a higher value).
+When defining an own `severity_t`, keep in mind, that backend (`severity_log`) treats the enum value `0` as `off` (this logger won't create any logs until its max_severity isn't changed to a higher value) and the enum value `1` will call the critical function at the end of a record, if it is enabled.
 
-As example for and example of inheritance from `basic_log` or `severity_log` and nessecary template specializations see `severity_log.hpp` and `severity_logger.hpp`.
+For an example of inheritance from `basic_log` or `severity_log` and nessecary template specializations see `severity_log.hpp` and `severity_logger.hpp`.
 
