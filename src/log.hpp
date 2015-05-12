@@ -19,11 +19,13 @@
 */
 
 
-/** File Version: 0.0.2-1 **/
+/** File Version: 0.0.2-2 **/
 
 #pragma once
 
 #include <memory>
+#include <fstream>
+
 #include "severity_logger.hpp"
 
 namespace log {
@@ -124,7 +126,10 @@ public:
 
 	template< typename T >
 	void log( const severity_level& severity ) {
-		this->end_record();
+		if( this->stream.has_buffered_content() ) {
+			this->log< std::string >( this->stream.get_buf() );
+		}
+
 		*console_log << severity;
 
 		if( file_log_enabled_ ) {

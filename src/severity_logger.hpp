@@ -18,12 +18,10 @@
 	USA
 */
 
-/** File Version: 0.0.2-2 **/
+/** File Version: 0.0.2-3 **/
 
 
 #pragma once
-
-#include <fstream>
 
 #include "severity_log.hpp"
 #include "severity.hpp"

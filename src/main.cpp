@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.1.4-2 **/
+/** File Version: 0.1.5-1 **/
 
 
 #include "severity_logger.hpp"
@@ -88,6 +88,8 @@ int main(int argc, char** argv) {
 	stdlog << "This is sent with stdlog as alias for log::globallog::get()" << log::endrec;
 
 	stdlog << "And again, 42 as hex via stdlog: " << std::hex << 42 << log::endrec;
+
+	stdlog << "And the current time: " << TIME << log::endrec
 
 	stdlog << "That's it for now." << log::endrec;
 

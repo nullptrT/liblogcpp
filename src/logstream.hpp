@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.0.2-1 **/
+/** File Version: 0.0.2-2 **/
 
 #pragma once
 
@@ -73,7 +73,7 @@ public:
 	}
 
 	bool has_buffered_content() {
-		return ( buf.in_avail() > 0 );
+		return ( buf.str().length() > 0 );
 	}
 };
 

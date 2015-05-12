@@ -19,12 +19,10 @@
 */
 
 
-/** File Version: 0.0.2-1 **/
+/** File Version: 0.0.2-2 **/
 
 
 #include "log.hpp"
-
-#include <fstream>
 
 
 namespace log {
@@ -85,6 +83,7 @@ void globallog::set_logfile_impl() {
 	}
 	ofs->open( globallog::logfile, std::ofstream::out | std::ofstream::app | std::ofstream::ate);
 	file_log.reset( new severity_logger( ofs->rdbuf(), this->file_severity ) );
+	file_log->enable_timestamp();
 }
 
 void globallog::set_logfile(const std::string file) {

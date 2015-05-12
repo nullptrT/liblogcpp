@@ -20,7 +20,7 @@
 
 
 
-/** File Version: 0.0.2-1 **/
+/** File Version: 0.0.3-1 **/
 
 #pragma once
 
@@ -36,8 +36,7 @@ class severity_log
 	:	public basic_log,
 		public severity_feature< severity_t >
 {
-private:
-	bool new_record;
+
 public:
 	inline severity_log& operator<<(severity_log& (*f)(severity_log&)) {
 		return f(*this);
@@ -51,8 +50,7 @@ public:
 
 	explicit severity_log( severity_t severity, std::streambuf* outbuf = std::cout.rdbuf())
 		:	basic_log(outbuf),
-			severity_feature< severity_t >(severity),
-			new_record(true)
+			severity_feature< severity_t >(severity)
 	{}
 	severity_log( const severity_log& ) = delete;
 
@@ -61,12 +59,14 @@ public:
 			basic_log::end_record();
 		} else {
 			stream.clear_buf();
+			new_record = true;
 		}
-		new_record = true;
 	}
 
-	template< typename T > void log( const T& t) {
+	template< typename T >
+	void log( const T& t) {
 		if( new_record ) {
+			insert_time_or_not();
 			stream << "<" << severity_name( this->current_severity ) << ">: ";
 			new_record = false;
 		}
@@ -75,8 +75,10 @@ public:
 
 	template< typename T >
 	void log( const severity_t& severity) {
-		if( stream.has_buffered_content() ) {
+		if( !new_record && stream.has_buffered_content() ) {
 			this->end_record();	// Flush buffer with previous severity before changing the current
+		} else if( new_record ) {
+			insert_time_or_not();
 		}
 		this->current_severity = severity;
 		stream << "<" << severity_name( this->current_severity ) << ">: ";

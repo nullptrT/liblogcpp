@@ -20,7 +20,7 @@
 
 
 
-/** File Version: 0.0.3-2 **/
+/** File Version: 0.0.5-1 **/
 
 
 #pragma once
@@ -30,6 +30,11 @@
 
 #include <utility>
 #include <iostream>
+#include <sstream>
+
+extern "C" {
+#include <ctime>
+}
 
 
 
@@ -43,6 +48,16 @@ inline scope_t scope(std::string place, uint line) {
 
 #define SCOPE log::scope(__FILE__, __LINE__)
 
+inline const std::string timestr() {
+	std::time_t rawtime = std::time(0);
+	struct std::tm* tinfo;
+	tinfo = std::localtime(&rawtime);
+	char buf[22];
+	std::strftime(buf, 22, "[%F_%T]", tinfo);
+	return std::string(buf);
+}
+
+#define TIME log::timestr()
 
 
 class basic_log
@@ -67,6 +82,15 @@ public:
 
 protected:
 	logstreambuf stream;
+	bool timestamp_enabled_;
+
+	void insert_time_or_not() {
+		if(timestamp_enabled_) {
+			stream << timestr() << " - ";
+		}
+	}
+
+	bool new_record;
 
 public:
 
@@ -74,7 +98,9 @@ public:
 	 * Specify, where to log to
 	 */
 	explicit basic_log( std::streambuf* outbuf = std::cout.rdbuf() )
-		:	stream( outbuf )
+		:	stream( outbuf ),
+			timestamp_enabled_(false),
+			new_record(true)
 	{}
 	basic_log( const basic_log& ) = delete;
 	~basic_log() {}
@@ -82,20 +108,29 @@ public:
 	void end_record() {
 		stream << "\n";
 		stream.flush();
+		new_record = true;
 	}
+
+	void enable_timestamp() { timestamp_enabled_ = true; }
+	void disable_timestamp() { timestamp_enabled_ = false; }
 
 	void end_line() {
 		stream << "\n";
+		new_record = false;
 	}
 
 	template< typename T >
 	void log( const scope_t& scope) {
+		if( new_record ) insert_time_or_not();
 		stream << "[ " << scope.first << ":" << scope.second << " ] : ";
+		new_record = false;
 	}
 
 	template< typename T >
 	void log(const T& t) {
+		if( new_record ) insert_time_or_not();
 		stream << t;
+		new_record = false;
 	}
 
 };
