@@ -20,7 +20,7 @@
 
 
 
-/** File Version: 0.0.3-1 **/
+/** File Version: 0.0.4-1 **/
 
 #pragma once
 
@@ -36,7 +36,8 @@ class severity_log
 	:	public basic_log,
 		public severity_feature< severity_t >
 {
-
+protected:
+	void(*abort_f)(void);
 public:
 	inline severity_log& operator<<(severity_log& (*f)(severity_log&)) {
 		return f(*this);
@@ -50,17 +51,28 @@ public:
 
 	explicit severity_log( severity_t severity, std::streambuf* outbuf = std::cout.rdbuf())
 		:	basic_log(outbuf),
-			severity_feature< severity_t >(severity)
+			severity_feature< severity_t >(severity),
+			abort_f(nullptr)
 	{}
 	severity_log( const severity_log& ) = delete;
 
 	void end_record() {
 		if( this->log_enabled() ) {
 			basic_log::end_record();
+			if( this->current_severity == 1 && abort_f != nullptr ) {
+				abort_f();
+			}
 		} else {
 			stream.clear_buf();
 			new_record = true;
 		}
+	}
+
+	/*
+	 * Sets the function to be used when a critical record has been written (defaults to no function)
+	 */
+	void set_critical_log_function( void(*crit_f)(void) = nullptr ) {
+		abort_f = crit_f;
 	}
 
 	template< typename T >

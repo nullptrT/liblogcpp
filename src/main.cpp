@@ -19,12 +19,13 @@
 */
 
 
-/** File Version: 0.1.5-2 **/
+/** File Version: 0.1.6-2 **/
 
 
 #include "severity_logger.hpp"
 #include "logmanip.hpp"
 #include "log.hpp"
+#include "log_exception.hpp"
 
 int main(int argc, char** argv) {
 
@@ -62,8 +63,13 @@ int main(int argc, char** argv) {
 	flog << SCOPE << "This log goes to a file" << log::endrec;
 
 	log::severity_logger sflog( ofs->rdbuf() );
+	sflog.set_critical_log_function(log::abort_with_exception);
 
-	sflog << log::error << SCOPE << "This is a second severity_logger to the same file" << log::endrec;
+	try {
+		sflog << log::critical << SCOPE << "This is a second severity_logger to the same file" << log::endrec;
+	} catch( log::critical_exception& ce ) {
+		logger << "When using sflog with log::critical, there was a log::critical_exception thrown:" << ce.what() << log::endl << "It was catched, but the next critical message through the global logger will use std::abort()..." << log::endrec;
+	}
 
 	log::globallog::enable_file_log();
 
@@ -79,11 +85,11 @@ int main(int argc, char** argv) {
 
 	log::globallog::get() << "Re-enabled file log" << log::endrec;
 
-	log::globallog::get().set_max_console_severity( log::critical );
+	log::globallog::get().set_max_console_severity( log::error );
 
-	log::globallog::get() << log::error << "This message goes to the file only, because console only accepts critical messages." << log::endrec;
+	log::globallog::get() << log::warning << "This message goes to the file only, because console only accepts critical messages." << log::endrec;
 
-	log::globallog::get() << log::critical << "Did you notice the previous global error message?" << log::endrec;
+	log::globallog::get() << log::critical << "Did you notice the previous global warning message?" << log::endrec;
 
 	stdlog << "This is sent with stdlog as alias for log::globallog::get()" << log::endrec;
 
@@ -91,7 +97,9 @@ int main(int argc, char** argv) {
 
 	stdlog << "And the current time: " << TIME << log::endrec;
 
-	stdlog << "That's it for now." << log::endrec;
+	stdlog.set_critical_log_function(std::abort);
+
+	stdlog << log::critical << "That's it for now." << log::endrec;
 
 
 	return 0;

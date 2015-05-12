@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.0.3-1 **/
+/** File Version: 0.0.4-1 **/
 
 
 #include "log.hpp"
@@ -57,6 +57,10 @@ void globallog::end_record() {
 	}
 
 	stream.clear_buf();
+
+	if( this->current_severity == critical && abort_f != nullptr ) {
+		abort_f();
+	}
 }
 
 
