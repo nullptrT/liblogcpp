@@ -18,7 +18,7 @@
 	USA
 */
 
-/** File Version: 0.0.1-1 **/
+/** File Version: 0.0.1-2 **/
 
 #pragma once
 
@@ -29,13 +29,13 @@
 
 
 
-extern log::basic_log& operator<<(log::basic_log&, std::_Resetiosflags (*resetiosflags)(std::ios_base::fmtflags));
-extern log::basic_log& operator<<(log::basic_log&, std::_Setiosflags (*setiosflags)(std::ios_base::fmtflags));
-extern log::basic_log& operator<<(log::basic_log&, std::_Setbase (*setbase)(int));
-extern log::basic_log& operator<<(log::basic_log&, std::_Setfill<char> (*setfill)(char));
-extern log::basic_log& operator<<(log::basic_log&, std::_Setprecision (*setprecision)(int));
-extern log::basic_log& operator<<(log::basic_log&, std::_Setw (*setw)(int));
+extern logcpp::basic_log& operator<<(logcpp::basic_log&, std::_Resetiosflags (*resetiosflags)(std::ios_base::fmtflags));
+extern logcpp::basic_log& operator<<(logcpp::basic_log&, std::_Setiosflags (*setiosflags)(std::ios_base::fmtflags));
+extern logcpp::basic_log& operator<<(logcpp::basic_log&, std::_Setbase (*setbase)(int));
+extern logcpp::basic_log& operator<<(logcpp::basic_log&, std::_Setfill<char> (*setfill)(char));
+extern logcpp::basic_log& operator<<(logcpp::basic_log&, std::_Setprecision (*setprecision)(int));
+extern logcpp::basic_log& operator<<(logcpp::basic_log&, std::_Setw (*setw)(int));
 
 template < typename _MoneyT >
-extern log::basic_log& operator<<(log::basic_log&, std::_Put_money<_MoneyT> (*put_money)(_MoneyT&, bool));
+extern logcpp::basic_log& operator<<(logcpp::basic_log&, std::_Put_money<_MoneyT> (*put_money)(_MoneyT&, bool));
 

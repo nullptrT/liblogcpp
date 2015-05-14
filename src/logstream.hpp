@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.0.2-2 **/
+/** File Version: 0.0.2-3 **/
 
 #pragma once
 
@@ -32,7 +32,7 @@
 
 
 
-namespace log {
+namespace logcpp {
 
 
 class logstreambuf
@@ -77,6 +77,6 @@ public:
 	}
 };
 
-} // namespace log
+} // namespace logcpp
 
 

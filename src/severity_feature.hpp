@@ -19,9 +19,9 @@
 */
 
 
-/** File Version: 0.0.1-1 **/
+/** File Version: 0.0.1-2 **/
 
-namespace log {
+namespace logcpp {
 
 template< typename severity_t >
 class severity_feature
@@ -53,5 +53,5 @@ public:
 };
 
 
-} // namespace log
+} // namespace logcpp
 

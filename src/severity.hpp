@@ -19,14 +19,14 @@
 */
 
 
-/** File Version: 0.0.1-2 **/
+/** File Version: 0.0.1-3 **/
 
 #pragma once
 
 #include <string>
 
 
-namespace log {
+namespace logcpp {
 
 enum severity_level {
 	off,
@@ -58,5 +58,5 @@ inline const std::string severity_name(severity_level lvl) {
 	}
 }
 
-} // namespace log
+} // namespace logcpp
 

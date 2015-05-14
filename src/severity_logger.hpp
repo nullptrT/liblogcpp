@@ -18,7 +18,7 @@
 	USA
 */
 
-/** File Version: 0.0.2-3 **/
+/** File Version: 0.0.2-4 **/
 
 
 #pragma once
@@ -27,7 +27,7 @@
 #include "severity.hpp"
 
 
-namespace log {
+namespace logcpp {
 
 
 class severity_logger
@@ -55,8 +55,8 @@ public:
 	severity_logger( const severity_logger& ) = delete;
 };
 
-#define SCOPE_SEVERITY(lvl_) log::severity_log< log::severity_level, log::severity_name >::severity_scope(lvl_, SCOPE)
+#define SCOPE_SEVERITY(lvl_) logcpp::severity_log< logcpp::severity_level, logcpp::severity_name >::severity_scope(lvl_, SCOPE)
 
-} // namespace log
+} // namespace logcpp
 
 

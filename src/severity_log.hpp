@@ -20,7 +20,7 @@
 
 
 
-/** File Version: 0.0.4-1 **/
+/** File Version: 0.0.4-2 **/
 
 #pragma once
 
@@ -28,7 +28,7 @@
 #include "severity_feature.hpp"
 
 
-namespace log {
+namespace logcpp {
 
 
 template< typename severity_t, const std::string (*severity_name)(severity_t) >
@@ -112,7 +112,7 @@ public:
 
 
 
-} // namespace log
+} // namespace logcpp
 
 
 

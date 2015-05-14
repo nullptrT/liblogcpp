@@ -19,13 +19,13 @@
 */
 
 
-/** File Version: 0.0.4-1 **/
+/** File Version: 0.0.4-2 **/
 
 
 #include "log.hpp"
 
 
-namespace log {
+namespace logcpp {
 
 std::string globallog::logfile = std::string( "./globallog.log" );
 std::unique_ptr< globallog > globallog::log_;
@@ -171,5 +171,5 @@ bool globallog::file_log_enabled() const {
 
 
 
-} // namespace log
+} // namespace logcpp
 

@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.0.3-1 **/
+/** File Version: 0.0.3-2 **/
 
 #pragma once
 
@@ -28,7 +28,7 @@
 
 #include "severity_logger.hpp"
 
-namespace log {
+namespace logcpp {
 
 class globallog
 	:	public severity_log< severity_level, severity_name >
@@ -59,7 +59,7 @@ public:
 
 	static globallog& get();
 
-	inline log::globallog& operator<<(globallog& (*f)(globallog&)) {
+	inline logcpp::globallog& operator<<(globallog& (*f)(globallog&)) {
 		return f(*this);
 	}
 
@@ -157,6 +157,6 @@ public:
 	}
 };
 
-} // namespace log
+} // namespace logcpp
 
-#define stdlog log::globallog::get()
+#define stdlog logcpp::globallog::get()

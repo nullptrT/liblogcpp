@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.1.6-2 **/
+/** File Version: 0.1.6-3 **/
 
 
 #include "severity_logger.hpp"
@@ -29,77 +29,77 @@
 
 int main(int argc, char** argv) {
 
-	log::severity_logger logger(log::verbose);
+	logcpp::severity_logger logger(logcpp::verbose);
 
-	logger << "A Simple message" << log::endrec;
+	logger << "A Simple message" << logcpp::endrec;
 
-	logger << std::setw(20) << "std::setw(20)" << log::endrec;
+	logger << std::setw(20) << "std::setw(20)" << logcpp::endrec;
 
-	logger << "42 as hex:" << std::hex << 42 << log::endrec;
+	logger << "42 as hex:" << std::hex << 42 << logcpp::endrec;
 
-	logger << "Message followed by std::endl" << log::endl << "Message after std::endl, followed by log::endrec" << log::endrec;
+	logger << "Message followed by std::endl" << logcpp::endl << "Message after std::endl, followed by logcpp::endrec" << logcpp::endrec;
 
 	logger << "First message" << "Message following";
 
-	logger << log::endrec;
+	logger << logcpp::endrec;
 
-	logger << log::severity_level::debug << "And a debug message";
+	logger << logcpp::severity_level::debug << "And a debug message";
 
-	logger << log::severity_level::critical << "A critical message" << log::endrec;
+	logger << logcpp::severity_level::critical << "A critical message" << logcpp::endrec;
 
-	logger << "And another critical message" << log::endrec;
+	logger << "And another critical message" << logcpp::endrec;
 
-	logger << log::normal << SCOPE << "A normal message with SCOPE following the severity." << log::endrec;
+	logger << logcpp::normal << SCOPE << "A normal message with SCOPE following the severity." << logcpp::endrec;
 
-	logger << SCOPE << "A message with a SCOPE before" << log::endrec;
+	logger << SCOPE << "A message with a SCOPE before" << logcpp::endrec;
 
-	logger << SCOPE_SEVERITY(log::error) << "A message calling SCOPE_SEVERITY(log::error)" << log::endrec;
+	logger << SCOPE_SEVERITY(logcpp::error) << "A message calling SCOPE_SEVERITY(logcpp::error)" << logcpp::endrec;
 
 
 	std::ofstream* ofs = new std::ofstream( "./flog_test.log", std::ofstream::out | std::ofstream::app | std::ofstream::ate);
 
-	log::logger flog( ofs->rdbuf() );
+	logcpp::logger flog( ofs->rdbuf() );
 
-	flog << SCOPE << "This log goes to a file" << log::endrec;
+	flog << SCOPE << "This log goes to a file" << logcpp::endrec;
 
-	log::severity_logger sflog( ofs->rdbuf() );
-	sflog.set_critical_log_function(log::abort_with_exception);
+	logcpp::severity_logger sflog( ofs->rdbuf() );
+	sflog.set_critical_log_function(logcpp::abort_with_exception);
 
 	try {
-		sflog << log::critical << SCOPE << "This is a second severity_logger to the same file" << log::endrec;
-	} catch( log::critical_exception& ce ) {
-		logger << "When using sflog with log::critical, there was a log::critical_exception thrown:" << ce.what() << log::endl << "It was catched, but the next critical message through the global logger will use std::abort()..." << log::endrec;
+		sflog << logcpp::critical << SCOPE << "This is a second severity_logger to the same file" << logcpp::endrec;
+	} catch( logcpp::critical_exception& ce ) {
+		logger << "When using sflog with logcpp::critical, there was a logcpp::critical_exception thrown:" << ce.what() << logcpp::endl << "It was catched, but the next critical message through the global logger will use std::abort()..." << logcpp::endrec;
 	}
 
-	log::globallog::enable_file_log();
+	logcpp::globallog::enable_file_log();
 
-	log::globallog::get() << SCOPE << "This is the first message using the global logger" << log::endrec;
+	logcpp::globallog::get() << SCOPE << "This is the first message using the global logger" << logcpp::endrec;
 
-	log::globallog::disable_file_log();
+	logcpp::globallog::disable_file_log();
 
-	log::globallog::get() << "This second global message was send after disabling the file log." << log::endrec;
+	logcpp::globallog::get() << "This second global message was send after disabling the file log." << logcpp::endrec;
 
 	if( !stdlog.file_log_enabled() ) {
-		log::globallog::enable_file_log();
+		logcpp::globallog::enable_file_log();
 	}
 
-	log::globallog::get() << "Re-enabled file log" << log::endrec;
+	logcpp::globallog::get() << "Re-enabled file log" << logcpp::endrec;
 
-	log::globallog::get().set_max_console_severity( log::error );
+	logcpp::globallog::get().set_max_console_severity( logcpp::error );
 
-	log::globallog::get() << log::warning << "This message goes to the file only, because console only accepts critical messages." << log::endrec;
+	logcpp::globallog::get() << logcpp::warning << "This message goes to the file only, because console only accepts critical messages." << logcpp::endrec;
 
-	log::globallog::get() << log::critical << "Did you notice the previous global warning message?" << log::endrec;
+	logcpp::globallog::get() << logcpp::critical << "Did you notice the previous global warning message?" << logcpp::endrec;
 
-	stdlog << "This is sent with stdlog as alias for log::globallog::get()" << log::endrec;
+	stdlog << "This is sent with stdlog as alias for logcpp::globallog::get()" << logcpp::endrec;
 
-	stdlog << "And again, 42 as hex via stdlog: " << std::hex << 42 << log::endrec;
+	stdlog << "And again, 42 as hex via stdlog: " << std::hex << 42 << logcpp::endrec;
 
-	stdlog << "And the current time: " << TIME << log::endrec;
+	stdlog << "And the current time: " << TIME << logcpp::endrec;
 
 	stdlog.set_critical_log_function(std::abort);
 
-	stdlog << log::critical << "That's it for now." << log::endrec;
+	stdlog << logcpp::critical << "That's it for now." << logcpp::endrec;
 
 
 	return 0;

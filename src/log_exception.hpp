@@ -19,14 +19,14 @@
 */
 
 
-/** File Version: 0.0.1-1 **/
+/** File Version: 0.0.1-2 **/
 
 #pragma once
 
 #include <exception>
 
 
-namespace log {
+namespace logcpp {
 
 class critical_exception
 	:	public std::exception
@@ -37,11 +37,11 @@ public:
 	{}
 
 	const char* what() const noexcept {
-		return "log::critical_exception";
+		return "logcpp::critical_exception";
 	}
 };
 
 void abort_with_exception() { throw critical_exception(); }
 
-} // namespace log
+} // namespace logcpp
 

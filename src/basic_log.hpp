@@ -20,7 +20,7 @@
 
 
 
-/** File Version: 0.0.5-1 **/
+/** File Version: 0.0.5-2 **/
 
 
 #pragma once
@@ -39,14 +39,14 @@ extern "C" {
 
 
 
-namespace log {
+namespace logcpp {
 
 typedef std::pair< std::string, uint > scope_t;
 inline scope_t scope(std::string place, uint line) {
 	return scope_t( place, line);
 }
 
-#define SCOPE log::scope(__FILE__, __LINE__)
+#define SCOPE logcpp::scope(__FILE__, __LINE__)
 
 inline const std::string timestr() {
 	std::time_t rawtime = std::time(0);
@@ -57,7 +57,7 @@ inline const std::string timestr() {
 	return std::string(buf);
 }
 
-#define TIME log::timestr()
+#define TIME logcpp::timestr()
 
 
 class basic_log
@@ -69,7 +69,7 @@ public:
 	}
 
 	template< typename T >
-	inline log::basic_log& operator<<(const T& t) {
+	inline basic_log& operator<<(const T& t) {
 		log<T>(t);
 		return *this;
 	}
@@ -152,6 +152,6 @@ template basic_log& endl(basic_log&);
 
 typedef basic_log logger;
 
-} // namespace log
+} // namespace logcpp
 
 
