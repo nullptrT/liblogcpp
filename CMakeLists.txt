@@ -4,14 +4,14 @@ cmake_minimum_required( VERSION 2.8 )
 
 set( LIBLOGCPP_STABLE_VERSION 1 )
 set( LIBLOGCPP_RELEASE 4 )
-set( LIBLOGCPP_DEV_VERSION 12 )
+set( LIBLOGCPP_DEV_VERSION 13 )
 set( LIBLOGCPP_VERSION "${LIBLOGCPP_STABLE_VERSION}.${LIBLOGCPP_RELEASE}.${LIBLOGCPP_DEV_VERSION}" )
 
-set( LIBLOGCPP_SRC_DIR "${PROJECT_SOURCE_DIR}/src" )
+set( LIBLOGCPP_SRC_DIR ${PROJECT_SOURCE_DIR}/src )
 
-add_definitions( -DVERSION="${LIBLOGCPP_VERSION}" )
+add_definitions( -DVERSION=${LIBLOGCPP_VERSION} )
 add_definitions( -std=c++11 )
-add_definitions(-DSRC_DIR="${LIBLOGCPP_SRC_DIR}")
+add_definitions(-DSRC_DIR=${LIBLOGCPP_SRC_DIR})
 
 if( DESTDIR )
 else()
@@ -20,18 +20,25 @@ endif()
 
 set(CMAKE_BUILD_TYPE "Debug")
 
-file (GLOB LIBLOGCPP_HEADERS "${LIBLOGCPP_SRC_DIR}/*.hpp" )
-file (GLOB LIBLOGCPP_SOURCE "${LIBLOGCPP_SRC_DIR}/log.cpp" )
+file (GLOB LIBLOGCPP_HEADERS ${LIBLOGCPP_SRC_DIR}/*.hpp )
+file (GLOB LIBLOGCPP_SOURCE ${LIBLOGCPP_SRC_DIR}/log.cpp )
 
-add_library( logcpp STATIC "${LIBLOGCPP_SOURCE}" )
+if( BUILD_SHARED_LIBS )
+	add_library(logcpp SHARED ${LIBLOGCPP_SOURCE})
+else()
+	add_library( logcpp STATIC ${LIBLOGCPP_SOURCE} )
+endif()
 
-add_executable( logger_test "${LIBLOGCPP_SRC_DIR}/main.cpp" )
-target_link_libraries( logger_test logcpp )
 
+
+if( BUILD_LOGCPP_TEST )
+	add_executable( logger_test ${LIBLOGCPP_SRC_DIR}/main.cpp )
+	target_link_libraries( logger_test logcpp )
+endif()
 
 if( HEADER_INSTALL_DIR )
 else()
-	set( HEADER_INSTALL_DIR "${DESTDIR}/include" )
+	set( HEADER_INSTALL_DIR ${DESTDIR}/include )
 endif()
 
 if ( LIB_INSTALL_DIR )
@@ -39,5 +46,5 @@ else()
 	set ( LIB_INSTALL_DIR ${DESTDIR}/lib )
 endif()
 
-
-install(FILES "${LIBLOGCPP_HEADERS}" DESTINATION "${HEADER_INSTALL_DIR}" )
+install(TARGETS logcpp DESTINATION ${LIB_INSTALL_DIR} )
+install(FILES ${LIBLOGCPP_HEADERS} DESTINATION ${HEADER_INSTALL_DIR} )
