@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.0.3-2 **/
+/** File Version: 0.0.5-1 **/
 
 #pragma once
 
@@ -106,6 +106,11 @@ public:
 	 */
 	void enable_timestamp();
 	void disable_timestamp();
+
+	/*
+	 * Sets wether to print out the current severity level or not
+	 */
+	void enable_print_severity( bool enable = true );
 
 	/*
 	 * Enables logging to console

@@ -20,7 +20,7 @@
 
 
 
-/** File Version: 0.0.4-2 **/
+/** File Version: 0.0.5-1 **/
 
 #pragma once
 
@@ -36,6 +36,8 @@ class severity_log
 	:	public basic_log,
 		public severity_feature< severity_t >
 {
+private:
+	bool enable_print_severity_;
 protected:
 	void(*abort_f)(void);
 public:
@@ -52,6 +54,7 @@ public:
 	explicit severity_log( severity_t severity, std::streambuf* outbuf = std::cout.rdbuf())
 		:	basic_log(outbuf),
 			severity_feature< severity_t >(severity),
+			enable_print_severity_(true),
 			abort_f(nullptr)
 	{}
 	severity_log( const severity_log& ) = delete;
@@ -79,7 +82,9 @@ public:
 	void log( const T& t) {
 		if( new_record ) {
 			insert_time_or_not();
-			stream << "<" << severity_name( this->current_severity ) << ">: ";
+			if( enable_print_severity_ ) {
+				stream << "<" << severity_name( this->current_severity ) << ">: ";
+			}
 			new_record = false;
 		}
 		basic_log::log<T>(t);
@@ -93,7 +98,9 @@ public:
 			insert_time_or_not();
 		}
 		this->current_severity = severity;
-		stream << "<" << severity_name( this->current_severity ) << ">: ";
+		if( enable_print_severity_ ) {
+			stream << "<" << severity_name( this->current_severity ) << ">: ";
+		}
 		new_record = false;
 	}
 
@@ -108,6 +115,7 @@ public:
 		this->log< scope_t >(sev_scope.second);
 	}
 
+	void enable_print_severity( bool enable = true ) { enable_print_severity_ = enable; }
 };
 
 

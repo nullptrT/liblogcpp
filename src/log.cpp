@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.0.4-2 **/
+/** File Version: 0.0.5-1 **/
 
 
 #include "log.hpp"
@@ -118,6 +118,14 @@ void globallog::disable_timestamp() {
 	use_timestamps_console(false);
 	use_timestamps_file(false);
 	basic_log::disable_timestamp();
+}
+
+void globallog::enable_print_severity( bool enable ) {
+	console_log->enable_print_severity( enable );
+
+	if( file_log_enabled_ ) {
+		file_log->enable_print_severity( enable );
+	}
 }
 
 void globallog::enable_console_log_impl() {
