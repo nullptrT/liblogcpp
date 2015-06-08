@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.0.5-1 **/
+/** File Version: 0.0.5-2 **/
 
 
 #include "log.hpp"
@@ -71,7 +71,9 @@ void globallog::set_max_console_severity(severity_level level) {
 
 
 void globallog::set_max_file_severity(severity_level level) {
-	file_log->set_max_severity_level( level );
+	if ( file_log_enabled_ ) {
+		file_log->set_max_severity_level( level );
+	}
 	this->file_severity = level;
 }
 

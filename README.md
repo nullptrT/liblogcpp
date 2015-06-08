@@ -1,13 +1,13 @@
 # liblogcpp
 ##### A simple, but highly customizable and intuitive LGPL library for logging in C++.
-###### v1.4.12
+###### v1.4.15
 
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
 
 I know, there is the fantastic Boost.Log library, supporting all features one could need for logging to something. If you can't solve your demands by using this library or writing simple additional datastructures or deriving classes for this library, you probably should go here: http://www.boost.org/doc/libs/release/libs/log/ .
 
-If you wrote additional datastructures or functions and you think it could be useful within this library: You are welcome to create a pull request or contact me.
+If you wrote additional datastructures or functions and you think it could be useful within this library: You are welcome to create a pull request or contact me ( lauseb644 _at_ gmail _dot_ com ).
 
 
 #### Currently supported features
@@ -35,8 +35,8 @@ However, you can use it by including `log.hpp` to your file.
 This will give you the ability to use stdlog, which offers you a console logger and a file logger. You can write to an enabled logger by using `<<` once:
 ```c++
 #include <log.hpp>
-stdlog::set_logfile("/path/to/file");   // Without this line, stdlog would log to ./globallog.log
-stdlog::enable_file_log();              // Without this line, the file logger would not be called (default behaviour)
+stdlog.set_logfile("/path/to/file");   // Without this line, stdlog would log to ./globallog.log
+stdlog.enable_file_log();              // Without this line, the file logger would not be called (default behaviour)
 stdlog << "A sample message to std::cout and /path/to/file" << logcpp::endrec
 ```
 
