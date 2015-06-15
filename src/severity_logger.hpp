@@ -18,7 +18,7 @@
 	USA
 */
 
-/** File Version: 0.0.2-4 **/
+/** File Version: 0.0.2-5 **/
 
 
 #pragma once
@@ -59,4 +59,7 @@ public:
 
 } // namespace logcpp
 
+
+#define CRITICAL SCOPE_SEVERITY(logcpp::critical)
+#define DEBUG SCOPE_SEVERITY(logcpp::debug)
 
