@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.0.5-1 **/
+/** File Version: 0.0.5-2 **/
 
 #pragma once
 
@@ -159,6 +159,12 @@ public:
 		}
 
 		this->current_severity = severity;
+	}
+
+	template<typename T>
+	void log( const severity_scope_t& sev_scope ) {
+		this->log< severity_level >(sev_scope.first);
+		this->log< scope_t >(sev_scope.second);
 	}
 };
 
