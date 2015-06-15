@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.0.5-2 **/
+/** File Version: 0.0.5-4 **/
 
 
 #include "log.hpp"
@@ -60,6 +60,14 @@ void globallog::end_record() {
 
 	if( this->current_severity == critical && abort_f != nullptr ) {
 		abort_f();
+	}
+}
+
+void globallog::end_line () {
+	*console_log << endl;
+
+	if( file_log_enabled_ ) {
+		*file_log << endl;
 	}
 }
 

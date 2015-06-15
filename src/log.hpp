@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.0.5-2 **/
+/** File Version: 0.0.5-4 **/
 
 #pragma once
 
@@ -136,6 +136,7 @@ public:
 	bool file_log_enabled() const;
 
 	void end_record();
+	void end_line();
 
 	template< typename T >
 	void log( const T& t) {
