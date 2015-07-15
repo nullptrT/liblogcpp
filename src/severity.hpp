@@ -19,11 +19,12 @@
 */
 
 
-/** File Version: 0.0.1-3 **/
+/** File Version: 0.0.1-4 **/
 
 #pragma once
 
 #include <string>
+#include <array>
 
 
 namespace logcpp {
@@ -38,7 +39,7 @@ enum severity_level {
 	debug
 };
 
-const std::string names[] =
+const std::array < std::string, 7 > names =
 {
 	"off",
 	"critical",
@@ -51,10 +52,10 @@ const std::string names[] =
 
 
 inline const std::string severity_name(severity_level lvl) {
-	if( static_cast< std::size_t >(lvl) < sizeof(names)/sizeof(*names) ) {
+	if( static_cast< std::size_t >(lvl) < names.size() ) {
 		return names[lvl];
 	} else {
-		return names[sizeof(names)-1];
+		return names.back();
 	}
 }
 
