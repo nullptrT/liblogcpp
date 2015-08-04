@@ -1,6 +1,6 @@
 # liblogcpp
 ##### A simple, but highly customizable and intuitive LGPL library for logging in C++.
-###### v1.5.2
+###### v1.5.3
 
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
@@ -97,7 +97,8 @@ lg << std::setw(4) << std::setfill('0') << std::hex << 42 << logcpp::endrec;
 
 ### Creating own loggers
 
-Simply inherit from `basic_log` (in `basic_log.hpp`) or `severity_log< typename severity_t, const std::string (*severity_name)(severity_t) >`, where `severity_t` is an enum type of your own severity and `severity_name` is a corresponding function taking your `severity_t` and returning a stream-qualified string.
+Simply inherit from `basic_log` (in `basic_log.hpp`) or `severity_log< typename severity_t, const std::string (*severity_name)(severity_t), const uint (*max_name_length)(void) = nullptr >`, where `severity_t` is an enum type of your own severity and `severity_name` is a corresponding function taking your `severity_t` and returning a stream-qualified string.
+If you want your severities aligned when printed, you also have to provide a function which returns the number of characters in the longest severity name. Otherwise the default option 'noalign' is used.
 
 When defining an own `severity_t`, keep in mind, that backend (`severity_log`) treats the enum value `0` as `off` (this logger won't create any logs until its max_severity isn't changed to a higher value) and the enum value `1` will call the critical function at the end of a record, if it is enabled.
 

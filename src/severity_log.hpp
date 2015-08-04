@@ -20,18 +20,19 @@
 
 
 
-/** File Version: 0.0.5-1 **/
+/** File Version: 0.0.6-1 **/
 
 #pragma once
 
 #include "basic_log.hpp"
 #include "severity_feature.hpp"
+#include "logmanip.hpp"
 
 
 namespace logcpp {
 
 
-template< typename severity_t, const std::string (*severity_name)(severity_t) >
+template< typename severity_t, const std::string (*severity_name)(severity_t), const uint (*max_name_length)() = nullptr >
 class severity_log
 	:	public basic_log,
 		public severity_feature< severity_t >
@@ -83,7 +84,11 @@ public:
 		if( new_record ) {
 			insert_time_or_not();
 			if( enable_print_severity_ ) {
-				stream << "<" << severity_name( this->current_severity ) << ">: ";
+				if( max_name_length == nullptr ) {
+					stream << "<" << severity_name( this->current_severity ) << ">: ";
+				} else {
+					stream << std::setw(max_name_length() - severity_name( this->current_severity ).length() ) << std::setfill(' ') << "<" << severity_name( this->current_severity ) << ">: " << std::setfill(' ');
+				}
 			}
 			new_record = false;
 		}
@@ -99,7 +104,11 @@ public:
 		}
 		this->current_severity = severity;
 		if( enable_print_severity_ ) {
-			stream << "<" << severity_name( this->current_severity ) << ">: ";
+			if( max_name_length == nullptr ) {
+				stream << "<" << severity_name( this->current_severity ) << ">: ";
+			} else {
+				stream << std::setw(max_name_length() - severity_name( this->current_severity ).length() ) << std::setfill(' ') << "<" << severity_name( this->current_severity ) << ">: ";
+			}
 		}
 		new_record = false;
 	}

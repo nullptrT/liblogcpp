@@ -18,7 +18,7 @@
 	USA
 */
 
-/** File Version: 0.0.2-5 **/
+/** File Version: 0.0.3-1 **/
 
 
 #pragma once
@@ -31,7 +31,7 @@ namespace logcpp {
 
 
 class severity_logger
-	:	public severity_log< severity_level, severity_name >
+	:	public severity_log< severity_level, severity_name, max_name_length >
 {
 public:
 
@@ -40,7 +40,7 @@ public:
 	 * Creates severity_logger logging to std::cout
 	 */
 	explicit severity_logger( severity_level max_severity = normal )
-		:	severity_log< severity_level, severity_name >( max_severity )
+		:	severity_log< severity_level, severity_name, max_name_length >( max_severity )
 	{
 		this->current_severity = normal;
 	}
@@ -48,7 +48,7 @@ public:
 	 * Creates severity_logger logging to stream
 	 */
 	explicit severity_logger( std::streambuf* stream, severity_level max_severity = normal )
-		:	severity_log< severity_level, severity_name >( max_severity, stream)
+		:	severity_log< severity_level, severity_name, max_name_length >( max_severity, stream)
 	{
 		this->current_severity = normal;
 	}

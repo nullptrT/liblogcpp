@@ -19,7 +19,7 @@
 */
 
 
-/** File Version: 0.0.1-4 **/
+/** File Version: 0.0.1-5 **/
 
 #pragma once
 
@@ -58,6 +58,8 @@ inline const std::string severity_name(severity_level lvl) {
 		return names.back();
 	}
 }
+
+inline const uint max_name_length() { return 8; }
 
 } // namespace logcpp
 
