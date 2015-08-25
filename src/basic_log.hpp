@@ -20,7 +20,7 @@
 
 
 
-/** File Version: 0.0.5-2 **/
+/** File Version: 0.0.5-3 **/
 
 
 #pragma once
@@ -53,7 +53,7 @@ inline const std::string timestr() {
 	struct std::tm* tinfo;
 	tinfo = std::localtime(&rawtime);
 	char buf[22];
-	std::strftime(buf, 22, "[%F_%T]", tinfo);
+	std::strftime(buf, 22, "%F_%T", tinfo);
 	return std::string(buf);
 }
 
@@ -86,7 +86,7 @@ protected:
 
 	void insert_time_or_not() {
 		if(timestamp_enabled_) {
-			stream << timestr() << " - ";
+			stream << "[" << timestr() << "] - ";
 		}
 	}
 
