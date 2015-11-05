@@ -13,7 +13,7 @@ If you wrote additional datastructures or functions and you think it could be us
 #### Currently supported features
 
 * Creating loggers and simply writing to them via `operator<<`.
-* A global default logger (stdlog), which manages a console log and a file log. Both can be en- and disabled.
+* A global default logger (stdlog), which manages a console log and a file log. Both can be enabled and disabled.
 * Logging by severity. There is a fully functional default severity_logger, but you also can use your own severities.
 * Using formatters from <iomanip>
 * Specifying a streambuffer to log to (like ofstream->rdbuf() or similar; defaults to std::cout.rdbuf).
@@ -25,6 +25,29 @@ If you wrote additional datastructures or functions and you think it could be us
 
 * Colorized output
 * Later on: A global channel logger, also usable via `operator<<`
+
+## Building
+
+You can simply build this with:
+
+```
+ % cd /path/to/clone/in
+ % git clone https://github.com/gS644/.git
+ % mkdir liblogcpp/build # or some other build directory
+ % cd /path/to/builddir
+ % cmake /path/to/cloned/directory
+ % make
+```
+
+Additionally to the default options CMake currently offers the following options (can be specified with `-DOPTION=ON`):
+
+* `INSTALL_LIBS`: Enables targets for installation of library files. Because it is useful not to install the library (e.g. when used as submodule of a project) this defaults to off.
+* `BUILD_LOGCPP_TEST`: Build a simple main runtime that demonstrates current features of liblogcpp.
+
+#### Requirements
+
+* cmake>=2.8
+* a c++ compiler (tested for gcc)
 
 
 ## Usage
@@ -92,7 +115,7 @@ Assuming the max_severity of `lg` in the example above is `logcpp::verbose`, eve
 lg << std::setw(4) << std::setfill('0') << std::hex << 42 << logcpp::endrec;
 ```
 * You can enable a timestamp at the beginning of each record with `enable_timestamp()`. You can disable it with `disable_timestamp()`. The file logger of stdlog has timestamps enabled by default. For controlling only one of the loggers in stdlog there are the functions `use_timestamps_{console,file}(bool)`.  If you need a timestamp in your log message, you can insert the `TIME` macro into any logger.
-* You can pass a function to all instances of `severity_log`. If this function is not a `nullptr`, it will be executed at the end of a record with a severity value of 1. For a better usability its a `nullptr` by default, but it can be enabled with `set_critical_log_function(void(*crit_f)(void))` on each severity_log.
+* You can pass a function to all instances of `severity_log`. If this function is not a `nullptr`, it will be executed at the end of a record with a severity value of 1. For a better usability its a `nullptr` by default, but it can be enabled with `set_critical_log_function(void(*crit_f)(void))` on each severity_log. A useful function could be `std::abort`.
 
 
 ### Creating own loggers
