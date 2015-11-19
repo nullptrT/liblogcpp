@@ -4,7 +4,9 @@ liblogcpp NEWS                                    -*- outline -*-
 
 ** New features
 
+	Added packaging files for Debian 8 and later
 	
+	Add pkg-config module
 
 ** Bug Fixes
 
@@ -21,7 +23,7 @@ liblogcpp NEWS                                    -*- outline -*-
 
 	Added CMake modules
 	
-	Added packaging files Arch Linux
+	Added packaging files for Arch Linux
 	
 	Added version header logcppversion.hpp
 

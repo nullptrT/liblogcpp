@@ -1,0 +1,11 @@
+prefix=/usr
+exec_prefix=/usr
+libdir=/usr/lib
+includedir=${prefix}/include
+
+Name: LibLogC++
+Description: A simple, but highly customizable and intuitive LGPL library for logging in C++
+Version: 1.6.0
+Libs: /usr/lib/liblogcpp.a
+Cflags: -I${includedir}/liblogcpp
+
