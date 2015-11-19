@@ -4,7 +4,6 @@
  *
  * Copy: See Copyright for the status of this software.
  *
- * Author: Daniel Veillard
  */
 
 #pragma once
@@ -18,21 +17,21 @@ extern "C" {
  *
  * the version string like "1.2.3"
  */
-#define LIBLOGCPP_DOTTED_VERSION "1.5.3"
+#define LIBLOGCPP_DOTTED_VERSION "1.6.1"
 
 /**
  * LIBLOGCPP_VERSION:
  *
  * the version number: 1.2.3 value is 10203
  */
-#define LIBLOGCPP_VERSION 10503
+#define LIBLOGCPP_VERSION 10601
 
 /**
  * LIBLOGCPP_VERSION_STRING:
  *
  * the version number string, 1.2.3 value is "10203"
  */
-#define LIBLOGCPP_VERSION_STRING "10503"
+#define LIBLOGCPP_VERSION_STRING "10601"
 
 /**
  * LIBLOGCPP_VERSION_EXTRA:

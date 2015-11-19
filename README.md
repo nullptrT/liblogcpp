@@ -1,6 +1,6 @@
 # liblogcpp
 ##### A simple, but highly customizable and intuitive LGPL library for logging in C++.
-###### v1.5.3
+###### v1.6.0
 
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
@@ -20,6 +20,9 @@ If you wrote additional datastructures or functions and you think it could be us
 * Optionally execute a function on critical warnings or throw a `logcpp::critical_exception` (from `log_exception.hpp`).
 * Logging the scope where the logstream comes from (identified by `__FILE__` and `__LINE__`) by simply inserting `SCOPE` into a log stream.
 * Timestamp support
+
+* A `find_package` module for cmake
+* Packaging scripts for Arch Linux
 
 #### Features for future releases
 
@@ -44,10 +47,24 @@ Additionally to the default options CMake currently offers the following options
 * `INSTALL_LIBS`: Enables targets for installation of library files. Because it is useful not to install the library (e.g. when used as submodule of a project) this defaults to off.
 * `BUILD_LOGCPP_TEST`: Build a simple main runtime that demonstrates current features of liblogcpp.
 
+#### Packages
+
+Currently there is a package in the Arch Linux User Repository under https://aur.archlinux.org/packages/liblogcpp/ .
+More distributions may follow or be submitted.
+
 #### Requirements
 
 * cmake>=2.8
 * a c++ compiler (tested for gcc)
+
+
+## Use with CMake
+
+
+The included `LibLogCPPConfig.cmake` module enables you to use `find_package(LibLogCPP >= 1.6)` in CMake:
+* `LibLogCPP_INCLUDE_DIR`: The directory, where the headers are located in `liblogcpp/` (usually `/usr/include`)
+* `LibLogCPP_LIBRARY`: The static library you can link into your program. It's only useful, if you use `stdlog`
+* `LibLogCPP_VERSION_STRING`: The current version of liblogcpp.
 
 
 ## Usage

@@ -1,0 +1,39 @@
+liblogcpp NEWS                                    -*- outline -*-
+
+* Noteworthy changes in release next (????-??-??) [?]
+
+** New features
+
+	
+
+** Bug Fixes
+
+	
+
+** Changes in behavior
+
+	
+
+
+* Noteworthy changes in release 1.6.0 (2015-11-19) [stable]
+
+** New features
+
+	Added CMake modules
+	
+	Added packaging files Arch Linux
+	
+	Added version header logcppversion.hpp
+
+** Bug Fixes
+
+	Some fixes in build system
+
+** Changes in behavior
+
+    The library (containing the global logger) can only be
+    build static since this release.
+
+
+
+
