@@ -15,7 +15,7 @@ add_definitions(-DSRC_DIR=${LIBLOGCPP_SRC_DIR})
 
 if( DESTDIR )
 else()
-	set( DESTDIR "${PROJECT_BINARY_DIR}" )
+	set( DESTDIR "${CMAKE_INSTALL_PREFIX}" )
 endif()
 
 set(CMAKE_BUILD_TYPE "Debug")
@@ -43,7 +43,7 @@ endif()
 
 if ( LIB_INSTALL_DIR )
 else()
-	set ( LIB_INSTALL_DIR ${DESTDIR}/lib )
+	set ( LIB_INSTALL_DIR ${DESTDIR}/lib/liblogcpp )
 endif()
 
 if( INSTALL_LIBS )
