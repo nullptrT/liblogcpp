@@ -4,9 +4,7 @@ liblogcpp NEWS                                    -*- outline -*-
 
 ** New features
 
-	Added packaging files for Debian 8 and later
 	
-	Add pkg-config module
 
 ** Bug Fixes
 
@@ -15,6 +13,22 @@ liblogcpp NEWS                                    -*- outline -*-
 ** Changes in behavior
 
 	
+
+
+* Noteworthy changes in release 1.6.1 (2015-11-20) [patch]
+
+** New features
+
+	Added packaging files for Debian 8 and later
+	
+	Add pkg-config module
+
+** Bug Fixes
+
+	Fix installation of library headers (they were installed
+	to include, not include/liblogcpp)
+
+
 
 
 * Noteworthy changes in release 1.6.0 (2015-11-19) [stable]

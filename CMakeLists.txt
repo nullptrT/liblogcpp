@@ -4,12 +4,11 @@ cmake_minimum_required( VERSION 3.0 )
 
 set( LIBLOGCPP_STABLE_VERSION 1 )
 set( LIBLOGCPP_RELEASE 6 )
-set( LIBLOGCPP_DEV_VERSION 0 )
-set( LIBLOGCPP_VERSION "${LIBLOGCPP_STABLE_VERSION}.${LIBLOGCPP_RELEASE}.${LIBLOGCPP_DEV_VERSION}" )
+set( LIBLOGCPP_PATCH_VERSION 1 )
+set( LIBLOGCPP_VERSION "${LIBLOGCPP_STABLE_VERSION}.${LIBLOGCPP_RELEASE}.${LIBLOGCPP_PATCH_VERSION}" )
 
 set( LIBLOGCPP_SRC_DIR ${PROJECT_SOURCE_DIR}/src )
 
-add_definitions( -DLIBLOGCPP_VERSION=${LIBLOGCPP_VERSION} )
 add_definitions( -std=c++11 )
 add_definitions(-DSRC_DIR=${LIBLOGCPP_SRC_DIR})
 
@@ -26,7 +25,6 @@ file (GLOB LIBLOGCPP_SOURCE ${LIBLOGCPP_SRC_DIR}/log.cpp )
 
 add_library( logcpp STATIC ${LIBLOGCPP_SOURCE} )
 
-
 if( BUILD_LOGCPP_TEST )
 	add_executable( logger_test ${LIBLOGCPP_SRC_DIR}/main.cpp )
 	target_link_libraries( logger_test logcpp )
@@ -34,7 +32,7 @@ endif()
 
 if( HEADER_INSTALL_DIR )
 else()
-	set( HEADER_INSTALL_DIR ${DESTDIR}/include )
+	set( HEADER_INSTALL_DIR ${DESTDIR}/include/liblogcpp )
 endif()
 
 if ( LIB_INSTALL_DIR )
