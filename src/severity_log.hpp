@@ -1,6 +1,7 @@
 /*
-	liblogcpp: A simple, but highly customizable and intuitive LGPL library for logging with C++.
-	Copyright (C) 2015 Sebastian Lau
+	LibLogC++: A simple, but highly customizable and intuitive LGPL library for logging with C++.
+	Copyright (C) 2015 Linux Gruppe IRB, TU Dortmund <linux@irb.cs.tu-dortmund.de>
+	Copyright (C) 2015 Sebastian Lau <lauseb644@gmail.com>
 
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
