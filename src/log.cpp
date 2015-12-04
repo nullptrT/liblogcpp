@@ -1,6 +1,7 @@
 /*
-	liblogcpp: A simple, but highly customizable and intuitive LGPL library for logging with C++.
-	Copyright (C) 2015 Sebastian Lau
+	LibLogC++: A simple, but highly customizable and intuitive LGPL library for logging with C++.
+	Copyright (C) 2015 Linux Gruppe IRB, TU Dortmund <linux@irb.cs.tu-dortmund.de>
+	Copyright (C) 2015 Sebastian Lau <lauseb644@gmail.com>
 
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
@@ -46,7 +47,7 @@ globallog& globallog::get() {
 	if( !log_ ) {
 		log_.reset( new globallog() );
 		stdlog.enable_print_severity(false);
-		stdlog << logcpp::warning << "LibLogC++ v" << LIBLOGCPP_DOTTED_VERSION << "Copyright 2015 Sebastian Lau <lauseb644@gmail.com>" << logcpp::endl << "This library is licensed under the terms of the GNU Lesser General Public, version 2.1" << logcpp::endrec;
+		stdlog << logcpp::warning << "LibLogC++ v" << LIBLOGCPP_DOTTED_VERSION << " (https://git.io/vBW7r)" << logcpp::endrec;
 		stdlog.enable_print_severity();
 	}
 
@@ -102,7 +103,7 @@ void globallog::set_logfile_impl() {
 	ofs->open( globallog::logfile, std::ofstream::out | std::ofstream::app | std::ofstream::ate);
 	file_log.reset( new severity_logger( ofs->rdbuf(), this->file_severity ) );
 	file_log->enable_print_severity(false);
-	*file_log << logcpp::warning << "LibLogC++ v" << LIBLOGCPP_DOTTED_VERSION << "Copyright 2015 Sebastian Lau <lauseb644@gmail.com>" << logcpp::endl << "This library is licensed under the terms of the GNU Lesser General Public, version 2.1" << logcpp::endrec;
+	*file_log << logcpp::warning << "LibLogC++ v" << LIBLOGCPP_DOTTED_VERSION << " (https://git.io/vBW7r)" << logcpp::endrec;
 	file_log->enable_print_severity();
 	file_log->enable_timestamp();
 }
