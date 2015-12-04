@@ -1,3 +1,8 @@
+/**
+ * @file log.cpp
+ * @brief A global singleton logger with severities that has a console and a file channel
+ * @author Sebastian Lau <lauseb644 [at] gmail [dot] com>
+ **/
 /*
 	LibLogC++: A simple, but highly customizable and intuitive LGPL library for logging with C++.
 	Copyright (C) 2015 Linux Gruppe IRB, TU Dortmund <linux@irb.cs.tu-dortmund.de>
@@ -18,9 +23,6 @@
 	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 	USA
 */
-
-
-/** File Version: 0.0.5-4 **/
 
 
 #include "log.hpp"

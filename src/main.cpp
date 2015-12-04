@@ -20,8 +20,6 @@
 */
 
 
-/** File Version: 0.1.6-3 **/
-
 
 #include "severity_logger.hpp"
 #include "logmanip.hpp"

@@ -1,3 +1,8 @@
+/**
+ * @file logstream.hpp
+ * @brief The underlying log stream buffer
+ * @author Sebastian Lau <lauseb644 [at] gmail [dot] com>
+ **/
 /*
 	LibLogC++: A simple, but highly customizable and intuitive LGPL library for logging with C++.
 	Copyright (C) 2015 Linux Gruppe IRB, TU Dortmund <linux@irb.cs.tu-dortmund.de>
@@ -20,8 +25,6 @@
 */
 
 
-/** File Version: 0.0.2-3 **/
-
 #pragma once
 
 
@@ -35,19 +38,31 @@
 
 namespace logcpp {
 
-
+/**
+ * @brief The stream buffer that buffers log records before writing until they are ended with logcpp::endrec
+ */
 class logstreambuf
 	:	public std::ostream
 {
+	/**
+	 * @brief The buffer of a log stream buffer
+	 */
 	class logbuffer
 		:	public std::stringbuf
 	{
 		std::ostream out;
 	public:
+		/**
+		 * @brief The constructor
+		 * @param outbuf A pointer to some streambuf where all buffered content is written to when flushed
+		 */
 		logbuffer(std::streambuf* outbuf)
 			:	out( outbuf )
 		{}
 
+		/**
+		 * @brief Write the rest of the buffered content to the target stream and flush it
+		 */
 		virtual int sync() {
 			out << str();
 			str("");
@@ -59,20 +74,35 @@ class logstreambuf
 	logbuffer buf;
 
 public:
+	/**
+	 * @brief The constructor
+	 * @param outbuf A pointer to some streambuf where all buffered content is written to when flushed
+	 */
 	logstreambuf( std::streambuf* outbuf )
 		:	std::ostream(&buf),
 			buf( outbuf )
 	{}
 
+	/**
+	 * @brief Delete all unflushed content from the target stream and flush to nowhere
+	 */
 	void clear_buf() {
 		buf.str("");
 		flush();
 	}
 
+	/**
+	 * @brief Get the content of the target stream buffer
+	 * @return The content of the target stream buffer
+	 */
 	const std::string get_buf() const {
 		return buf.str();
 	}
 
+	/**
+	 * @brief Find out, wether this logstreambuf has content to flush in its target streambuf or not
+	 * @return True, if content is found; false otherwise
+	 */
 	bool has_buffered_content() {
 		return ( buf.str().length() > 0 );
 	}

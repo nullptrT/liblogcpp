@@ -20,8 +20,6 @@
 */
 
 
-/** File Version: 0.0.1-5 **/
-
 #pragma once
 
 #include <string>
@@ -30,6 +28,14 @@
 
 namespace logcpp {
 
+/**
+ * @brief The default severities that are used in LibLogC++
+ * @note In all cases, the value 
+ * @note - 0 defaults to off
+ * @note - 1 defaults to critical
+ * @note
+ * @note The higher the enum value, the less critical is this severity
+ */
 enum severity_level {
 	off,
 	critical,
@@ -40,6 +46,9 @@ enum severity_level {
 	debug
 };
 
+/**
+ * @brief The names of severity_level as string array
+ */
 const std::array < std::string, 7 > names =
 {
 	"off",
@@ -52,6 +61,10 @@ const std::array < std::string, 7 > names =
 };
 
 
+/**
+ * @return The name for severity_level as string
+ * @param lvl A severity_level to get as string
+ */
 inline const std::string severity_name(severity_level lvl) {
 	if( static_cast< std::size_t >(lvl) < names.size() ) {
 		return names[lvl];
@@ -60,6 +73,9 @@ inline const std::string severity_name(severity_level lvl) {
 	}
 }
 
+/**
+ * @return The amount of characters of the longest name of all severity_level
+ */
 inline const uint max_name_length() { return 8; }
 
 } // namespace logcpp

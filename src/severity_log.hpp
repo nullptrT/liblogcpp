@@ -1,3 +1,8 @@
+/**
+ * @file severity_log.hpp
+ * @brief Abstract description of a severity logger
+ * @author Sebastian Lau <lauseb644 [at] gmail [dot] com>
+ **/
 /*
 	LibLogC++: A simple, but highly customizable and intuitive LGPL library for logging with C++.
 	Copyright (C) 2015 Linux Gruppe IRB, TU Dortmund <linux@irb.cs.tu-dortmund.de>
@@ -21,8 +26,6 @@
 
 
 
-/** File Version: 0.0.6-1 **/
-
 #pragma once
 
 #include "basic_log.hpp"
@@ -32,7 +35,12 @@
 
 namespace logcpp {
 
-
+/**
+ * @brief Abstract description of a severity logger
+ * @note severity_t: The type of severity that is to be used
+ * @note severity_name: A function taking a severity_t and returning its name
+ * @note max_name_length: A function returning the amount of characters of the longest severity name (used for alignment)
+ */
 template< typename severity_t, const std::string (*severity_name)(severity_t), const uint (*max_name_length)() = nullptr >
 class severity_log
 	:	public basic_log,
@@ -41,26 +49,45 @@ class severity_log
 private:
 	bool enable_print_severity_;
 protected:
+	/**
+	 * @brief Optional function to be called on critical severity
+	 */
 	void(*abort_f)(void);
 public:
+	/**
+	 * @brief Override for basic_log::operator<<
+	 * @param f Some function that takes a reference to a severity_log and returns it
+	 */
 	inline severity_log& operator<<(severity_log& (*f)(severity_log&)) {
 		return f(*this);
 	}
 
+	/**
+	 * @brief Override for basic_log::operator<<
+	 * @param t Some object of type T that can be inserted into a std::ostream
+	 */
 	template< typename T >
 	inline severity_log& operator<<(const T& t) {
 		log<T>(t);
 		return *this;
 	}
 
-	explicit severity_log( severity_t severity, std::streambuf* outbuf = std::cout.rdbuf())
+	/**
+	 * @brief Constructor
+	 * @param max_severity The maximum severity level for this logger
+	 * @param outbuf A pointer to some std::streambuf where all content is logged to. Defaults to std::cout.rdbuf()
+	 */
+	explicit severity_log( severity_t max_severity, std::streambuf* outbuf = std::cout.rdbuf())
 		:	basic_log(outbuf),
-			severity_feature< severity_t >(severity),
+			severity_feature< severity_t >(max_severity),
 			enable_print_severity_(true),
 			abort_f(nullptr)
 	{}
 	severity_log( const severity_log& ) = delete;
 
+	/**
+	 * @brief Override of basic_log::end_record that only logs when it is enabled by severity
+	 */
 	void end_record() {
 		if( this->log_enabled() ) {
 			basic_log::end_record();
@@ -73,13 +100,18 @@ public:
 		}
 	}
 
-	/*
-	 * Sets the function to be used when a critical record has been written (defaults to no function)
+	/**
+	 * @brief Sets the function to be called when a critical record has been written (defaults to no function)
+	 * @param crit_f Function to be called after log records with severity level 1
 	 */
 	void set_critical_log_function( void(*crit_f)(void) = nullptr ) {
 		abort_f = crit_f;
 	}
 
+	/**
+	 * @brief Override of basic_log::log that inserts the severity into stream first, if enabled
+	 * @param t Some object of type T that can be inserted into a std::ostream
+	 */
 	template< typename T >
 	void log( const T& t) {
 		if( new_record ) {
@@ -96,6 +128,10 @@ public:
 		basic_log::log<T>(t);
 	}
 
+	/**
+	 * @brief Function that logs a severity inserted into this log stream and sets the current severity to its value
+	 * @param severity Insert this severity into stream and make it the current severity
+	 */
 	template< typename T >
 	void log( const severity_t& severity) {
 		if( !new_record && stream.has_buffered_content() ) {
@@ -114,17 +150,30 @@ public:
 		new_record = false;
 	}
 
+	/**
+	 * @brief A tuple containing a severity and a scope_t
+	 */
 	typedef std::pair< severity_t, scope_t > severity_scope_t;
+	/**
+	 * @brief Free function that generates a severity_scope_t from its parameters
+	 */
 	static severity_scope_t severity_scope( severity_t severity, scope_t scope ) {
 		return severity_scope_t( severity, scope );
 	}
-
+	/**
+	 * @brief Log a severity_scope_t to this log stream
+	 * @param sev_scope The severity_scope_t to log
+	 */
 	template< typename T >
 	void log( const severity_scope_t& sev_scope ) {
 		this->log< severity_t >(sev_scope.first);
 		this->log< scope_t >(sev_scope.second);
 	}
 
+	/**
+	 * @brief Enable or disable the logging of severity names into the log stream
+	 * @param enable Enable or disable the loggin of severity names
+	 */
 	void enable_print_severity( bool enable = true ) { enable_print_severity_ = enable; }
 };
 

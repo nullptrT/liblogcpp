@@ -1,3 +1,8 @@
+/**
+ * @file severity_feature.hpp
+ * @brief Abstract template of a severity feature
+ * @author Sebastian Lau <lauseb644 [at] gmail [dot] com>
+ **/
 /*
 	LibLogC++: A simple, but highly customizable and intuitive LGPL library for logging with C++.
 	Copyright (C) 2015 Linux Gruppe IRB, TU Dortmund <linux@irb.cs.tu-dortmund.de>
@@ -20,35 +25,58 @@
 */
 
 
-/** File Version: 0.0.1-2 **/
-
 namespace logcpp {
 
+/**
+ * @brief The abstract template of a severity feature with type severity_t
+ * @note severity_t: The type of severity that is to be used
+ */
 template< typename severity_t >
 class severity_feature
 {
 protected:
+	/**
+	 * @brief The maximum severity level that shall be logged
+	 */
 	severity_t max_severity_lvl;
+	/**
+	 * @brief The severity level currently used
+	 */
 	severity_t current_severity;
 
+	/**
+	 * @brief Constructor
+	 * @param max_severity The maximum severity level that shall be logged
+	 */
 	explicit severity_feature( severity_t max_severity )
 		:	max_severity_lvl( max_severity )
 	{}
 	severity_feature( const severity_feature& ) = delete;
 
+	/**
+	 * @brief Find out if logging is enabled or not, depending on the current severity values
+	 */
 	bool log_enabled() const {
 		return ( current_severity <= max_severity_lvl && max_severity_lvl != 0 ); // A severity of 0 should default to 'logging off'
 	}
 
 public:
-	/*
-	 * Specify, how much output the Logger will produce
+	/**
+	 * @brief Specify, how much output the Logger will produce
+	 * @param severity The maximum severity level that shall be logged
 	 */
 	void set_max_severity_level(const severity_t severity ) {
 		max_severity_lvl = severity;
 	}
 
+	/**
+	 * @brief Get the current maximum severity level
+	 */
 	const severity_t severity_max() const { return max_severity_lvl; }
+	
+	/**
+	 * @brief Get the current severity level
+	 */
 	const severity_t severity() const { return current_severity; }
 
 };

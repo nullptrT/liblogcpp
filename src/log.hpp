@@ -1,3 +1,8 @@
+/**
+ * @file log.hpp
+ * @brief A global singleton logger with severities that has a console and a file channel
+ * @author Sebastian Lau <lauseb644 [at] gmail [dot] com>
+ **/
 /*
 	LibLogC++: A simple, but highly customizable and intuitive LGPL library for logging with C++.
 	Copyright (C) 2015 Linux Gruppe IRB, TU Dortmund <linux@irb.cs.tu-dortmund.de>
@@ -19,9 +24,6 @@
 	USA
 */
 
-
-/** File Version: 0.0.5-4 **/
-
 #pragma once
 
 #include <memory>
@@ -31,6 +33,9 @@
 
 namespace logcpp {
 
+/**
+ * @brief A global singleton logger with severities that has a console and a file channel
+ */
 class globallog
 	:	public severity_log< severity_level, severity_name >
 {
@@ -57,13 +62,23 @@ private:
 
 public:
 
-
+	/**
+	 * @brief Get a reference to the logger object
+	 */
 	static globallog& get();
 
+	/**
+	 * @brief Override of severity_log::operator<< for functions
+	 * @param f Some function that takes a reference to the globallog and returns it
+	 */
 	inline logcpp::globallog& operator<<(globallog& (*f)(globallog&)) {
 		return f(*this);
 	}
 
+	/**
+	 * @brief Override of severity_log::operator<< for generic objects
+	 * @param t Some object of type T that can be inserted into a std::ostream
+	 */
 	template< typename T >
 	inline globallog& operator<<(const T& t) {
 		this->log<T>(t);
@@ -71,74 +86,99 @@ public:
 	}
 
 
-	/*
-	 * Set a file to log to
+	/**
+	 * @brief Set a file to log to and enable the file channel
+	 * @param file A path to the file to log to
 	 */
 	static void set_logfile( std::string file );
 
-	/*
-	 * Sets the maximum severity of message sent to console
+	/**
+	 * @brief Sets the maximum severity level of messages sent to the console log
+	 * @param level The maximum severity level to be used
 	 */
 	void set_max_console_severity( severity_level level );
 
-	/*
-	 * Sets the maximum severity of message sent to log file
+	/**
+	 * @brief Sets the maximum severity level of messages sent to log file
+	 * @param level The maximum severity level to be used
 	 */
 	void set_max_file_severity( severity_level level );
 
-	/*
-	 * Sets the maximum severity for both logs (console and file)
+	/**
+	 * @brief Sets the maximum severity level for both log channels (console and file)
+	 * @param level The maximum severity level to be used
 	 */
 	void set_max_severity_level( severity_level level);
 
-	/*
-	 * Sets wether to use timestamps on console or not
+	/**
+	 * @brief Sets wether to use timestamps in console channel or not
+	 * @param use Enable or disable timestamps
 	 */
 	void use_timestamps_console( bool use = true );
 
-	/*
-	 * Sets wether to use timestamps on console or not
+	/**
+	 * @brief Sets wether to use timestamps on file channel or not
+	 * @param use Enable or disable timestamps
 	 */
 	void use_timestamps_file( bool use = true );
 
-	/*
-	 * Overrides of the two functions from basic_log
-	 * Enables or disables timestamps for both loggers - console and file
+	/**
+	 * @brief Overrides basic_log::enable_timestamp for and applies their functionality to both channels (console and file)
 	 */
 	void enable_timestamp();
+	/**
+	 * @brief Overrides basic_log::disable_timestamp for and applies their functionality to both channels (console and file)
+	 */
 	void disable_timestamp();
 
-	/*
-	 * Sets wether to print out the current severity level or not
+	/**
+	 * @brief Enable logging of severity names or not
+	 * @param enable Enable or disable printing of severity names
 	 */
 	void enable_print_severity( bool enable = true );
 
-	/*
-	 * Enables logging to console
+	/**
+	 * @brief Enables logging to console channel
 	 */
 	static void enable_console_log();
 
-	/*
-	 * Disables logging to console
+	/**
+	 * @brief Disables logging to console channel
 	 */
 	static void disable_console_log();
 
-	/*
-	 * Enables logging to a file
+	/**
+	 * @brief Enables logging to a file. If no file was specified with set_logfile, all content will be logged to ./globallog
 	 */
 	static void enable_file_log();
 
-	/*
-	 * Disables logging to a file
+	/**
+	 * @brief Disables logging to a file
 	 */
 	static void disable_file_log();
 
+	/**
+	 * @return Wether logging to console channel is enabled or not
+	 */
 	bool console_log_enabled() const;
+	/**
+	 * @return Wether logging to file channel is enabled or not
+	 */
 	bool file_log_enabled() const;
 
+	/**
+	 * @brief Override of severity_log::end_record to insert end_record into both channels
+	 */
 	void end_record();
+	/**
+	 * @brief Override of severity_log::end_record to insert end_line into both channels
+	 */
 	void end_line();
 
+	/**
+	 * @brief Override of severity_log::log that inserts t into both channels (console and file)
+	 * @param t Some object of type T that can be inserted into a std::ostream
+	 */
 	template< typename T >
 	void log( const T& t) {
 		*console_log << t;
@@ -148,6 +188,10 @@ public:
 		}
 	}
 
+	/**
+	 * @brief Override of severity_log::log that inserts the severity both channels (console and file)
+	 * @param severity Insert this severity into stream and make it the current severity
+	 */
 	template< typename T >
 	void log( const severity_level& severity ) {
 		if( this->stream.has_buffered_content() ) {
@@ -163,6 +207,10 @@ public:
 		this->current_severity = severity;
 	}
 
+	/**
+	 * @brief Override of severity_log::log that inserts the severity both channels (console and file)
+	 * @param sev_scope The severity_scope_t to log
+	 */
 	template<typename T>
 	void log( const severity_scope_t& sev_scope ) {
 		this->log< severity_level >(sev_scope.first);
@@ -172,4 +220,8 @@ public:
 
 } // namespace logcpp
 
+/**
+ * @def stdlog
+ * @brief Macro that can be used to insert log records into like 'stdlog << SOMECONTENT'
+ */
 #define stdlog logcpp::globallog::get()

@@ -1,3 +1,8 @@
+/**
+ * @file log_exception.hpp
+ * @brief A global singleton logger with severities that has a console and a file channel
+ * @author Sebastian Lau <lauseb644 [at] gmail [dot] com>
+ **/
 /*
 	LibLogC++: A simple, but highly customizable and intuitive LGPL library for logging with C++.
 	Copyright (C) 2015 Linux Gruppe IRB, TU Dortmund <linux@irb.cs.tu-dortmund.de>
@@ -20,8 +25,6 @@
 */
 
 
-/** File Version: 0.0.1-2 **/
-
 #pragma once
 
 #include <exception>
@@ -29,6 +32,9 @@
 
 namespace logcpp {
 
+/**
+ * @brief A exception type that can be used with LibLogC++
+ */
 class critical_exception
 	:	public std::exception
 {
@@ -37,11 +43,18 @@ public:
 		:	std::exception()
 	{}
 
+	/**
+	 * @return Description of this exception
+	 */
 	const char* what() const noexcept {
 		return "logcpp::critical_exception";
 	}
 };
 
+/**
+ * @brief A function that can be as critical function in severity_log. Only throws a critical_exception
+ * @throws critical_exception
+ */
 void abort_with_exception() { throw critical_exception(); }
 
 } // namespace logcpp
