@@ -1,9 +1,11 @@
-# liblogcpp
-##### A simple, but highly customizable and intuitive LGPL library for logging in C++.
-###### v1.6.1
+# LibLogC++
+##### A simple, intuitive and highly customizable LGPL library for logging with C++.
+###### v1.6.2
 
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
+
+It's online api documentation can be found [here](https://www.slau.me/liblogcpp/). How to use it is document lower on this page.
 
 I know, there is the fantastic Boost.Log library, supporting all features one could need for logging to something. If you can't solve your demands by using this library or writing simple additional datastructures or deriving classes for this library, you probably should go here: http://www.boost.org/doc/libs/release/libs/log/ .
 
@@ -19,8 +21,7 @@ If you wrote additional datastructures or functions and you think it could be us
 * Specifying a streambuffer to log to (like ofstream->rdbuf() or similar; defaults to std::cout.rdbuf).
 * Optionally execute a function on critical warnings or throw a `logcpp::critical_exception` (from `log_exception.hpp`).
 * Logging the scope where the logstream comes from (identified by `__FILE__` and `__LINE__`) by simply inserting `SCOPE` into a log stream.
-* Timestamp support
-
+* Documentation
 * A `find_package` module for cmake
 * Packaging scripts for Arch Linux
 
@@ -52,6 +53,7 @@ You can simply build this with:
 Additionally to the default options CMake currently offers the following options (can be specified with `-DOPTION=ON`):
 
 * `INSTALL_LIBS`: Enables targets for installation of library files. Because it is useful not to install the library (e.g. when used as submodule of a project) this defaults to off.
+* `ENABLE_DOC`: Enables building of doxygen html pages. Requires doxygen.
 * `BUILD_LOGCPP_TEST`: Build a simple main runtime that demonstrates current features of liblogcpp.
 
 #### Packages
@@ -63,6 +65,7 @@ More distributions may follow or be submitted.
 
 * cmake>=2.8
 * a c++ compiler (tested for gcc)
+* doxygen (optional for building the [html documentation](https://www.slau.me/liblogcpp/))
 
 
 ## Use with CMake

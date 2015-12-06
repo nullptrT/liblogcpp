@@ -15,6 +15,13 @@ liblogcpp NEWS                                    -*- outline -*-
 	
 
 
+* Noteworthy changes in release 1.6.2 (2015-12-06) [stable]
+
+** New features
+
+	Added Doxygen documentation
+
+
 * Noteworthy changes in release 1.6.1 (2015-11-20) [patch]
 
 ** New features
