@@ -1,4 +1,11 @@
-liblogcpp (1.6.0-1) stable; urgency=low
+liblogcpp (1.6.2-1) stable; urgency=low
+
+  * Added documentation
+
+ -- Sebastian Lau <lauseb644@gmail.com>  Thu, 06 Dec 2015 12:28:32 +0100
+
+
+liblogcpp (1.6.1-1) stable; urgency=low
 
   * Bug fixes and pkgconfig module
 
