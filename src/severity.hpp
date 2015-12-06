@@ -1,5 +1,10 @@
+/**
+ * @file severity.hpp
+ * @brief The default severities that are used in LibLogC++
+ * @author Sebastian Lau <lauseb644 [at] gmail [dot] com>
+ **/
 /*
-	LibLogC++: A simple, but highly customizable and intuitive LGPL library for logging with C++.
+	LibLogC++: A simple, intuitive and highly customizable LGPL library for logging with C++.
 	Copyright (C) 2015 Linux Gruppe IRB, TU Dortmund <linux@irb.cs.tu-dortmund.de>
 	Copyright (C) 2015 Sebastian Lau <lauseb644@gmail.com>
 
