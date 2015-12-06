@@ -1,5 +1,5 @@
 /*
-	LibLogC++: A simple, but highly customizable and intuitive LGPL library for logging with C++.
+	LibLogC++: A simple, intuitive and highly customizable LGPL library for logging with C++.
 	Copyright (C) 2015 Linux Gruppe IRB, TU Dortmund <linux@irb.cs.tu-dortmund.de>
 	Copyright (C) 2015 Sebastian Lau <lauseb644@gmail.com>
 
