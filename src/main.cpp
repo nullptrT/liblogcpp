@@ -54,6 +54,10 @@ int main(int argc, char** argv) {
 
 	logger << SCOPE_SEVERITY(logcpp::error) << "A message calling SCOPE_SEVERITY(logcpp::error)" << logcpp::endrec;
 
+#ifdef ENABLE_QT_SUPPORT
+	QString qstr("This is a QString");
+	logger << qstr << logcpp::endrec;
+#endif
 
 	std::ofstream* ofs = new std::ofstream( "./flog_test.log", std::ofstream::out | std::ofstream::app | std::ofstream::ate);
 
@@ -96,9 +100,11 @@ int main(int argc, char** argv) {
 
 	stdlog << "And the current time: " << TIME << logcpp::endrec;
 
+	stdlog << "Now we set 'std::abort' as critical log function and write a critical message again." << logcpp::endrec;
+
 	stdlog.set_critical_log_function(std::abort);
 
-	stdlog << logcpp::critical << "That's it for now." << logcpp::endrec;
+	stdlog << logcpp::critical << "That's it for now (aborted with critical log function)." << logcpp::endrec;
 
 
 	return 0;

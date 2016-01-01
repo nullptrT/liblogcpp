@@ -15,6 +15,15 @@ liblogcpp NEWS                                    -*- outline -*-
 	
 
 
+* Noteworthy changes in release 1.6.3 (2016-01-01) [stable]
+
+** New features
+
+	Added support for QString. This can be enabled with the
+	CMake option -DENABLE_QT_SUPPORT=ON
+
+
+
 * Noteworthy changes in release 1.6.2 (2015-12-06) [stable]
 
 ** New features

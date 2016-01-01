@@ -1,6 +1,6 @@
 # LibLogC++
 ##### A simple, intuitive and highly customizable LGPL library for logging with C++.
-###### v1.6.2
+###### v1.6.3
 
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
@@ -53,6 +53,7 @@ You can simply build this with:
 Additionally to the default options CMake currently offers the following options (can be specified with `-DOPTION=ON`):
 
 * `INSTALL_LIBS`: Enables targets for installation of library files. Because it is useful not to install the library (e.g. when used as submodule of a project) this defaults to off.
+* `ENABLE_QT_SUPPORT`: Enables a function wrapper for QStrings. Needs `Qt5Core_LIBRARIES`.
 * `ENABLE_DOC`: Enables building of doxygen html pages. Requires doxygen.
 * `BUILD_LOGCPP_TEST`: Build a simple main runtime that demonstrates current features of liblogcpp.
 
@@ -64,6 +65,7 @@ More distributions may follow or be submitted.
 #### Requirements
 
 * cmake>=2.8
+* qt5-base (optional for building with support for QString)
 * a c++ compiler (tested for gcc)
 * doxygen (optional for building the [html documentation](https://www.slau.me/liblogcpp/))
 

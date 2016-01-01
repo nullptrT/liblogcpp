@@ -4,26 +4,35 @@ cmake_minimum_required( VERSION 3.0 )
 
 set( LIBLOGCPP_STABLE_VERSION 1 )
 set( LIBLOGCPP_RELEASE 6 )
-set( LIBLOGCPP_PATCH_VERSION 2 )
-set( LIBLOGCPP_VERSION "${LIBLOGCPP_STABLE_VERSION}.${LIBLOGCPP_RELEASE}.${LIBLOGCPP_PATCH_VERSION}" )
+set( LIBLOGCPP_DEV_VERSION 3 )
+set( LIBLOGCPP_VERSION "${LIBLOGCPP_STABLE_VERSION}.${LIBLOGCPP_RELEASE}.${LIBLOGCPP_DEV_VERSION}" )
 
 set( LIBLOGCPP_SRC_DIR ${PROJECT_SOURCE_DIR}/src )
 
 add_definitions( -std=c++11 )
 add_definitions(-DSRC_DIR=${LIBLOGCPP_SRC_DIR})
 
+if( ENABLE_QT_SUPPORT )
+	add_definitions( -DENABLE_QT_SUPPORT=1 )
+	# Instruct CMake to run moc automatically when needed.
+	set(CMAKE_AUTOMOC ON)
+	# Find the QtCore library
+	find_package(Qt5Core)
+endif()
+
 if( DESTDIR )
 else()
 	set( DESTDIR "${CMAKE_INSTALL_PREFIX}" )
 endif()
-
-#set(CMAKE_BUILD_TYPE "Debug")
 
 file (GLOB LIBLOGCPP_HEADERS ${LIBLOGCPP_SRC_DIR}/*.hpp )
 file (GLOB LIBLOGCPP_SOURCE ${LIBLOGCPP_SRC_DIR}/log.cpp )
 
 
 add_library( logcpp STATIC ${LIBLOGCPP_SOURCE} )
+if( ENABLE_QT_SUPPORT )
+	target_link_libraries( logcpp ${Qt5Core_LIBRARIES} )
+endif()
 
 if( BUILD_LOGCPP_TEST )
 	add_executable( logger_test ${LIBLOGCPP_SRC_DIR}/main.cpp )

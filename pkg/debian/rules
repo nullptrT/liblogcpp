@@ -21,6 +21,7 @@ include /usr/share/dpkg/default.mk
 override_dh_auto_configure:
 	dh_auto_configure -- -DCMAKE_BUILD_TYPE="Release" \
 			-DCMAKE_INSTALL_PREFIX:PATH="/usr/" \
+			-DENABLE_QT_SUPPORT=ON \
 			-DINSTALL_LIBS=ON \
 
 

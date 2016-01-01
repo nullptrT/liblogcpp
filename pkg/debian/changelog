@@ -1,3 +1,10 @@
+liblogcpp (1.6.3-1) stable; urgency=low
+
+  * Added support for QString
+
+ -- Sebastian Lau <lauseb644@gmail.com>  Thu, 01 Jan 2016 13:54:32 +0100
+
+
 liblogcpp (1.6.2-1) stable; urgency=low
 
   * Added documentation
