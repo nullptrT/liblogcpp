@@ -7,8 +7,8 @@ arch=('x86_64' 'i386' 'arm6h')
 url="https://github.com/gS644/liblogcpp"
 license=('LGPL2.1')
 depends=()
-makedepends=('cmake' 'git')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/gS644/$pkgname/archive/$pkgver.tar.gz")
+makedepends=('cmake')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/nullptrT/$pkgname/archive/$pkgver.tar.gz")
 md5sums=('dc376fa2a96ad105f2ef49f3abf006f7')
 
 

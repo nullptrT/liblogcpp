@@ -1,7 +1,7 @@
 /*
 	LibLogC++: A simple, intuitive and highly customizable LGPL library for logging with C++.
 	Copyright (C) 2015 Linux Gruppe IRB, TU Dortmund <linux@irb.cs.tu-dortmund.de>
-	Copyright (C) 2015 Sebastian Lau <lauseb644@gmail.com>
+	Copyright (C) 2015-2016 Sebastian Lau <lauseb644@gmail.com>
 
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
