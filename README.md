@@ -18,6 +18,7 @@ If you wrote additional datastructures or functions and you think it could be us
 * A global default logger (stdlog), which manages a console log and a file log. Both can be enabled and disabled.
 * Logging by severity. There is a fully functional default severity_logger, but you also can use your own severities.
 * Using formatters from <iomanip>
+* Colorized output for UNIX
 * Specifying a streambuffer to log to (like ofstream->rdbuf() or similar; defaults to std::cout.rdbuf).
 * Optionally execute a function on critical warnings or throw a `logcpp::critical_exception` (from `log_exception.hpp`).
 * Logging the scope where the logstream comes from (identified by `__FILE__` and `__LINE__`) by simply inserting `SCOPE` into a log stream.
@@ -27,7 +28,8 @@ If you wrote additional datastructures or functions and you think it could be us
 
 #### Features for future releases
 
-* Colorized output
+* Colorized output for WIN32
+* Better README.md
 * Later on: A global channel logger, also usable via `operator<<`
 
 ## License:
@@ -52,9 +54,10 @@ You can simply build this with:
 
 Additionally to the default options CMake currently offers the following options (can be specified with `-DOPTION=ON`):
 
-* `INSTALL_LIBS`: Enables targets for installation of library files. Because it is useful not to install the library (e.g. when used as submodule of a project) this defaults to off.
 * `ENABLE_QT_SUPPORT`: Enables a function wrapper for QStrings. Needs `Qt5Core_LIBRARIES`.
+* `AUTOCOLOR`: Enables colorized output of severities and automatic reset of terminal modes on logcpp::endrec
 * `ENABLE_DOC`: Enables building of doxygen html pages. Requires doxygen.
+* `INSTALL_LIBS`: Enables targets for installation of library files. Because it is useful not to install the library (e.g. when used as submodule of a project) this defaults to off.
 * `BUILD_LOGCPP_TEST`: Build a simple main runtime that demonstrates current features of liblogcpp.
 
 #### Packages

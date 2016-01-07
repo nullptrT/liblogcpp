@@ -18,6 +18,7 @@ if( ENABLE_QT_SUPPORT )
 	set(CMAKE_AUTOMOC ON)
 	# Find the QtCore library
 	find_package(Qt5Core)
+	message("-- Compiling with support for QString")
 endif()
 
 if( DESTDIR )
@@ -25,9 +26,20 @@ else()
 	set( DESTDIR "${CMAKE_INSTALL_PREFIX}" )
 endif()
 
+if( BUILD_LOGCPP_TEST )
+	set( AUTOCOLOR 1 )
+endif()
+
 file (GLOB LIBLOGCPP_HEADERS ${LIBLOGCPP_SRC_DIR}/*.hpp )
 file (GLOB LIBLOGCPP_SOURCE ${LIBLOGCPP_SRC_DIR}/log.cpp )
 
+if( UNIX )
+	set( LIBLOGCPP_SOURCE ${LIBLOGCPP_SOURCE} ${LIBLOGCPP_SRC_DIR}/color_feature.cpp )
+	message("-- Compiling with support for ANSI Color codes")
+	if(AUTOCOLOR)
+		add_definitions( -DAUTOCOLOR=1 )
+	endif()
+endif()
 
 add_library( logcpp STATIC ${LIBLOGCPP_SOURCE} )
 if( ENABLE_QT_SUPPORT )

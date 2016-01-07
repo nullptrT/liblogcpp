@@ -35,7 +35,6 @@
 
 
 
-
 namespace logcpp {
 
 /**
@@ -68,6 +67,14 @@ class logstreambuf
 			str("");
 			out.flush();
 			return 0;
+		}
+		
+		/**
+		 * @brief Determines, if the underlying stream is a terminal
+		 * @note Will fail in some cases where a terminal supports positioning
+		 */
+		bool sink_is_terminal() {
+			return ( out.tellp() == -1 );
 		}
 	};
 
@@ -105,6 +112,14 @@ public:
 	 */
 	bool has_buffered_content() {
 		return ( buf.str().length() > 0 );
+	}
+	
+	/**
+	 * @brief Determines, if the underlying stream is a terminal
+	 * @note Will fail in some cases where a terminal supports positioning
+	 */
+	bool sink_is_terminal() {
+		return buf.sink_is_terminal();
 	}
 };
 
