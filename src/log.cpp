@@ -49,7 +49,15 @@ globallog& globallog::get() {
 	if( !log_ ) {
 		log_.reset( new globallog() );
 		stdlog.enable_print_severity(false);
-		stdlog << logcpp::warning << "LibLogC++ v" << LIBLOGCPP_DOTTED_VERSION << " (https://git.io/vBW7r)" << logcpp::endrec;
+		stdlog << logcpp::warning;
+#ifdef AUTOCOLOR
+		stdlog << logcpp::sty_bold;
+#endif
+		stdlog << "LibLogC++ v" << LIBLOGCPP_DOTTED_VERSION << " (https://git.io/vBW7r)";
+#ifdef AUTOCOLOR
+		stdlog << logcpp::ctl_reset_all;
+#endif
+		stdlog << logcpp::endrec;
 		stdlog.enable_print_severity();
 	}
 

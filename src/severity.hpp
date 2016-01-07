@@ -27,6 +27,12 @@
 
 #pragma once
 
+#include "config.hpp"
+
+#ifdef ENABLE_COLOR_SUPPORT
+#include "color_feature.hpp"
+#endif
+
 #include <string>
 #include <array>
 
@@ -57,12 +63,30 @@ enum severity_level {
 const std::array < std::string, 7 > names =
 {
 	"off",
+#ifdef AUTOCOLOR
+#ifdef ENABLE_COLOR_SUPPORT
+	"\x1b[1;49;31mcritical\x1b[0m",
+	"\x1b[0m\x1b[49;31m  error \x1b[0m",
+	"\x1b[0m\x1b[1;49;33m warning\x1b[0m",
+	"\x1b[0m\x1b[49;36m normal \x1b[0m",
+	"\x1b[0m\x1b[1;49;36mverbose\x1b[0m",
+	"\x1b[0m\x1b[1;49;35m debug \x1b[0m",
+#else
 	"critical",
 	"error",
 	"warning",
 	"normal",
 	"verbose",
 	"debug"
+#endif
+#else
+	"critical",
+	"error",
+	"warning",
+	"normal",
+	"verbose",
+	"debug"
+#endif
 };
 
 

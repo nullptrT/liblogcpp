@@ -54,9 +54,10 @@ You can simply build this with:
 
 Additionally to the default options CMake currently offers the following options (can be specified with `-DOPTION=ON`):
 
-* `INSTALL_LIBS`: Enables targets for installation of library files. Because it is useful not to install the library (e.g. when used as submodule of a project) this defaults to off.
 * `ENABLE_QT_SUPPORT`: Enables a function wrapper for QStrings. Needs `Qt5Core_LIBRARIES`.
+* `AUTOCOLOR`: Enables colorized output of severities and automatic reset of terminal modes on logcpp::endrec
 * `ENABLE_DOC`: Enables building of doxygen html pages. Requires doxygen.
+* `INSTALL_LIBS`: Enables targets for installation of library files. Because it is useful not to install the library (e.g. when used as submodule of a project) this defaults to off.
 * `BUILD_LOGCPP_TEST`: Build a simple main runtime that demonstrates current features of liblogcpp.
 
 #### Packages

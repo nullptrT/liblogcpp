@@ -172,6 +172,11 @@ public:
 	 * @brief Member function that inserts a newline into the buffer, flushes it and begins a new record
 	 */
 	void end_record() {
+#ifdef ENABLE_COLOR_SUPPORT
+#ifdef AUTOCOLOR
+		stream << COLOR(logcpp::ctl_reset_all);
+#endif
+#endif
 		stream << "\n";
 		stream.flush();
 		new_record = true;
