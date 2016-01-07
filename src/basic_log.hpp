@@ -28,6 +28,8 @@
 
 #pragma once
 
+#include "config.hpp"
+
 #include "logstream.hpp"
 
 
@@ -38,6 +40,10 @@
 extern "C" {
 #include <ctime>
 }
+
+#ifdef ENABLE_COLOR_SUPPORT
+#include "color_feature.hpp"
+#endif
 
 #ifdef ENABLE_QT_SUPPORT
 #include <QString>
@@ -89,6 +95,9 @@ inline const std::string timestr() {
  */
 class basic_log
 {
+#ifdef ENABLE_COLOR_SUPPORT
+	bool m_color_ok;
+#endif
 public:
 
 	/**
@@ -141,10 +150,13 @@ public:
 	 * @param outbuf A pointer to some std::streambuf where all content is logged to. Defaults to std::cout.rdbuf()
 	 */
 	explicit basic_log( std::streambuf* outbuf = std::cout.rdbuf() )
-		:	stream( outbuf ),
+		:	m_color_ok(false),
+			stream( outbuf ),
 			timestamp_enabled_(false),
 			new_record(true)
-	{}
+	{
+		m_color_ok = stream.sink_is_terminal();
+	}
 	basic_log( const basic_log& ) = delete;
 	~basic_log() {}
 
@@ -196,6 +208,19 @@ public:
 		new_record = false;
 	}
 
+#ifdef ENABLE_COLOR_SUPPORT
+	/**
+	 * @brief Member function that controls colors and styles of the underlying sink
+	 * @param col Some value of color
+	 */
+	template< typename T >
+	void log( const color& col ) {
+		if ( m_color_ok ) {
+			this->log( color_feature::get().code(col) );
+		}
+	}
+#endif
+	
 #ifdef ENABLE_QT_SUPPORT
 	/**
 	 * @brief Member function that can handle a QString

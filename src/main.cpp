@@ -53,6 +53,8 @@ int main(int argc, char** argv) {
 	logger << SCOPE << "A message with a SCOPE before" << logcpp::endrec;
 
 	logger << SCOPE_SEVERITY(logcpp::error) << "A message calling SCOPE_SEVERITY(logcpp::error)" << logcpp::endrec;
+	
+	logger << logcpp::ctl_background << logcpp::black << logcpp::sty_bold << logcpp::ctl_foreground << logcpp::yellow << "This is a message using the color feature" << logcpp::ctl_reset_col << logcpp::endrec;
 
 #ifdef ENABLE_QT_SUPPORT
 	QString qstr("This is a QString");
@@ -65,6 +67,8 @@ int main(int argc, char** argv) {
 
 	flog << SCOPE << "This log goes to a file" << logcpp::endrec;
 
+	flog << logcpp::red << "Tried to put colors to a file log here" << logcpp::endrec;
+	
 	logcpp::severity_logger sflog( ofs->rdbuf() );
 	sflog.set_critical_log_function(logcpp::abort_with_exception);
 
@@ -98,9 +102,9 @@ int main(int argc, char** argv) {
 
 	stdlog << "And again, 42 as hex via stdlog: " << std::hex << 42 << logcpp::endrec;
 
-	stdlog << "And the current time: " << TIME << logcpp::endrec;
+	stdlog << "And the current time in blue: " << logcpp::blue << TIME << logcpp::endrec;
 
-	stdlog << "Now we set 'std::abort' as critical log function and write a critical message again." << logcpp::endrec;
+	stdlog << "Now we set 'std::abort' as " << logcpp::ctl_background << logcpp::red << logcpp::sty_blink << "critical" << logcpp::ctl_reset_all << " log function and write a critical message again." << logcpp::endrec;
 
 	stdlog.set_critical_log_function(std::abort);
 

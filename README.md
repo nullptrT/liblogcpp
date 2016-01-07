@@ -18,6 +18,7 @@ If you wrote additional datastructures or functions and you think it could be us
 * A global default logger (stdlog), which manages a console log and a file log. Both can be enabled and disabled.
 * Logging by severity. There is a fully functional default severity_logger, but you also can use your own severities.
 * Using formatters from <iomanip>
+* Colorized output for UNIX
 * Specifying a streambuffer to log to (like ofstream->rdbuf() or similar; defaults to std::cout.rdbuf).
 * Optionally execute a function on critical warnings or throw a `logcpp::critical_exception` (from `log_exception.hpp`).
 * Logging the scope where the logstream comes from (identified by `__FILE__` and `__LINE__`) by simply inserting `SCOPE` into a log stream.
@@ -27,7 +28,8 @@ If you wrote additional datastructures or functions and you think it could be us
 
 #### Features for future releases
 
-* Colorized output
+* Colorized output for WIN32
+* Better README.md
 * Later on: A global channel logger, also usable via `operator<<`
 
 ## License:
