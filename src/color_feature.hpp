@@ -40,16 +40,19 @@
 
 namespace logcpp {
 
-enum color {
+/**
+ * @brief Enum that represents all terminal modes currently supported
+ */
+enum termmode {
 	// Default colors
-	white,
-	cyan,
-	magenta,
-	blue,
-	yellow,
-	green,
-	red,
-	black,
+	col_white,
+	col_cyan,
+	col_magenta,
+	col_blue,
+	col_yellow,
+	col_green,
+	col_red,
+	col_black,
 
 	// Styles
 	sty_bold,
@@ -64,13 +67,10 @@ enum color {
 	ctl_background
 };
 
-
+/**
+ * @brief Class that implements the color feature for one logger
+ */
 class color_feature {
-	
-	static color_feature* m_self;
-	color_feature();
-	color_feature(color_feature const& another) = delete;
-	color_feature& operator=(color_feature const& another);
 	
 	bool m_background_ctl;
 	uint m_back;
@@ -78,15 +78,33 @@ class color_feature {
 	std::vector< uint > m_styles;
 public:
 	/**
-	 * @brief Get a reference to the color color feature
+	 * @brief Constructor
 	 */
-	static color_feature& get();
+	color_feature();
 	
-	const std::string code( color col );
+	/**
+	 * @brief Get the CSI-Code representing the current mode
+	 * @param mode The term mode
+	 */
+	const std::string code( termmode m );
+	
+	/**
+	 * @brief Get the CSI-Code for one term mode only
+	 * @param mode The term mode
+	 */
+	static const std::string code_plain( termmode m );
 };
 
 
 
 } // namespace logcpp
+
+
+/**
+ * @def COLOR
+ * @brief Gets the code of the terminal mode specified without any additional modifications
+ * @param col Terminal mode
+ */
+#define COLOR(col) logcpp::color_feature::code_plain(col)
 
 #endif

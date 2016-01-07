@@ -95,9 +95,6 @@ inline const std::string timestr() {
  */
 class basic_log
 {
-#ifdef ENABLE_COLOR_SUPPORT
-	bool m_color_ok;
-#endif
 public:
 
 	/**
@@ -143,6 +140,11 @@ protected:
 	 */
 	bool new_record;
 
+#ifdef ENABLE_COLOR_SUPPORT
+	bool m_color_ok;
+	color_feature* m_color;
+#endif
+
 public:
 
 	/**
@@ -150,13 +152,19 @@ public:
 	 * @param outbuf A pointer to some std::streambuf where all content is logged to. Defaults to std::cout.rdbuf()
 	 */
 	explicit basic_log( std::streambuf* outbuf = std::cout.rdbuf() )
-		:	m_color_ok(false),
-			stream( outbuf ),
-			timestamp_enabled_(false),
-			new_record(true)
+		:	stream( outbuf )
+		,	timestamp_enabled_(false)
+		,	new_record(true)
+#ifdef ENABLE_COLOR_SUPPORT
+		,	m_color_ok(false)
+		,	m_color( new color_feature() )
+
 	{
 		m_color_ok = stream.sink_is_terminal();
 	}
+#else
+	{}
+#endif
 	basic_log( const basic_log& ) = delete;
 	~basic_log() {}
 
@@ -211,12 +219,12 @@ public:
 #ifdef ENABLE_COLOR_SUPPORT
 	/**
 	 * @brief Member function that controls colors and styles of the underlying sink
-	 * @param col Some value of color
+	 * @param mode Some value of color
 	 */
 	template< typename T >
-	void log( const color& col ) {
+	void log( const termmode& mode ) {
 		if ( m_color_ok ) {
-			this->log( color_feature::get().code(col) );
+			this->log( m_color->code(mode) );
 		}
 	}
 #endif

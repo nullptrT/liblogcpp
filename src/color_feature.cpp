@@ -33,8 +33,6 @@
 
 namespace logcpp {
 
-color_feature* color_feature::m_self = 0;
-
 color_feature::color_feature()
 	:	m_background_ctl( false )
 	,	m_back( 49 )
@@ -43,18 +41,10 @@ color_feature::color_feature()
 {}
 
 
-color_feature& color_feature::get() {
-	if ( m_self == 0 ) {
-		m_self = new color_feature();
-	}
-	return *m_self;
-}
-
-
-const std::string color_feature::code(color c) {
+const std::string color_feature::code(termmode m) {
 	bool set = true;
 	bool disable_blink = false;
-	switch( c ) {
+	switch( m ) {
 		case ctl_reset_col:
 			m_back = 49;
 			m_fore = 39;
@@ -64,56 +54,56 @@ const std::string color_feature::code(color c) {
 			m_fore = 39;
 			m_styles.clear();
 			return std::string("\x1b[0m");
-		case white:
+		case col_white:
 			if ( !m_background_ctl ) {
 				m_fore = 37;
 			} else {
 				m_back = 47;
 			}
 			break;
-		case cyan:
+		case col_cyan:
 			if ( !m_background_ctl  ) {
 				m_fore = 36;
 			} else {
 				m_back = 46;
 			}
 			break;
-		case magenta:
+		case col_magenta:
 			if ( !m_background_ctl  ) {
 				m_fore = 35;
 			} else {
 				m_back = 45;
 			}
 			break;
-		case blue:
+		case col_blue:
 			if ( !m_background_ctl  ) {
 				m_fore = 34;
 			} else {
 				m_back = 44;
 			}
 			break;
-		case yellow:
+		case col_yellow:
 			if ( !m_background_ctl  ) {
 				m_fore = 33;
 			} else {
 				m_back = 43;
 			}
 			break;
-		case green:
+		case col_green:
 			if ( !m_background_ctl  ) {
 				m_fore = 32;
 			} else {
 				m_back = 42;
 			}
 			break;
-		case red:
+		case col_red:
 			if ( !m_background_ctl  ) {
 				m_fore = 31;
 			} else {
 				m_back = 41;
 			}
 			break;
-		case black:
+		case col_black:
 			if ( !m_background_ctl ) {
 				m_fore = 30;
 			} else {
@@ -180,6 +170,43 @@ const std::string color_feature::code(color c) {
 	
 	return ansi_code;
 }
+
+
+const std::string color_feature::code_plain(termmode m) {
+	switch( m ) {
+		case ctl_reset_col:
+			return std::string("\x1b[39m");
+		case ctl_reset_all:
+			return std::string("\x1b[0m");
+		case col_white:
+			return std::string("\x1b[37m");
+		case col_cyan:
+			return std::string("\x1b[36m");
+		case col_magenta:
+			return std::string("\x1b[35m");
+		case col_blue:
+			return std::string("\x1b[34m");
+		case col_yellow:
+			return std::string("\x1b[33m");
+		case col_green:
+			return std::string("\x1b[32m");
+		case col_red:
+			return std::string("\x1b[31m");
+		case col_black:
+			return std::string("\x1b[30m");
+		case sty_bold:
+			return std::string("\x1b[1m");
+		case sty_unterline:
+			return std::string("\x1b[4m");
+		case sty_blink:
+			return std::string("\x1b[5m");
+		case sty_blink_off:
+			return std::string("\x1b[25m");
+		default:
+			return std::string("");
+	}
+}
+
 
 } // namespace logcpp
 
