@@ -2,19 +2,15 @@
 ##### Changelog
 
 
-## Noteworthy changes in release next (????-??-??) [?]
+## Noteworthy changes in release 1.7.0 (2016-01-08) [stable]
 
 #### New features
 
-*	
-
-#### Bug Fixes
-
-*	
+*	Colorizing and controlling the font is supported for unix now
 
 #### Changes in behavior
 
-*	
+*	The compile and cmake option -DAUTOCOLOR=1 enables automatic features like colorizing severities and resetting terminal mode after ending a record.
 
 
 ## Noteworthy changes in release 1.6.3 (2016-01-01) [stable]
@@ -66,6 +62,21 @@
 #### Changes in behavior
 
 *	The library (containing the global logger) can only be build static since this release.
+
+
+## Noteworthy changes in release next (????-??-??) [?]
+
+#### New features
+
+*	
+
+#### Bug Fixes
+
+*	
+
+#### Changes in behavior
+
+*	
 
 
 

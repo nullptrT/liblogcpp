@@ -17,21 +17,21 @@ extern "C" {
  *
  * the version string like "1.2.3"
  */
-#define LIBLOGCPP_DOTTED_VERSION "1.6.3"
+#define LIBLOGCPP_DOTTED_VERSION "1.7.0"
 
 /**
  * LIBLOGCPP_VERSION:
  *
  * the version number: 1.2.3 value is 10203
  */
-#define LIBLOGCPP_VERSION 10603
+#define LIBLOGCPP_VERSION 10700
 
 /**
  * LIBLOGCPP_VERSION_STRING:
  *
  * the version number string, 1.2.3 value is "10203"
  */
-#define LIBLOGCPP_VERSION_STRING "10603"
+#define LIBLOGCPP_VERSION_STRING "10700"
 
 /**
  * LIBLOGCPP_VERSION_EXTRA:
