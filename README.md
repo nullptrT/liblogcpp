@@ -5,7 +5,7 @@
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
 
-It's online api documentation can be found [here](https://www.slau.me/liblogcpp/). How to use it is document lower on this page.
+It's online api documentation can be found [here](https://doc.0ptr.de/liblogcpp/). How to use it is document lower on this page.
 
 I know, there is the fantastic Boost.Log library, supporting all features one could need for logging to something. If you can't solve your demands by using this library or writing simple additional datastructures or deriving classes for this library, you probably should go here: http://www.boost.org/doc/libs/release/libs/log/ .
 
