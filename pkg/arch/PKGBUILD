@@ -9,7 +9,7 @@ license=('LGPL2.1')
 depends=()
 makedepends=('cmake' 'qt5-base')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/nullptrT/$pkgname/archive/$pkgver.tar.gz")
-md5sums=('1d86b9cbb57d1e8f055bb0f4a3521ee4')
+md5sums=('fac9d7642172476a24da79f0e6f87cf9')
 
 
 build() {
