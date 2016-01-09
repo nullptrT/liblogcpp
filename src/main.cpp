@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
 	logger << logcpp::ctl_background << logcpp::col_black << logcpp::sty_bold << logcpp::ctl_foreground << logcpp::col_yellow << "This is a message using the color feature" << logcpp::ctl_reset_col << logcpp::endrec;
 #endif
 
-#ifdef ENABLE_QT_SUPPORT
+#ifdef LOGCPP_ENABLE_QT_SUPPORT
 	QString qstr("This is a QString");
 	logger << qstr << logcpp::endrec;
 #endif

@@ -2,6 +2,13 @@
 ##### Changelog
 
 
+## Noteworthy changes in release 1.7.1 (2016-01-09) [stable]
+
+#### Changes in behavior
+
+*	The compile options AUTOCOLOR and ENABLE_QT_SUPPORT are now prefixed with LOGCPP_ (LOGCPP_AUTOCOLOR, LOGCPP_ENABLE_QT_SUPPORT) for better compatibility with other libraries
+
+
 ## Noteworthy changes in release 1.7.0 (2016-01-08) [stable]
 
 #### New features

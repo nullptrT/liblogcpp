@@ -52,6 +52,8 @@ You can simply build this with:
  % make
 ```
 
+#### CMake options
+
 Additionally to the default options CMake currently offers the following options (can be specified with `-DOPTION=ON`):
 
 * `ENABLE_QT_SUPPORT`: Enables a function wrapper for QStrings. Needs `Qt5Core_LIBRARIES`.
@@ -60,16 +62,23 @@ Additionally to the default options CMake currently offers the following options
 * `INSTALL_LIBS`: Enables targets for installation of library files. Because it is useful not to install the library (e.g. when used as submodule of a project) this defaults to off.
 * `BUILD_LOGCPP_TEST`: Build a simple main runtime that demonstrates current features of liblogcpp.
 
+#### Compiler options / Config variables
+
+You can define the following with gcc/msvc or with a `#define` in your config header
+
+* `LOGCPP_ENABLE_QT_SUPPORT`: Enables a function wrapper for QStrings. Needs `Qt5Core_LIBRARIES`.
+* `LOGCPP_AUTOCOLOR`: Enables colorized output of severities and automatic reset of terminal modes on logcpp::endrec
+
 #### Packages
 
-Currently there is a package in the Arch Linux User Repository under https://aur.archlinux.org/packages/liblogcpp/ .
+Currently there is a package in the Arch Linux User Repository under https://aur.archlinux.org/liblogcpp/ .
 More distributions may follow or be submitted.
 
 #### Requirements
 
 * cmake>=2.8
-* qt5-base (optional for building with support for QString)
 * a c++ compiler (tested for gcc)
+* qt5-base (optional for building with support for QString)
 * doxygen (optional for building the [html documentation](https://www.slau.me/liblogcpp/))
 
 

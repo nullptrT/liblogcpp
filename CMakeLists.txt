@@ -4,7 +4,7 @@ cmake_minimum_required( VERSION 3.0 )
 
 set( LIBLOGCPP_STABLE_VERSION 1 )
 set( LIBLOGCPP_RELEASE 7 )
-set( LIBLOGCPP_DEV_VERSION 0 )
+set( LIBLOGCPP_DEV_VERSION 1 )
 set( LIBLOGCPP_VERSION "${LIBLOGCPP_STABLE_VERSION}.${LIBLOGCPP_RELEASE}.${LIBLOGCPP_DEV_VERSION}" )
 
 set( LIBLOGCPP_SRC_DIR ${PROJECT_SOURCE_DIR}/src )
@@ -13,7 +13,7 @@ add_definitions( -std=c++11 )
 add_definitions(-DSRC_DIR=${LIBLOGCPP_SRC_DIR})
 
 if( ENABLE_QT_SUPPORT )
-	add_definitions( -DENABLE_QT_SUPPORT=1 )
+	add_definitions( -DLOGCPP_ENABLE_QT_SUPPORT=1 )
 	# Instruct CMake to run moc automatically when needed.
 	set(CMAKE_AUTOMOC ON)
 	# Find the QtCore library
@@ -37,7 +37,7 @@ if( UNIX )
 	set( LIBLOGCPP_SOURCE ${LIBLOGCPP_SOURCE} ${LIBLOGCPP_SRC_DIR}/color_feature.cpp )
 	message("-- Compiling with support for ANSI Color codes")
 	if(AUTOCOLOR)
-		add_definitions( -DAUTOCOLOR=1 )
+		add_definitions( -DLOGCPP_AUTOCOLOR=1 )
 	endif()
 endif()
 

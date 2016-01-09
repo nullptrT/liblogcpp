@@ -45,7 +45,7 @@ extern "C" {
 #include "color_feature.hpp"
 #endif
 
-#ifdef ENABLE_QT_SUPPORT
+#ifdef LOGCPP_ENABLE_QT_SUPPORT
 #include <QString>
 #endif
 
@@ -173,7 +173,7 @@ public:
 	 */
 	void end_record() {
 #ifdef ENABLE_COLOR_SUPPORT
-#ifdef AUTOCOLOR
+#ifdef LOGCPP_AUTOCOLOR
 		stream << COLOR(logcpp::ctl_reset_all);
 #endif
 #endif
@@ -234,7 +234,7 @@ public:
 	}
 #endif
 	
-#ifdef ENABLE_QT_SUPPORT
+#ifdef LOGCPP_ENABLE_QT_SUPPORT
 	/**
 	 * @brief Member function that can handle a QString
 	 * @param str A QString to log

@@ -63,7 +63,7 @@ enum severity_level {
 const std::array < std::string, 7 > names =
 {
 	"off",
-#ifdef AUTOCOLOR
+#ifdef LOGCPP_AUTOCOLOR
 #ifdef ENABLE_COLOR_SUPPORT
 	"\x1b[1;49;31mcritical\x1b[0m",
 	"\x1b[0m\x1b[49;31m  error \x1b[0m",

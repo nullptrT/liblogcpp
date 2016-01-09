@@ -1,3 +1,18 @@
+liblogcpp (1.7.1-1) stable; urgency=low
+
+  * The compile options AUTOCOLOR and ENABLE_QT_SUPPORT are now prefixed with LOGCPP_ (LOGCPP_AUTOCOLOR, LOGCPP_ENABLE_QT_SUPPORT) for better compatibility with other libraries
+
+ -- Sebastian Lau <lauseb644@gmail.com>  Thu, 09 Jan 2016 13:54:32 +0100
+
+
+liblogcpp (1.7.0-1) stable; urgency=low
+
+  * Colorizing and controlling the font is supported for unix now
+  * The compile and cmake option -DAUTOCOLOR=1 enables automatic features like colorizing severities and resetting terminal mode after ending a record.
+
+ -- Sebastian Lau <lauseb644@gmail.com>  Thu, 08 Jan 2016 13:54:32 +0100
+
+
 liblogcpp (1.6.3-1) stable; urgency=low
 
   * Added support for QString
