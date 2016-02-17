@@ -56,8 +56,10 @@ Additionally to the default options CMake currently offers the following options
 
 * `LOGCPP_ENABLE_QT_SUPPORT`: Enables a function wrapper for QStrings. Needs `Qt5Core_LIBRARIES`.
 * `LOGCPP_AUTOCOLOR`: Enables colorized output of severities and automatic reset of terminal modes on logcpp::endrec
-* `ENABLE_DOC`: Enables building of doxygen html pages. Requires doxygen.
-* `LOGCPP_INSTALL_LIBS`: Enables targets for installation of library files. Because it is useful not to install the library (e.g. when used as submodule of a project) this defaults to off.
+* `LOGCPP_DESTDIR`: Where are the files installed to. Defaults to `CMAKE_INSTALL_PREFIX` (`/usr/local` on UNIX and `c:/Program Files` on WIN32)
+* `LOGCPP_HEADER_INSTALL_DIR`: Can be set to control, where headers are installed. Defaults to `LOGCPP_DESTDIR/include/liblogcpp`.
+* `LOGCPP_LIB_INSTALL_DIR`: Can be set to control where the library is installed. Defaults to `LOGCPP_DESTDIR/lib`.
+* `LOGCPP_INSTALL_LIBS`: Enables targets for installation of library files. Because it is useful not to install the library (e.g. when used as submodule of a project) this defaults to off. If enabled, it installs all headers to `HEADER_INSTALL_DIR` and the library to `LIB_INSTALL_DIR`
 * `BUILD_LOGCPP_TEST`: Build a simple main runtime that demonstrates current features of liblogcpp.
 
 #### Compiler options / Config variables
