@@ -20,7 +20,7 @@
 */
 
 
-
+#include "config.hpp"
 #include "severity_logger.hpp"
 #include "logmanip.hpp"
 #include "log.hpp"
@@ -54,7 +54,7 @@ int main(int argc, char** argv) {
 
 	logger << SCOPE_SEVERITY(logcpp::error) << "A message calling SCOPE_SEVERITY(logcpp::error)" << logcpp::endrec;
 
-#ifdef ENABLE_COLOR_SUPPORT
+#if LOGCPP_ENABLE_COLOR_SUPPORT
 	logger << logcpp::ctl_background << logcpp::col_black << logcpp::sty_bold << logcpp::ctl_foreground << logcpp::col_yellow << "This is a message using the color feature" << logcpp::ctl_reset_col << logcpp::endrec;
 #endif
 
@@ -69,9 +69,11 @@ int main(int argc, char** argv) {
 
 	flog << SCOPE << "This log goes to a file" << logcpp::endrec;
 
-#ifdef ENABLE_COLOR_SUPPORT
-	flog << logcpp::col_red << "Tried to put colors to a file log here" << logcpp::endrec;
+#if LOGCPP_ENABLE_COLOR_SUPPORT
+	flog << logcpp::col_red << "Tried to put colors to a file log here." << logcpp::endrec;
 #endif
+
+
 
 	logcpp::severity_logger sflog( ofs->rdbuf() );
 	sflog.set_critical_log_function(logcpp::abort_with_exception);
@@ -84,7 +86,7 @@ int main(int argc, char** argv) {
 
 	logcpp::globallog::enable_file_log();
 
-	logcpp::globallog::get() << SCOPE << "This is the first message using the global logger" << logcpp::endrec;
+	logcpp::globallog::get() << SCOPE << "This is the first message using the global logger." << logcpp::endrec;
 
 	logcpp::globallog::disable_file_log();
 
@@ -107,12 +109,12 @@ int main(int argc, char** argv) {
 	stdlog << "And again, 42 as hex via stdlog: " << std::hex << 42 << logcpp::endrec;
 
 	stdlog << "And the current time";
-#ifdef ENABLE_COLOR_SUPPORT
+#if LOGCPP_ENABLE_COLOR_SUPPORT
 	stdlog << " in blue" << logcpp::col_blue;
 #endif
 	stdlog << ": " << TIME << logcpp::endrec;
 
-#ifdef ENABLE_COLOR_SUPPORT
+#if LOGCPP_ENABLE_COLOR_SUPPORT
 	stdlog << "Now we set 'std::abort' as " << logcpp::col_black << logcpp::ctl_background << logcpp::col_red << "critical" << logcpp::ctl_reset_all << " log function and write a critical message again." << logcpp::endrec;
 #else
 	stdlog << "Now we set 'std::abort' as critical log function and write a critical message again." << logcpp::endrec;

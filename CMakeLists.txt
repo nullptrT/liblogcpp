@@ -10,9 +10,9 @@ set( LIBLOGCPP_VERSION "${LIBLOGCPP_STABLE_VERSION}.${LIBLOGCPP_RELEASE}.${LIBLO
 set( LIBLOGCPP_SRC_DIR ${PROJECT_SOURCE_DIR}/src )
 
 add_definitions( -std=c++11 )
-add_definitions(-DSRC_DIR=${LIBLOGCPP_SRC_DIR})
+add_definitions(-DLOGCPP_SRC_DIR=${LIBLOGCPP_SRC_DIR})
 
-if( ENABLE_QT_SUPPORT )
+if( LOGCPP_ENABLE_QT_SUPPORT )
 	add_definitions( -DLOGCPP_ENABLE_QT_SUPPORT=1 )
 	# Instruct CMake to run moc automatically when needed.
 	set(CMAKE_AUTOMOC ON)
@@ -27,7 +27,7 @@ else()
 endif()
 
 if( BUILD_LOGCPP_TEST )
-	set( AUTOCOLOR 1 )
+	set( LOGCPP_AUTOCOLOR 1 )
 endif()
 
 file (GLOB LIBLOGCPP_HEADERS ${LIBLOGCPP_SRC_DIR}/*.hpp )
@@ -36,13 +36,15 @@ file (GLOB LIBLOGCPP_SOURCE ${LIBLOGCPP_SRC_DIR}/log.cpp )
 if( UNIX )
 	set( LIBLOGCPP_SOURCE ${LIBLOGCPP_SOURCE} ${LIBLOGCPP_SRC_DIR}/color_feature.cpp )
 	message("-- Compiling with support for ANSI Color codes")
-	if(AUTOCOLOR)
+	if(LOGCPP_AUTOCOLOR)
 		add_definitions( -DLOGCPP_AUTOCOLOR=1 )
 	endif()
+else()
+	list(REMOVE_ITEM ${LIBLOGCPP_HEADERS} "${LIBLOGCPP_SRC_DIR}/color_feature.hpp")
 endif()
 
 add_library( logcpp STATIC ${LIBLOGCPP_SOURCE} )
-if( ENABLE_QT_SUPPORT )
+if( LOGCPP_ENABLE_QT_SUPPORT )
 	target_link_libraries( logcpp ${Qt5Core_LIBRARIES} )
 endif()
 
@@ -71,9 +73,8 @@ endif()
 
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
-	if(ENABLE_DOC)
-		configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
-		add_custom_target(doc ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} COMMENT "Generating documentation with Doxygen")
-	endif()
+	message("-- Enabled doc_logcpp target for make")
+	configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
+	add_custom_target(doc_logcpp ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} COMMENT "Generating documentation with Doxygen")
 endif()
 

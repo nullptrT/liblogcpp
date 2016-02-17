@@ -38,6 +38,18 @@
 
 #ifdef __unix__
 
-#define ENABLE_COLOR_SUPPORT 1
+#define LOGCPP_ENABLE_COLOR_SUPPORT true
+
+#else
+
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
+#undef LOGCPP_ENABLE_COLOR_SUPPORT
+#endif
+
+#define LOGCPP_ENABLE_COLOR_SUPPORT false
+
+#ifdef LOGCPP_AUTOCOLOR
+#undef LOGCPP_AUTOCOLOR
+#endif
 
 #endif

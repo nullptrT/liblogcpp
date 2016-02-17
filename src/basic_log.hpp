@@ -41,7 +41,7 @@ extern "C" {
 #include <ctime>
 }
 
-#ifdef ENABLE_COLOR_SUPPORT
+#if LOGCPP_ENABLE_COLOR_SUPPORT
 #include "color_feature.hpp"
 #endif
 
@@ -140,7 +140,7 @@ protected:
 	 */
 	bool new_record;
 
-#ifdef ENABLE_COLOR_SUPPORT
+#if LOGCPP_ENABLE_COLOR_SUPPORT
 	bool m_color_ok;
 	color_feature* m_color;
 #endif
@@ -155,7 +155,7 @@ public:
 		:	stream( outbuf )
 		,	timestamp_enabled_(false)
 		,	new_record(true)
-#ifdef ENABLE_COLOR_SUPPORT
+#if LOGCPP_ENABLE_COLOR_SUPPORT
 		,	m_color_ok(false)
 		,	m_color( new color_feature() )
 
@@ -172,7 +172,7 @@ public:
 	 * @brief Member function that inserts a newline into the buffer, flushes it and begins a new record
 	 */
 	void end_record() {
-#ifdef ENABLE_COLOR_SUPPORT
+#if LOGCPP_ENABLE_COLOR_SUPPORT
 #ifdef LOGCPP_AUTOCOLOR
 		stream << COLOR(logcpp::ctl_reset_all);
 #endif
@@ -221,7 +221,7 @@ public:
 		new_record = false;
 	}
 
-#ifdef ENABLE_COLOR_SUPPORT
+#if LOGCPP_ENABLE_COLOR_SUPPORT
 	/**
 	 * @brief Member function that controls colors and styles of the underlying sink
 	 * @param mode Some value of color

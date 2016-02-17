@@ -32,7 +32,7 @@
 
 #include "config.hpp"
 
-#ifdef ENABLE_COLOR_SUPPORT
+#if LOGCPP_ENABLE_COLOR_SUPPORT
 
 #include <string>
 #include <vector>

@@ -2,6 +2,20 @@
 ##### Changelog
 
 
+## Noteworthy changes in release 1.?.? (2016-??-??) [stable]
+
+#### Changes in behavior
+
+*	The cmake options AUTOCOLOR, ENABLE_QT_SUPPORT and INSTALL_LIBS are now also prefixed with LOGCPP_ (LOGCPP_AUTOCOLOR, LOGCPP_ENABLE_QT_SUPPORT, LOGCPP_INSTALL_LIBS) for better compatibility with other libraries when used as a submodule.
+*	The make target for Doxygen is now called 'doc_logcpp' for compatibility when using this as a submodule.
+*	The make target is now enabled automatically when Doxygen is found.
+
+#### Bug fixes
+
+*	Don't make it possible to use AUTOCOLOR on WIN32 yet
+*	Color support is now explicitly disabled for WIN32 in config.hpp, even if CMake sets this macro
+
+
 ## Noteworthy changes in release 1.7.1 (2016-01-09) [stable]
 
 #### Changes in behavior

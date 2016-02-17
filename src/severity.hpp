@@ -29,7 +29,7 @@
 
 #include "config.hpp"
 
-#ifdef ENABLE_COLOR_SUPPORT
+#if LOGCPP_ENABLE_COLOR_SUPPORT
 #include "color_feature.hpp"
 #endif
 
@@ -63,8 +63,8 @@ enum severity_level {
 const std::array < std::string, 7 > names =
 {
 	"off",
+#if LOGCPP_ENABLE_COLOR_SUPPORT
 #ifdef LOGCPP_AUTOCOLOR
-#ifdef ENABLE_COLOR_SUPPORT
 	"\x1b[1;49;31mcritical\x1b[0m",
 	"\x1b[0m\x1b[49;31m  error \x1b[0m",
 	"\x1b[0m\x1b[1;49;33m warning\x1b[0m",

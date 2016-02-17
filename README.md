@@ -5,9 +5,7 @@
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
 
-It's online api documentation can be found [here](https://doc.0ptr.de/liblogcpp/). How to use it is document lower on this page.
-
-I know, there is the fantastic Boost.Log library, supporting all features one could need for logging to something. If you can't solve your demands by using this library or writing simple additional datastructures or deriving classes for this library, you probably should go here: http://www.boost.org/doc/libs/release/libs/log/ .
+It's online api documentation can be found [here](https://doc.0ptr.de/liblogcpp/). How to use it is documented lower on this page.
 
 If you wrote additional datastructures or functions and you think it could be useful within this library: You are welcome to create a pull request or contact me ( lauseb644 _at_ gmail _dot_ com ).
 
@@ -56,10 +54,10 @@ You can simply build this with:
 
 Additionally to the default options CMake currently offers the following options (can be specified with `-DOPTION=ON`):
 
-* `ENABLE_QT_SUPPORT`: Enables a function wrapper for QStrings. Needs `Qt5Core_LIBRARIES`.
-* `AUTOCOLOR`: Enables colorized output of severities and automatic reset of terminal modes on logcpp::endrec
+* `LOGCPP_ENABLE_QT_SUPPORT`: Enables a function wrapper for QStrings. Needs `Qt5Core_LIBRARIES`.
+* `LOGCPP_AUTOCOLOR`: Enables colorized output of severities and automatic reset of terminal modes on logcpp::endrec
 * `ENABLE_DOC`: Enables building of doxygen html pages. Requires doxygen.
-* `INSTALL_LIBS`: Enables targets for installation of library files. Because it is useful not to install the library (e.g. when used as submodule of a project) this defaults to off.
+* `LOGCPP_INSTALL_LIBS`: Enables targets for installation of library files. Because it is useful not to install the library (e.g. when used as submodule of a project) this defaults to off.
 * `BUILD_LOGCPP_TEST`: Build a simple main runtime that demonstrates current features of liblogcpp.
 
 #### Compiler options / Config variables
@@ -79,7 +77,7 @@ More distributions may follow or be submitted.
 * cmake>=2.8
 * a c++ compiler (tested for gcc)
 * qt5-base (optional for building with support for QString)
-* doxygen (optional for building the [html documentation](https://www.slau.me/liblogcpp/))
+* doxygen (optional for building the [html documentation](https://doc.0ptr.de/liblogcpp/))
 
 
 ## Use with CMake
