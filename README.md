@@ -43,7 +43,7 @@ You can simply build this with:
 
 ```
  % cd /path/to/clone/in
- % git clone https://github.com/gS644/.git
+ % git clone https://github.com/nullptrT/.git
  % mkdir liblogcpp/build # or some other build directory
  % cd /path/to/builddir
  % cmake /path/to/cloned/directory
@@ -59,7 +59,7 @@ Additionally to the default options CMake currently offers the following options
 * `LOGCPP_DESTDIR`: Where are the files installed to. Defaults to `CMAKE_INSTALL_PREFIX` (`/usr/local` on UNIX and `c:/Program Files` on WIN32)
 * `LOGCPP_HEADER_INSTALL_DIR`: Can be set to control, where headers are installed. Defaults to `LOGCPP_DESTDIR/include/liblogcpp`.
 * `LOGCPP_LIB_INSTALL_DIR`: Can be set to control where the library is installed. Defaults to `LOGCPP_DESTDIR/lib`.
-* `LOGCPP_INSTALL_LIBS`: Enables targets for installation of library files. Because it is useful not to install the library (e.g. when used as submodule of a project) this defaults to off. If enabled, it installs all headers to `HEADER_INSTALL_DIR` and the library to `LIB_INSTALL_DIR`
+* `LOGCPP_INSTALL_LIBS`: Enables targets for installation of library files. Because it is useful not to install the library (e.g. when used as submodule of a project) this defaults to off. If enabled, it installs all headers to `LOGCPP_HEADER_INSTALL_DIR` and the library to `LOGCPP_LIB_INSTALL_DIR`
 * `BUILD_LOGCPP_TEST`: Build a simple main runtime that demonstrates current features of liblogcpp.
 
 #### Compiler options / Config variables
