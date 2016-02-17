@@ -64,10 +64,26 @@ Additionally to the default options CMake currently offers the following options
 
 #### Compiler options / Config variables
 
-You can define the following with gcc/msvc or with a `#define` in your config header
+You can define the following with gcc/msvc or with a `#define` in your config header.
 
 * `LOGCPP_ENABLE_QT_SUPPORT`: Enables a function wrapper for QStrings. Needs `Qt5Core_LIBRARIES`.
 * `LOGCPP_AUTOCOLOR`: Enables colorized output of severities and automatic reset of terminal modes on logcpp::endrec
+* `LOGCPP_STRIP_SCOPE_DIRS_PREFIX`: Strips everything except the filename from SCOPE (like `/path/to/` in `/path/to/compilation.cpp`) since that defaults to the path in the build environment. Defaults to true.
+
+As an example you could write a `logging.hpp` header like this:
+
+```c++
+#define LOGCPP_AUTOCOLOR true			/* If you want severities colorized automatically
+											and reset the terminal on each new record */
+#define LOGCPP_ENABLE_QT_SUPPORT true	// If you want to pass QString to loggers
+
+#include <liblogcpp/log.hpp>			/* If you want to use the global logger 
+											(like stdlog << logcpp::warning << "some text" << logcpp::endrec) */
+
+namespace myNamespace {
+namespace log = logcpp;
+} // namespace myNamespace
+```
 
 #### Packages
 
@@ -101,7 +117,7 @@ This will give you the ability to use stdlog, which offers you a console logger 
 #include <log.hpp>
 stdlog.set_logfile("/path/to/file");   // Without this line, stdlog would log to ./globallog.log
 stdlog.enable_file_log();              // Without this line, the file logger would not be called (default behaviour)
-stdlog << "A sample message to std::cout and /path/to/file" << logcpp::endrec
+stdlog << logcpp::warning << "A sample message to std::cout and /path/to/file" << logcpp::endrec
 ```
 
 On the other hand you can create more loggers by simply passing a `std::streambuf` pointer to the constructor. If you omit this pointer, the logger will log to `std::cout`.

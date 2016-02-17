@@ -53,3 +53,10 @@
 #endif
 
 #endif
+
+
+#ifndef LOGCPP_STRIP_SCOPE_DIRS_PREFIX
+
+#define LOGCPP_STRIP_SCOPE_DIRS_PREFIX false
+
+#endif
