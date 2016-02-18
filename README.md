@@ -92,7 +92,7 @@ More distributions may follow or be submitted.
 
 #### Requirements
 
-* cmake>=2.8
+* cmake>=3.0
 * a c++ compiler (tested for gcc)
 * qt5-base (optional for building with support for QString)
 * doxygen (optional for building the [html documentation](https://doc.0ptr.de/liblogcpp/))
@@ -102,9 +102,9 @@ More distributions may follow or be submitted.
 
 
 The included `LibLogCPPConfig.cmake` module enables you to use `find_package(LibLogCPP >= 1.6)` in CMake:
-* `LibLogCPP_INCLUDE_DIR`: The directory, where the headers are located in `liblogcpp/` (usually `/usr/include`)
-* `LibLogCPP_LIBRARY`: The static library you can link into your program. It's only useful, if you use `stdlog`
-* `LibLogCPP_VERSION_STRING`: The current version of liblogcpp.
+* `LIBLOGCPP_INCLUDE_DIR`: The directory, where the headers are located in `liblogcpp/` (usually `/usr/include`)
+* `LIBLOGCPP_LIBRARY`: The static library you can link into your program. It's only useful, if you use `stdlog`
+* `LIBLOGCPP_VERSION_STRING`: The current version of liblogcpp.
 
 
 ## Usage
