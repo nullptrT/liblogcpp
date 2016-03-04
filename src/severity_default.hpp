@@ -1,6 +1,6 @@
 /**
- * @file severity.hpp
- * @brief The abstract template for severities in LibLogC++
+ * @file severity_default.hpp
+ * @brief The default severities that are used in LibLogC++
  * @author Sebastian Lau <lauseb644 [at] gmail [dot] com>
  **/
 /*
@@ -28,42 +28,54 @@
 #pragma once
 
 #include "config.hpp"
-
-#include <string>
-#include <array>
+#include "severity.hpp"
 
 
 namespace logcpp {
 
-template< typename severity_t >
-class AbstractSeverity {
+/**
+ * @brief The default severities that are used in LibLogC++
+ * @note In all cases, the value 
+ * @note - 0 defaults to off
+ * @note - 1 defaults to critical
+ * @note - The last element has to be called SEVERITY_SIZE to determine
+ * @note   the size of the enum
+ * @note
+ * @note - You are not allowed to assign values to the enum members
+ * @note
+ * @note - For better use and readablity, a severity_level enum is defined at global
+ * @note   library scope, but you also may define it in your own namespace.
+ * @note
+ * @note - The higher the enum value, the less critical is this severity
+ */
+enum default_severity_levels {
+	off,
+	critical,
+	error,
+	warning,
+	normal,
+	verbose,
+	verbose2,
+	debug,
+	debug2,
+	SEVERITY_SIZE
+};
 
-	const std::array< const std::string, 1 + (int)severity_t::SEVERITY_SIZE >* m_names;
-
-protected:
-	AbstractSeverity( const std::array< const std::string, 1 + (int)severity_t::SEVERITY_SIZE >* severity_names )
-		:	m_names( severity_names )
-	{}
-
+class DefaultSeverity
+	:	public AbstractSeverity< default_severity_levels >
+{
 public:
+	DefaultSeverity();
+
 	/**
-	 * @return The name for severity_level as string
-	 * @param lvl A severity_level to get as string
+	 * @brief The names of severity_level as string array
 	 */
-	const std::string severity_name( const severity_t lvl ) const {
-		if( this->m_names == 0 ) {
-			return std::string("NULL");
-		} else if( static_cast< std::size_t >(lvl) < this->m_names->size() ) {
-			return this->m_names->at(lvl);
-		} else {
-			return this->m_names->back();
-		}
-	}
+	static std::array < const std::string, 1 + (int)default_severity_levels::SEVERITY_SIZE >* default_severity_names;
 
 	/**
 	 * @return The amount of characters of the longest name of all severity_level
 	 */
-	virtual const uint max_name_length() = 0;
+	virtual const uint max_name_length();
 };
 
 } // namespace logcpp

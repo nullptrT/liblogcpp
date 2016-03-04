@@ -1,6 +1,6 @@
 /**
- * @file severity.hpp
- * @brief The abstract template for severities in LibLogC++
+ * @file severity_logger.cpp
+ * @brief A severity logger that can be used instantly
  * @author Sebastian Lau <lauseb644 [at] gmail [dot] com>
  **/
 /*
@@ -25,46 +25,31 @@
 */
 
 
-#pragma once
-
-#include "config.hpp"
-
-#include <string>
-#include <array>
+#include "severity_logger.hpp"
 
 
 namespace logcpp {
 
-template< typename severity_t >
-class AbstractSeverity {
+/**
+ * @brief Creates severity_logger logging to std::cout
+ * @param max_severity The maximum severity level for this logger
+ */
+severity_logger::severity_logger( default_severity_levels max_severity )
+	:	severity_log< default_severity_levels >( new DefaultSeverity(), max_severity )
+{
+	this->current_severity = normal;
+}
 
-	const std::array< const std::string, 1 + (int)severity_t::SEVERITY_SIZE >* m_names;
+/**
+ * @brief Creates severity_logger logging to a specific streambuf
+ * @param stream A pointer to some std::streambuf where all content is logged to.
+ * @param max_severity The maximum severity level for this logger
+ */
+severity_logger::severity_logger( std::streambuf* stream, default_severity_levels max_severity )
+	:	severity_log< default_severity_levels >( new DefaultSeverity(), max_severity, stream)
+{
+	this->current_severity = normal;
+}
 
-protected:
-	AbstractSeverity( const std::array< const std::string, 1 + (int)severity_t::SEVERITY_SIZE >* severity_names )
-		:	m_names( severity_names )
-	{}
-
-public:
-	/**
-	 * @return The name for severity_level as string
-	 * @param lvl A severity_level to get as string
-	 */
-	const std::string severity_name( const severity_t lvl ) const {
-		if( this->m_names == 0 ) {
-			return std::string("NULL");
-		} else if( static_cast< std::size_t >(lvl) < this->m_names->size() ) {
-			return this->m_names->at(lvl);
-		} else {
-			return this->m_names->back();
-		}
-	}
-
-	/**
-	 * @return The amount of characters of the longest name of all severity_level
-	 */
-	virtual const uint max_name_length() = 0;
-};
 
 } // namespace logcpp
-

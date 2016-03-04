@@ -37,7 +37,7 @@ namespace logcpp {
  * @brief A global singleton logger with severities that has a console and a file channel
  */
 class globallog
-	:	public severity_log< severity_level, severity_name >
+	:	public severity_log< default_severity_levels >
 {
 private:
 	static std::unique_ptr< globallog > log_;
@@ -48,7 +48,7 @@ private:
 	bool file_log_enabled_;
 	std::ofstream* ofs;
 	std::unique_ptr< severity_logger > file_log;
-	severity_level file_severity;
+	default_severity_levels file_severity;
 
 	globallog();
 	globallog(globallog const& another) = delete;
@@ -96,19 +96,19 @@ public:
 	 * @brief Sets the maximum severity level of messages sent to the console log
 	 * @param level The maximum severity level to be used
 	 */
-	void set_max_console_severity( severity_level level );
+	void set_max_console_severity( default_severity_levels level );
 
 	/**
 	 * @brief Sets the maximum severity level of messages sent to log file
 	 * @param level The maximum severity level to be used
 	 */
-	void set_max_file_severity( severity_level level );
+	void set_max_file_severity( default_severity_levels level );
 
 	/**
 	 * @brief Sets the maximum severity level for both log channels (console and file)
 	 * @param level The maximum severity level to be used
 	 */
-	void set_max_severity_level( severity_level level);
+	void set_max_severity_level( default_severity_levels level);
 
 	/**
 	 * @brief Sets wether to use timestamps in console channel or not
@@ -193,7 +193,7 @@ public:
 	 * @param severity Insert this severity into stream and make it the current severity
 	 */
 	template< typename T >
-	void log( const severity_level& severity ) {
+	void log( const default_severity_levels& severity ) {
 		if( this->stream.has_buffered_content() ) {
 			this->log< std::string >( this->stream.get_buf() );
 		}
@@ -213,7 +213,7 @@ public:
 	 */
 	template<typename T>
 	void log( const severity_scope_t& sev_scope ) {
-		this->log< severity_level >(sev_scope.first);
+		this->log< default_severity_levels >(sev_scope.first);
 		this->log< scope_t >(sev_scope.second);
 	}
 };

@@ -29,6 +29,7 @@
 #pragma once
 
 #include "basic_log.hpp"
+#include "severity.hpp"
 #include "severity_feature.hpp"
 #include "logmanip.hpp"
 
@@ -41,13 +42,14 @@ namespace logcpp {
  * @note severity_name: A function taking a severity_t and returning its name
  * @note max_name_length: A function returning the amount of characters of the longest severity name (used for alignment)
  */
-template< typename severity_t, const std::string (*severity_name)(severity_t), const uint (*max_name_length)() = nullptr >
+template< typename severity_t >
 class severity_log
 	:	public basic_log,
 		public severity_feature< severity_t >
 {
 private:
 	bool enable_print_severity_;
+	AbstractSeverity< severity_t >* m_severity;
 protected:
 	/**
 	 * @brief Optional function to be called on critical severity
@@ -77,10 +79,14 @@ public:
 	 * @param max_severity The maximum severity level for this logger
 	 * @param outbuf A pointer to some std::streambuf where all content is logged to. Defaults to std::cout.rdbuf()
 	 */
-	explicit severity_log( severity_t max_severity, std::streambuf* outbuf = std::cout.rdbuf())
+	explicit severity_log( AbstractSeverity< severity_t >* severity
+						 , severity_t max_severity
+						 , std::streambuf* outbuf = std::cout.rdbuf()
+	)
 		:	basic_log(outbuf),
 			severity_feature< severity_t >(max_severity),
-			enable_print_severity_(true),
+			m_severity( severity )
+		,	enable_print_severity_(true),
 			abort_f(nullptr)
 	{}
 	severity_log( const severity_log& ) = delete;
@@ -117,11 +123,7 @@ public:
 		if( new_record ) {
 			insert_time_or_not();
 			if( enable_print_severity_ ) {
-				if( max_name_length == nullptr ) {
-					stream << "<" << severity_name( this->current_severity ) << ">: ";
-				} else {
-					stream << std::setw(max_name_length() - severity_name( this->current_severity ).length() ) << std::setfill(' ') << "<" << severity_name( this->current_severity ) << ">: " << std::setfill(' ');
-				}
+				stream << std::setw(m_severity->max_name_length() - m_severity->severity_name( this->current_severity ).length() ) << std::setfill(' ') << "<" << m_severity->severity_name( this->current_severity ) << ">: " << std::setfill(' ');
 			}
 			new_record = false;
 		}
@@ -141,11 +143,7 @@ public:
 		}
 		this->current_severity = severity;
 		if( enable_print_severity_ ) {
-			if( max_name_length == nullptr ) {
-				stream << "<" << severity_name( this->current_severity ) << ">: ";
-			} else {
-				stream << std::setw(max_name_length() - severity_name( this->current_severity ).length() ) << std::setfill(' ') << "<" << severity_name( this->current_severity ) << ">: ";
-			}
+			stream << std::setw(m_severity->max_name_length() - m_severity->severity_name( this->current_severity ).length() ) << std::setfill(' ') << "<" << m_severity->severity_name( this->current_severity ) << ">: ";
 		}
 		new_record = false;
 	}

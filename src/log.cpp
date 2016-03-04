@@ -36,7 +36,7 @@ std::unique_ptr< globallog > globallog::log_;
 
 
 globallog::globallog()
-	:	severity_log< severity_level, severity_name >( normal ),
+	:	severity_log< default_severity_levels >( new DefaultSeverity(), normal ),
 		console_log( new severity_logger() ),
 		file_log_enabled_(false),
 		ofs( new std::ofstream ),
@@ -87,13 +87,13 @@ void globallog::end_line () {
 }
 
 
-void globallog::set_max_console_severity(severity_level level) {
+void globallog::set_max_console_severity(default_severity_levels level) {
 	this->max_severity_lvl = level;
 	console_log->set_max_severity_level( level );
 }
 
 
-void globallog::set_max_file_severity(severity_level level) {
+void globallog::set_max_file_severity(default_severity_levels level) {
 	if ( file_log_enabled_ ) {
 		file_log->set_max_severity_level( level );
 	}
@@ -101,7 +101,7 @@ void globallog::set_max_file_severity(severity_level level) {
 }
 
 
-void globallog::set_max_severity_level(severity_level level) {
+void globallog::set_max_severity_level(default_severity_levels level) {
 	set_max_console_severity( level );
 	set_max_file_severity( level );
 }

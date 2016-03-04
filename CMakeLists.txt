@@ -31,7 +31,7 @@ if( BUILD_LOGCPP_TEST )
 endif()
 
 file (GLOB LIBLOGCPP_HEADERS ${LIBLOGCPP_SRC_DIR}/*.hpp )
-file (GLOB LIBLOGCPP_SOURCE ${LIBLOGCPP_SRC_DIR}/log.cpp )
+set ( LIBLOGCPP_SOURCE ${LIBLOGCPP_SRC_DIR}/log.cpp ${LIBLOGCPP_SRC_DIR}/severity_default.cpp ${LIBLOGCPP_SRC_DIR}/severity_logger.cpp )
 
 if( UNIX )
 	set( LIBLOGCPP_SOURCE ${LIBLOGCPP_SOURCE} ${LIBLOGCPP_SRC_DIR}/color_feature.cpp )
@@ -56,8 +56,8 @@ if( LOGCPP_ENABLE_QT_SUPPORT )
 endif()
 
 if( BUILD_LOGCPP_TEST )
-	add_executable( logger_test ${LIBLOGCPP_SRC_DIR}/main.cpp )
-	target_link_libraries( logger_test logcpp )
+	add_executable( logcpp_test ${LIBLOGCPP_SRC_DIR}/main.cpp )
+	target_link_libraries( logcpp_test logcpp )
 endif()
 
 if( LOGCPP_HEADER_INSTALL_DIR )

@@ -42,9 +42,9 @@ int main(int argc, char** argv) {
 
 	logger << logcpp::endrec;
 
-	logger << logcpp::severity_level::debug << "And a debug message";
+	logger << logcpp::debug << "And a debug message";
 
-	logger << logcpp::severity_level::critical << "A critical message" << logcpp::endrec;
+	logger << logcpp::critical << "A critical message" << logcpp::endrec;
 
 	logger << "And another critical message" << logcpp::endrec;
 

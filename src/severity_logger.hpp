@@ -28,7 +28,7 @@
 #pragma once
 
 #include "severity_log.hpp"
-#include "severity.hpp"
+#include "severity_default.hpp"
 
 
 namespace logcpp {
@@ -37,41 +37,35 @@ namespace logcpp {
  * @brief A severity logger that can be used instantly
  */
 class severity_logger
-	:	public severity_log< severity_level, severity_name, max_name_length >
+	:	public severity_log< default_severity_levels >
 {
 public:
-
-
 	/**
 	 * @brief Creates severity_logger logging to std::cout
 	 * @param max_severity The maximum severity level for this logger
 	 */
-	explicit severity_logger( severity_level max_severity = normal )
-		:	severity_log< severity_level, severity_name, max_name_length >( max_severity )
-	{
-		this->current_severity = normal;
-	}
+	severity_logger( default_severity_levels max_severity = normal );
+
 	/**
 	 * @brief Creates severity_logger logging to a specific streambuf
 	 * @param stream A pointer to some std::streambuf where all content is logged to.
 	 * @param max_severity The maximum severity level for this logger
 	 */
-	explicit severity_logger( std::streambuf* stream, severity_level max_severity = normal )
-		:	severity_log< severity_level, severity_name, max_name_length >( max_severity, stream)
-	{
-		this->current_severity = normal;
-	}
+	explicit severity_logger( std::streambuf* stream, default_severity_levels max_severity = normal );
+
 	severity_logger( const severity_logger& ) = delete;
 };
+
+} // namespace logcpp
+
 
 /**
  * @def SCOPE_SEVERITY(lvl_)
  * @brief Insert a severity with the current scope into the severity_logger
  * @param lvl_ The severity level to be inserted into the severity_logger
  */
-#define SCOPE_SEVERITY(lvl_) logcpp::severity_log< logcpp::severity_level, logcpp::severity_name >::severity_scope(lvl_, SCOPE)
+#define SCOPE_SEVERITY(lvl_) logcpp::severity_log< logcpp::default_severity_levels >::severity_scope(lvl_, SCOPE)
 
-} // namespace logcpp
 
 /**
  * @def CRITICAL
