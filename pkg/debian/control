@@ -3,11 +3,11 @@ Section: devel
 Priority: extra
 Maintainer: Sebastian Lau <lauseb644@gmail.com>
 Build-Depends: cmake (>= 3.0), debhelper (>= 9), qtbase5-dev (>= 5.3)
-Standards-Version: 1.7.1
+Standards-Version: 1.7.2
 Homepage: https://github.com/nullptrT/liblogcpp
 
 Package: liblogcpp
 Architecture: amd64 arm64 armel armhf i386
 Depends:
 Suggests:
-Description: A simple, but highly customizable and intuitive LGPL library for logging in C++
+Description: A simple, intuitive and highly customizable LGPL library for logging with C++.

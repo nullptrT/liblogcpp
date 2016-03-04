@@ -2,17 +2,19 @@
 ##### Changelog
 
 
-## Noteworthy changes in release 1.?.? (2016-??-??) [stable]
+## Noteworthy changes in release 1.7.2 (2016-03-04) [stable]
 
 #### New features
 
 *	liblogcpp can now be build as shared library by passing `-DLOGCPP_SHARED=ON` to cmake. Default behaviour is to build a static library.
+*	Severities are not defined in global namespace anymore, but in classes that can be inherited from.
 
 #### Changes in behavior
 
 *	The cmake options AUTOCOLOR, ENABLE_QT_SUPPORT and INSTALL_LIBS are now also prefixed with LOGCPP_ (LOGCPP_AUTOCOLOR, LOGCPP_ENABLE_QT_SUPPORT, LOGCPP_INSTALL_LIBS) for better compatibility with other libraries when used as a submodule.
 *	The make target for Doxygen is now called 'doc_logcpp' for compatibility when using this as a submodule.
 *	The make target is now enabled automatically when Doxygen is found.
+*	Less templating, less compile time
 
 #### Bug fixes
 

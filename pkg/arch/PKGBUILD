@@ -1,9 +1,9 @@
 # Maintainer: Sebastian Lau <arch _at_ slau _dot_ info>
 pkgname="liblogcpp"
-pkgver=1.7.1
+pkgver=1.7.2
 pkgrel=1
-pkgdesc="A simple, but highly customizable and intuitive LGPL library for logging in C++."
-arch=('x86_64' 'i386' 'armv6h')
+pkgdesc="A simple, intuitive and highly customizable LGPL library for logging with C++."
+arch=('x86_64' 'i386' 'armv6h' 'armv7h')
 url="https://github.com/nullptrT/liblogcpp"
 license=('LGPL2.1')
 depends=()

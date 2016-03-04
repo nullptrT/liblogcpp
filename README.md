@@ -1,6 +1,6 @@
 # LibLogC++
 ##### A simple, intuitive and highly customizable LGPL library for logging with C++.
-###### v1.7.1
+###### v1.7.2
 
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
