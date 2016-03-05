@@ -1,5 +1,13 @@
 # LibLogC++
+##### A intuitive and highly customizable LGPL library for logging with C++.
 ##### Changelog
+
+
+## Noteworthy changes in release 1.8.0 (2016-03-05) [stable]
+
+#### New features
+
+*	liblogcpp has now a channel logger that is able to handle a set of named loggers that can be selected by operator[]
 
 
 ## Noteworthy changes in release 1.7.3 (2016-03-05) [stable]

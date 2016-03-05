@@ -1,6 +1,6 @@
 # LibLogC++
-##### A simple, intuitive and highly customizable LGPL library for logging with C++.
-###### v1.7.3
+##### A intuitive and highly customizable LGPL library for logging with C++.
+###### v1.8.0
 
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
@@ -8,6 +8,8 @@ It is a simple and intuitive frontend to libstdc++ turning it into a fully featu
 It's online api documentation can be found [here](https://doc.0ptr.de/liblogcpp/). How to use it is documented lower on this page.
 
 If you wrote additional datastructures or functions and you think it could be useful within this library: You are welcome to create a pull request or contact me ( lauseb644 _at_ gmail _dot_ com ).
+
+Since v1.8.0 LibLogC++ is feature-complete except for colorized terminal output on windows.
 
 
 #### Currently supported features
@@ -18,6 +20,7 @@ If you wrote additional datastructures or functions and you think it could be us
 * Using formatters from <iomanip>
 * Colorized output for UNIX
 * Specifying a streambuffer to log to (like ofstream->rdbuf() or similar; defaults to std::cout.rdbuf).
+* A channel logger, also usable via `operator<<`
 * Optionally execute a function on critical warnings or throw a `logcpp::critical_exception` (from `log_exception.hpp`).
 * Logging the scope where the logstream comes from (identified by `__FILE__` and `__LINE__`) by simply inserting `SCOPE` into a log stream.
 * Documentation
@@ -26,8 +29,7 @@ If you wrote additional datastructures or functions and you think it could be us
 
 #### Features for future releases
 
-* Better README.md
-* A global channel logger, also usable via `operator<<`
+* Better README.md and documentation
 
 ## License:
 
@@ -48,6 +50,9 @@ You can simply build this with:
  % cmake /path/to/cloned/directory
  % make
 ```
+
+On windows you want to use the cmake gui to generate files for MSVC 2015 or later and build it afterwards.
+
 
 #### CMake options
 
@@ -160,6 +165,22 @@ The maximal severity of a severity_logger defaults to `logcpp::normal`, but can 
 When using stdlog, you can also use `set_max_{console,file}_severity(logcpp::severity_level)` for controlling only one of them.
 The severity_logger will also flush its stream on `logcpp::endrec`, but in case, the max severity level is less than the current severity (last severity inserted into stream), it just clears its internal buffer and does not log anything.
 Assuming the max_severity of `lg` in the example above is `logcpp::verbose`, everything would get logged except the last line, which hast `logcpp::debug` as current `severity_level`.
+
+
+#### Logging with channels
+
+```c++
+std::ofstream* ofs = new std::ofstream( "./flog_test.log", std::ofstream::out | std::ofstream::app | std::ofstream::ate);
+logcpp::logger flog( ofs->rdbuf() );
+
+logcpp::severity_logger logger(logcpp::verbose);
+
+logcpp::channellog< logcpp::basic_log > ch;
+ch.add_channel( "file", flog );
+ch.add_channel( "console", logger );
+ch["file"] << "A message to the file channel" << logcpp::endrec;
+ch["console"] << "A message to the console channel" << logcpp::endrec;
+```
 
 
 #### More features
