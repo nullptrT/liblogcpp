@@ -218,6 +218,18 @@ public:
 	}
 };
 
+
+/**
+ * @brief Template specialization for endl and globallog
+ */
+template globallog& endl(globallog&);
+
+/**
+ * @brief Template specialization for endrec and globallog
+ */
+template globallog& endrec(globallog&);
+
+
 } // namespace logcpp
 
 /**
