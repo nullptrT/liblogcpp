@@ -32,7 +32,7 @@
 #include "basic_log.hpp"
 
 
-
+#ifdef __unix__
 extern logcpp::basic_log& operator<<(logcpp::basic_log&, std::_Resetiosflags (*resetiosflags)(std::ios_base::fmtflags));
 extern logcpp::basic_log& operator<<(logcpp::basic_log&, std::_Setiosflags (*setiosflags)(std::ios_base::fmtflags));
 extern logcpp::basic_log& operator<<(logcpp::basic_log&, std::_Setbase (*setbase)(int));
@@ -43,3 +43,4 @@ extern logcpp::basic_log& operator<<(logcpp::basic_log&, std::_Setw (*setw)(int)
 template < typename _MoneyT >
 extern logcpp::basic_log& operator<<(logcpp::basic_log&, std::_Put_money<_MoneyT> (*put_money)(_MoneyT&, bool));
 
+#endif

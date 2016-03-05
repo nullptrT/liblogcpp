@@ -9,7 +9,9 @@ set( LIBLOGCPP_VERSION "${LIBLOGCPP_STABLE_VERSION}.${LIBLOGCPP_RELEASE}.${LIBLO
 
 set( LIBLOGCPP_SRC_DIR ${PROJECT_SOURCE_DIR}/src )
 
-add_definitions( -std=c++11 )
+if( UNIX )
+	add_definitions( -std=c++11 )
+endif()
 add_definitions(-DLOGCPP_SRC_DIR=${LIBLOGCPP_SRC_DIR})
 
 if( LOGCPP_ENABLE_QT_SUPPORT )
@@ -40,7 +42,7 @@ if( UNIX )
 		add_definitions( -DLOGCPP_AUTOCOLOR=1 )
 	endif()
 else()
-	list(REMOVE_ITEM ${LIBLOGCPP_HEADERS} "${LIBLOGCPP_SRC_DIR}/color_feature.hpp")
+#	list(REMOVE_ITEM ${LIBLOGCPP_HEADERS} "${LIBLOGCPP_SRC_DIR}/color_feature.hpp")
 endif()
 
 if( LOGCPP_SHARED )
@@ -79,10 +81,12 @@ if( LOGCPP_INSTALL_LIBS )
 endif()
 
 
-find_package(Doxygen)
-if(DOXYGEN_FOUND)
-	message("-- Enabled doc_logcpp target for make")
-	configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
-	add_custom_target(doc_logcpp ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} COMMENT "Generating documentation with Doxygen")
+if( UNIX )
+	find_package(Doxygen)
+	if(DOXYGEN_FOUND)
+		message("-- Enabled doc_logcpp target for make")
+		configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
+		add_custom_target(doc_logcpp ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} COMMENT "Generating documentation with Doxygen")
+	endif()
 endif()
 

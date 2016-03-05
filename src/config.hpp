@@ -29,9 +29,15 @@
 // Now check the compiler
 
 #ifndef __cplusplus
+#error A C++ compiler is required!
+#elif __unix__
+#if __cplusplus < 201103L
 #error A C++ compiler supporting -std=c++11 is required!
-#elif __cplusplus != 201103L
-#error A C++ compiler supporting -std=c++11 is required!
+#endif
+#else
+#if _MSC_VER < 1900
+#error A MSVC++ compiler supporting -std=c++11 is required!
+#endif
 #endif
 
 // Determine, which features we will enable
