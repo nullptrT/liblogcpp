@@ -5,7 +5,9 @@
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
 
-It's online api documentation can be found [here](https://doc.0ptr.de/liblogcpp/). How to use it is documented lower on this page.
+* [Online api documentation](https://doc.0ptr.de/liblogcpp/)
+* [Prebuild packages](https://mirror.0ptr.de/liblogcpp/) can be found on my server for WIN32 and ArchLinux and in [Arch User Repository](https://aur.archlinux.org/liblogcpp) too.
+* How to use it is documented lower on this page.
 
 If you wrote additional datastructures or functions and you think it could be useful within this library: You are welcome to create a pull request or contact me ( lauseb644 _at_ gmail _dot_ com ).
 
