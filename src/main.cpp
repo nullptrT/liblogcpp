@@ -21,6 +21,7 @@
 
 
 #include "config.hpp"
+#include "channel_log.hpp"
 #include "severity_logger.hpp"
 #include "logmanip.hpp"
 #include "log.hpp"
@@ -72,6 +73,15 @@ int main(int argc, char** argv) {
 #if LOGCPP_ENABLE_COLOR_SUPPORT
 	flog << logcpp::col_red << "Tried to put colors to a file log here." << logcpp::endrec;
 #endif
+
+
+	logger << "Here we use the functionality of the channel logger" << logcpp::endrec;
+
+	logcpp::channellog< logcpp::basic_log > ch;
+	ch.add_channel( "file", flog );
+	ch.add_channel( "console", logger );
+	ch["file"] << "A message to the file channel" << logcpp::endrec;
+	ch["console"] << "A message to the console channel" << logcpp::endrec;
 
 
 

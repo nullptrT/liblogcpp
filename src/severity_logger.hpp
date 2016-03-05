@@ -64,7 +64,7 @@ template severity_log< default_severity_levels >& endl(severity_log< default_sev
 template severity_logger& endl(severity_logger&);
 
 /**
- * @brief Template specialization for endl and default severities
+ * @brief Template specialization for endrec and default severities
  */
 template severity_log< default_severity_levels >& endrec(severity_log< default_severity_levels >&);
 template severity_logger& endrec(severity_logger&);
