@@ -2,6 +2,13 @@
 ##### Changelog
 
 
+## Noteworthy changes in release 1.7.3 (2016-03-05) [stable]
+
+#### New features
+
+*	liblogcpp now supports MSVC 2015 and later (Tested on Windows 8.1). There is still no solution for colors on Windows.
+
+
 ## Noteworthy changes in release 1.7.2 (2016-03-04) [stable]
 
 #### New features

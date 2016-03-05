@@ -1,6 +1,6 @@
 # LibLogC++
 ##### A simple, intuitive and highly customizable LGPL library for logging with C++.
-###### v1.7.2
+###### v1.7.3
 
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
@@ -26,9 +26,8 @@ If you wrote additional datastructures or functions and you think it could be us
 
 #### Features for future releases
 
-* Colorized output for WIN32
 * Better README.md
-* Later on: A global channel logger, also usable via `operator<<`
+* A global channel logger, also usable via `operator<<`
 
 ## License:
 
