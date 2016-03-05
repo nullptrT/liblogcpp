@@ -73,9 +73,9 @@ enum termmode {
 class color_feature {
 	
 	bool m_background_ctl;
-	uint m_back;
-	uint m_fore;
-	std::vector< uint > m_styles;
+	unsigned int m_back;
+	unsigned int m_fore;
+	std::vector< unsigned int > m_styles;
 public:
 	/**
 	 * @brief Constructor

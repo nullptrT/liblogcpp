@@ -56,15 +56,15 @@ namespace logcpp {
 /**
  * @brief A tuple containing a string and an unsigned int representing some place in a file
  */
-typedef std::pair< std::string, uint > scope_t;
+typedef std::pair< std::string, unsigned int > scope_t;
 /**
  * @return Free function that generates a scope_t from its parameters
  * @param place The string of the place wanted for this scope
  * @param line An unsigned integer representing the line for this scope
  */
-inline scope_t scope(std::string place, uint line) {
+inline scope_t scope(std::string place, unsigned int line) {
 #if LOGCPP_STRIP_SCOPE_DIRS_PREFIX
-	uint dir_prefix_end = 0;
+	unsigned int dir_prefix_end = 0;
 #ifdef __unix__
 	dir_prefix_end = place.find_last_of('/');
 #endif

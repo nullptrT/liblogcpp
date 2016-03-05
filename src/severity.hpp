@@ -63,7 +63,7 @@ public:
 	/**
 	 * @return The amount of characters of the longest name of all severity_level
 	 */
-	virtual const uint max_name_length() = 0;
+	virtual const unsigned int max_name_length() = 0;
 };
 
 } // namespace logcpp

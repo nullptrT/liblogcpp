@@ -111,7 +111,7 @@ const std::string color_feature::code(termmode m) {
 			}
 			break;
 		case sty_bold:
-			for ( uint i : m_styles ) {
+			for ( unsigned int i : m_styles ) {
 				if ( i == 1 ) {
 					set = false;
 				}
@@ -121,7 +121,7 @@ const std::string color_feature::code(termmode m) {
 			}
 			break;
 		case sty_unterline:
-			for ( uint i : m_styles ) {
+			for ( unsigned int i : m_styles ) {
 				if ( i == 4 ) {
 					set = false;
 				}
@@ -131,7 +131,7 @@ const std::string color_feature::code(termmode m) {
 			}
 			break;
 		case sty_blink:
-			for ( uint i : m_styles ) {
+			for ( unsigned int i : m_styles ) {
 				if ( i == 5 ) {
 					set = false;
 				}
@@ -141,7 +141,7 @@ const std::string color_feature::code(termmode m) {
 			}
 			break;
 		case sty_blink_off:
-			for ( std::vector< uint >::iterator it = m_styles.begin(); it != m_styles.end(); it++ ) {
+			for ( std::vector< unsigned int >::iterator it = m_styles.begin(); it != m_styles.end(); it++ ) {
 				if ( *it == 5 ) {
 					m_styles.erase(it);
 					disable_blink = true;
@@ -159,7 +159,7 @@ const std::string color_feature::code(termmode m) {
 	}
 
 	std::string ansi_code("\x1b[");
-	for( uint i : m_styles ) {
+	for( unsigned int i : m_styles ) {
 		ansi_code += std::to_string(i) + ";";
 	}
 	if ( disable_blink ) {

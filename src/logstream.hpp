@@ -74,7 +74,7 @@ class logstreambuf
 		 * @note Will fail in some cases where a terminal supports positioning
 		 */
 		bool sink_is_terminal() {
-			return ( out.tellp() == -1 );
+			return ( (int)out.tellp() == -1 );
 		}
 	};
 

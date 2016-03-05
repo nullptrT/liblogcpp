@@ -76,7 +76,7 @@ DefaultSeverity::DefaultSeverity()
 {}
 
 
-const uint DefaultSeverity::max_name_length() {
+const unsigned int DefaultSeverity::max_name_length() {
 	return 8;
 }
 
