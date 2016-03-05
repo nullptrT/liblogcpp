@@ -61,10 +61,17 @@ enum default_severity_levels {
 	SEVERITY_SIZE
 };
 
+
+/**
+ * @brief The default severity set that describes the enum default_severity_levels and is used in globallog and severity_logger
+ */
 class DefaultSeverity
 	:	public AbstractSeverity< default_severity_levels >
 {
 public:
+	/**
+	 * @brief Constructor
+	 */
 	DefaultSeverity();
 
 	/**
@@ -74,6 +81,7 @@ public:
 
 	/**
 	 * @return The amount of characters of the longest name of all severity_level
+	 * @note Only important for alignment of severities
 	 */
 	virtual const unsigned int max_name_length();
 };

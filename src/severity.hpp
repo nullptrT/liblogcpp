@@ -35,12 +35,19 @@
 
 namespace logcpp {
 
+/**
+ * @brief Abstract description of a set of severities
+ */
 template< typename severity_t >
 class AbstractSeverity {
 
 	const std::array< const std::string, 1 + (int)severity_t::SEVERITY_SIZE >* m_names;
 
 protected:
+	/**
+	 * @brief Constructor
+	 * @param severity_names A pointer to an array of names that describe the enum of severity_t
+	 */
 	AbstractSeverity( const std::array< const std::string, 1 + (int)severity_t::SEVERITY_SIZE >* severity_names )
 		:	m_names( severity_names )
 	{}
@@ -62,6 +69,7 @@ public:
 
 	/**
 	 * @return The amount of characters of the longest name of all severity_level
+	 * @note Only important for alignment of severities
 	 */
 	virtual const unsigned int max_name_length() = 0;
 };
