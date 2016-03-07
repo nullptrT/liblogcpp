@@ -91,6 +91,19 @@ namespace log = logcpp;
 } // namespace myNamespace
 ```
 
+and for additional version checking you could have a `logging.cpp` file like this:
+
+```c++
+#include <liblogcpp/logcppversion.hpp>
+
+#if LIBLOGCPP_VERSION < 10700
+#error LibLogC++ needs to be at least at version 1.7
+#else
+#pragma message ("Found LibLogC++ at required version 1.7 or more")
+#endif
+```
+
+
 #### Packages
 
 Currently there is a package in the Arch Linux User Repository under https://aur.archlinux.org/liblogcpp/ .
@@ -115,7 +128,7 @@ The included `LibLogCPPConfig.cmake` module enables you to use `find_package(Lib
 
 ## Usage
 
-At the moment, the library is under active development. The included file `main.cpp` can be used and compiled as an additional example for its usage. For a more detailed reference, please read the following short documentation.
+The included file `main.cpp` can be used and compiled as an additional example for its usage. For a more detailed reference, please read the following short documentation.
 
 However, you can use it by including `log.hpp` to your file.
 This will give you the ability to use stdlog, which offers you a console logger and a file logger. You can write to an enabled logger by using `<<` once:
