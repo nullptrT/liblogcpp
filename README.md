@@ -70,7 +70,7 @@ Additionally to the default options CMake currently offers the following options
 
 #### Compiler options / Config variables
 
-You can define the following with gcc/msvc or with a `#define` in your config header.
+You can define the following with your compiler by `-DOPTION=TRUE/FALSE` or cmake's `add_definitions()` function:
 
 * `LOGCPP_ENABLE_QT_SUPPORT`: Enables a function wrapper for QStrings. Needs `Qt5Core_LIBRARIES`.
 * `LOGCPP_AUTOCOLOR`: Enables colorized output of severities and automatic reset of terminal modes on logcpp::endrec
@@ -79,10 +79,6 @@ You can define the following with gcc/msvc or with a `#define` in your config he
 As an example you could write a `logging.hpp` header like this:
 
 ```c++
-#define LOGCPP_AUTOCOLOR true			/* If you want severities colorized automatically
-											and reset the terminal on each new record */
-#define LOGCPP_ENABLE_QT_SUPPORT true	// If you want to pass QString to loggers
-
 #include <liblogcpp/log.hpp>			/* If you want to use the global logger 
 											(like stdlog << logcpp::warning << "some text" << logcpp::endrec) */
 
@@ -91,7 +87,7 @@ namespace log = logcpp;
 } // namespace myNamespace
 ```
 
-and for additional version checking you could have a `logging.cpp` file like this:
+and for additional version checking without CMake you could have a `logging.cpp` file compiled like this:
 
 ```c++
 #include <liblogcpp/logcppversion.hpp>
