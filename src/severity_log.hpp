@@ -83,11 +83,11 @@ public:
 						 , severity_t max_severity
 						 , std::streambuf* outbuf = std::cout.rdbuf()
 	)
-		:	basic_log(outbuf),
-			severity_feature< severity_t >(max_severity),
-			m_severity( severity )
-		,	enable_print_severity_(true),
-			abort_f(nullptr)
+		:	basic_log(outbuf)
+		,	severity_feature< severity_t >(max_severity)
+		,	enable_print_severity_(true)
+		,	m_severity( severity )
+		,	abort_f(nullptr)
 	{}
 	severity_log( const severity_log& ) = delete;
 
