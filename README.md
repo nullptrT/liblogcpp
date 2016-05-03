@@ -35,7 +35,8 @@ Since v1.8.0 LibLogC++ is feature-complete except for colorized terminal output 
 
 ## License:
 
-This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.
+This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 3 of the 
+License, or (at your option) any later version.
 
 * Copyright (C) 2015 Linux Gruppe IRB, TU Dortmund <linux@irb.cs.tu-dortmund.de>
 * Copyright (C) 2015-2016 Sebastian Lau <lauseb644@gmail.com>
