@@ -27,6 +27,8 @@
 
 #pragma once
 
+#include "config.hpp"
+
 #include "severity_log.hpp"
 #include "severity_default.hpp"
 
@@ -53,7 +55,7 @@ public:
 	 */
 	explicit severity_logger( std::streambuf* stream, default_severity_levels max_severity = normal );
 
-	severity_logger( const severity_logger& ) = delete;
+    severity_logger( const severity_logger& ) = delete;
 };
 
 
@@ -84,10 +86,68 @@ template severity_logger& endrec(severity_logger&);
  * @def CRITICAL
  * @brief Insert a critical scope into the log stream that may call the critical function of severity_log
  */
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
+#define CRITICAL logcpp::col_red << logcpp::sty_bold << SCOPE_SEVERITY(logcpp::critical) << logcpp::ctl_reset_all
+#else
 #define CRITICAL SCOPE_SEVERITY(logcpp::critical)
+#endif
+
+/**
+ * @def ERROR
+ * @brief Insert a error into the log stream
+ */
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
+#define ERROR logcpp::col_red << logcpp::error << logcpp::ctl_reset_col
+#else
+#define ERROR logcpp::error
+#endif
+
+/**
+ * @def WARNING
+ * @brief Insert a warning into the log stream
+ */
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
+#define WARNING logcpp::col_yellow << logcpp::warning << logcpp::ctl_reset_col
+#else
+#define WARNING logcpp::warning
+#endif
+
+/**
+ * @def VERBOSE
+ * @brief Insert a verbose into the log stream
+ */
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
+#define VERBOSE logcpp::col_cyan << logcpp::verbose << logcpp::ctl_reset_col
+#else
+#define VERBOSE logcpp::verbose
+#endif
+
+/**
+ * @def VERBOSE2
+ * @brief Insert a verbose2 into the log stream
+ */
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
+#define VERBOSE2 logcpp::col_blue << logcpp::verbose2 << logcpp::ctl_reset_col
+#else
+#define VERBOSE2 logcpp::verbose2
+#endif
+
 /**
  * @def DEBUG
- * @brief Insert a debug scope into the log stream
+ * @brief Insert a debug severity into the log stream
  */
-#define DEBUG SCOPE_SEVERITY(logcpp::debug)
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
+#define DEBUG logcpp::col_white << logcpp::debug << logcpp::ctl_reset_col
+#else
+#define DEBUG logcpp::debug
+#endif
 
+/**
+ * @def DEBUG2
+ * @brief Insert a debug2 scope into the log stream
+ */
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
+#define DEBUG2 logcpp::col_white << SCOPE_SEVERITY(logcpp::debug2) << logcpp::ctl_reset_col
+#else
+#define DEBUG2 logcpp::debug2
+#endif
