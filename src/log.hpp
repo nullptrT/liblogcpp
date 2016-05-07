@@ -29,6 +29,8 @@
 #include <memory>
 #include <fstream>
 
+#include "config.hpp"
+
 #include "severity_logger.hpp"
 
 namespace logcpp {
@@ -216,6 +218,19 @@ public:
 		this->log< default_severity_levels >(sev_scope.first);
 		this->log< scope_t >(sev_scope.second);
 	}
+	
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
+	/**
+	 * @brief Member function that controls colors and styles of the underlying sink
+	 * @param mode Some value of color
+	 */
+	template< typename T >
+	void log( const termmode& mode ) {
+		if ( m_color_ok ) {
+            *console_log << mode;
+		}
+	}
+#endif
 };
 
 

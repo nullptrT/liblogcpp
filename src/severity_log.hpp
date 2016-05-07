@@ -168,6 +168,19 @@ public:
 		this->log< scope_t >(sev_scope.second);
 	}
 
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
+	/**
+	 * @brief Member function that controls colors and styles of the underlying sink
+	 * @param mode Some value of color
+	 */
+	template< typename T >
+	void log( const termmode& mode ) {
+		if ( m_color_ok ) {
+            basic_log::log< termmode >( mode );
+		}
+	}
+#endif
+
 	/**
 	 * @brief Enable or disable the logging of severity names into the log stream
 	 * @param enable Enable or disable the loggin of severity names
