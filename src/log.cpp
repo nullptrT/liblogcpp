@@ -50,11 +50,11 @@ globallog& globallog::get() {
 		log_.reset( new globallog() );
 		stdlog.enable_print_severity(false);
 		stdlog << logcpp::warning;
-#ifdef LOGCPP_AUTOCOLOR
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
 		stdlog << logcpp::sty_bold;
 #endif
 		stdlog << "LibLogC++ v" << LIBLOGCPP_DOTTED_VERSION << " (https://git.io/vBW7r)";
-#ifdef LOGCPP_AUTOCOLOR
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
 		stdlog << logcpp::ctl_reset_all;
 #endif
 		stdlog << logcpp::endrec;

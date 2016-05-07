@@ -29,7 +29,7 @@
 
 #include "color_feature.hpp"
 
-#if LOGCPP_ENABLE_COLOR_SUPPORT
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
 
 namespace logcpp {
 

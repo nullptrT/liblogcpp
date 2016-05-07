@@ -41,7 +41,7 @@ extern "C" {
 #include <ctime>
 }
 
-#if LOGCPP_ENABLE_COLOR_SUPPORT
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
 #include "color_feature.hpp"
 #endif
 
@@ -152,7 +152,7 @@ protected:
 	 */
 	bool new_record;
 
-#if LOGCPP_ENABLE_COLOR_SUPPORT
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
 	bool m_color_ok;
 	color_feature* m_color;
 #endif
@@ -167,7 +167,7 @@ public:
 		:	stream( outbuf )
 		,	timestamp_enabled_(false)
 		,	new_record(true)
-#if LOGCPP_ENABLE_COLOR_SUPPORT
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
 		,	m_color_ok(false)
 		,	m_color( new color_feature() )
 
@@ -185,9 +185,9 @@ public:
 	 */
 	void end_record() {
 #if LOGCPP_ENABLE_COLOR_SUPPORT
-#ifdef LOGCPP_AUTOCOLOR
-		stream << COLOR(logcpp::ctl_reset_all);
-#endif
+                if ( m_color_ok ) {
+                    stream << COLOR(logcpp::ctl_reset_all);
+                }
 #endif
 		stream << "\n";
 		stream.flush();
@@ -233,7 +233,7 @@ public:
 		new_record = false;
 	}
 
-#if LOGCPP_ENABLE_COLOR_SUPPORT
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
 	/**
 	 * @brief Member function that controls colors and styles of the underlying sink
 	 * @param mode Some value of color
@@ -241,7 +241,7 @@ public:
 	template< typename T >
 	void log( const termmode& mode ) {
 		if ( m_color_ok ) {
-			this->log( m_color->code(mode) );
+			stream << m_color->code(mode);
 		}
 	}
 #endif
@@ -289,5 +289,19 @@ template basic_log& endl(basic_log&);
 typedef basic_log logger;
 
 } // namespace logcpp
+
+
+/**
+ * @def ENDL
+ * @brief Insert a endrec into the log stream
+ */
+#define ENDL logcpp::endl
+
+
+/**
+ * @def ENDREC
+ * @brief Insert a endrec into the log stream
+ */
+#define ENDREC logcpp::endrec
 
 
