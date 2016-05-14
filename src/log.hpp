@@ -29,6 +29,8 @@
 #include <memory>
 #include <fstream>
 
+#include "config.hpp"
+
 #include "severity_logger.hpp"
 
 namespace logcpp {
@@ -71,7 +73,7 @@ public:
 	 * @brief Override of severity_log::operator<< for functions
 	 * @param f Some function that takes a reference to the globallog and returns it
 	 */
-	inline logcpp::globallog& operator<<(globallog& (*f)(globallog&)) {
+	logcpp::globallog& operator<<(globallog& (*f)(globallog&)) {
 		return f(*this);
 	}
 
@@ -80,7 +82,7 @@ public:
 	 * @param t Some object of type T that can be inserted into a std::ostream
 	 */
 	template< typename T >
-	inline globallog& operator<<(const T& t) {
+	globallog& operator<<(const T& t) {
 		this->log<T>(t);
 		return *this;
 	}
@@ -216,6 +218,19 @@ public:
 		this->log< default_severity_levels >(sev_scope.first);
 		this->log< scope_t >(sev_scope.second);
 	}
+	
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
+	/**
+	 * @brief Member function that controls colors and styles of the underlying sink
+	 * @param mode Some value of color
+	 */
+	template< typename T >
+	void log( const termmode& mode ) {
+		if ( m_color_ok ) {
+            *console_log << mode;
+		}
+	}
+#endif
 };
 
 

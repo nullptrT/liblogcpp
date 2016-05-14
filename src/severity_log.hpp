@@ -44,13 +44,25 @@ namespace logcpp {
  */
 template< typename severity_t >
 class severity_log
-	:	public basic_log,
-		public severity_feature< severity_t >
+    :	public basic_log,
+        public severity_feature< severity_t >
 {
-private:
+protected:
+	/**
+	 * @brief Function that sets the severity
+	 * @param severity Severity level severity level to log
+	 */
+	virtual void log_severity( const severity_t severity ) {
+		this->current_severity = severity;
+		if( enable_print_severity_ ) {
+			stream << std::setw(m_severity->max_name_length() - m_severity->severity_name( this->current_severity ).length() ) << std::setfill(' ') << "<" << m_severity->severity_name( this->current_severity ) << ">: ";
+		}
+		this->new_record = false;
+	}
+
 	bool enable_print_severity_;
 	AbstractSeverity< severity_t >* m_severity;
-protected:
+
 	/**
 	 * @brief Optional function to be called on critical severity
 	 */
@@ -60,7 +72,7 @@ public:
 	 * @brief Override for basic_log::operator<<
 	 * @param f Some function that takes a reference to a severity_log and returns it
 	 */
-	inline severity_log& operator<<(severity_log& (*f)(severity_log&)) {
+	severity_log& operator<<(severity_log& (*f)(severity_log&)) {
 		return f(*this);
 	}
 
@@ -69,7 +81,7 @@ public:
 	 * @param t Some object of type T that can be inserted into a std::ostream
 	 */
 	template< typename T >
-	inline severity_log& operator<<(const T& t) {
+	severity_log& operator<<(const T& t) {
 		log<T>(t);
 		return *this;
 	}
@@ -80,14 +92,14 @@ public:
 	 * @param outbuf A pointer to some std::streambuf where all content is logged to. Defaults to std::cout.rdbuf()
 	 */
 	explicit severity_log( AbstractSeverity< severity_t >* severity
-						 , severity_t max_severity
-						 , std::streambuf* outbuf = std::cout.rdbuf()
+	                     , severity_t max_severity
+	                     , std::streambuf* outbuf = std::cout.rdbuf()
 	)
-		:	basic_log(outbuf)
-		,	severity_feature< severity_t >(max_severity)
-		,	enable_print_severity_(true)
-		,	m_severity( severity )
-		,	abort_f(nullptr)
+	    :	basic_log(outbuf)
+	    ,	severity_feature< severity_t >(max_severity)
+	    ,	enable_print_severity_(true)
+	    ,	m_severity( severity )
+	    ,	abort_f(nullptr)
 	{}
 	severity_log( const severity_log& ) = delete;
 
@@ -141,11 +153,7 @@ public:
 		} else if( new_record ) {
 			insert_time_or_not();
 		}
-		this->current_severity = severity;
-		if( enable_print_severity_ ) {
-			stream << std::setw(m_severity->max_name_length() - m_severity->severity_name( this->current_severity ).length() ) << std::setfill(' ') << "<" << m_severity->severity_name( this->current_severity ) << ">: ";
-		}
-		new_record = false;
+		this->log_severity( severity );
 	}
 
 	/**
@@ -167,6 +175,19 @@ public:
 		this->log< severity_t >(sev_scope.first);
 		this->log< scope_t >(sev_scope.second);
 	}
+
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
+	/**
+	 * @brief Member function that can send colors before start of
+	 * @param mode Some value of color
+	 */
+	template< typename T >
+	void log( const termmode& mode ) {
+		if ( m_color_ok ) {
+			basic_log::log< termmode >( mode );
+		}
+	}
+#endif
 
 	/**
 	 * @brief Enable or disable the logging of severity names into the log stream

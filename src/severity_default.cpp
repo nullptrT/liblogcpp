@@ -37,17 +37,6 @@ std::array < const std::string, 1 + (int)default_severity_levels::SEVERITY_SIZE 
 new std::array < const std::string, 1 + (int)default_severity_levels::SEVERITY_SIZE >
 {{
 	"off",
-#if LOGCPP_ENABLE_COLOR_SUPPORT
-#ifdef LOGCPP_AUTOCOLOR
-	"\x1b[1;49;31mcritical\x1b[0m",
-	"\x1b[0m\x1b[49;31m error  \x1b[0m",
-	"\x1b[0m\x1b[1;49;33m warning\x1b[0m",
-	"\x1b[0m\x1b[49;36m normal \x1b[0m",
-	"\x1b[0m\x1b[1;49;36mverbose\x1b[0m",
-	"\x1b[0m\x1b[1;49;36mverbose2\x1b[0m",
-	"\x1b[0m\x1b[1;49;35m debug \x1b[0m",
-	"\x1b[0m\x1b[1;49;35m debug2 \x1b[0m",
-#else
 	"critical",
 	"error",
 	"warning",
@@ -56,17 +45,6 @@ new std::array < const std::string, 1 + (int)default_severity_levels::SEVERITY_S
 	"verbose2",
 	"debug",
 	"debug2",
-#endif
-#else
-	"critical",
-	"error",
-	"warning",
-	"normal",
-	"verbose",
-	"verbose2",
-	"debug",
-	"debug2",
-#endif
 	"SIZE_T"
 }};
 
@@ -74,11 +52,6 @@ new std::array < const std::string, 1 + (int)default_severity_levels::SEVERITY_S
 DefaultSeverity::DefaultSeverity()
 	:	AbstractSeverity< default_severity_levels >( DefaultSeverity::default_severity_names )
 {}
-
-
-const unsigned int DefaultSeverity::max_name_length() {
-	return 8;
-}
 
 
 

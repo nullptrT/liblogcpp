@@ -35,7 +35,7 @@ Since v1.8.0 LibLogC++ is feature-complete except for colorized terminal output 
 
 ## License:
 
-This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 3 of the 
+This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 3 of the
 License, or (at your option) any later version.
 
 * Copyright (C) 2015 Linux Gruppe IRB, TU Dortmund <linux@irb.cs.tu-dortmund.de>
@@ -62,7 +62,7 @@ On windows you want to use the cmake gui to generate files for MSVC 2015 or late
 Additionally to the default options CMake currently offers the following options (can be specified with `-DOPTION=ON`):
 
 * `LOGCPP_ENABLE_QT_SUPPORT`: Enables a function wrapper for QStrings. Needs `Qt5Core_LIBRARIES`.
-* `LOGCPP_AUTOCOLOR`: Enables colorized output of severities and automatic reset of terminal modes on logcpp::endrec
+* `LOGCPP_AUTOCOLOR`: Enables colorized output of severities
 * `LOGCPP_DESTDIR`: Where are the files installed to. Defaults to `CMAKE_INSTALL_PREFIX` (`/usr/local` on UNIX and `c:/Program Files` on WIN32)
 * `LOGCPP_HEADER_INSTALL_DIR`: Can be set to control, where headers are installed. Defaults to `LOGCPP_DESTDIR/include/liblogcpp`.
 * `LOGCPP_LIB_INSTALL_DIR`: Can be set to control where the library is installed. Defaults to `LOGCPP_DESTDIR/lib`.
@@ -74,13 +74,13 @@ Additionally to the default options CMake currently offers the following options
 You can define the following with your compiler by `-DOPTION=TRUE/FALSE` or cmake's `add_definitions()` function:
 
 * `LOGCPP_ENABLE_QT_SUPPORT`: Enables a function wrapper for QStrings. Needs `Qt5Core_LIBRARIES`.
-* `LOGCPP_AUTOCOLOR`: Enables colorized output of severities and automatic reset of terminal modes on logcpp::endrec
+* `LOGCPP_AUTOCOLOR`: Enables colorized output of severities
 * `LOGCPP_STRIP_SCOPE_DIRS_PREFIX`: Strips everything except the filename from SCOPE (like `/path/to/` in `/path/to/compilation.cpp`) since that defaults to the path in the build environment. Defaults to true.
 
 As an example you could write a `logging.hpp` header like this:
 
 ```c++
-#include <liblogcpp/log.hpp>			/* If you want to use the global logger 
+#include <liblogcpp/log.hpp>			/* If you want to use the global logger
 											(like stdlog << logcpp::warning << "some text" << logcpp::endrec) */
 
 namespace myNamespace {

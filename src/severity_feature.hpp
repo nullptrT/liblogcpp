@@ -49,7 +49,8 @@ protected:
 	 * @param max_severity The maximum severity level that shall be logged
 	 */
 	explicit severity_feature( severity_t max_severity )
-		:	max_severity_lvl( max_severity )
+                :   max_severity_lvl( max_severity )
+                ,   current_severity( max_severity )
 	{}
 	severity_feature( const severity_feature& ) = delete;
 

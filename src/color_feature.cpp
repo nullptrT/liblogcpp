@@ -29,7 +29,7 @@
 
 #include "color_feature.hpp"
 
-#if LOGCPP_ENABLE_COLOR_SUPPORT
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
 
 namespace logcpp {
 
@@ -53,6 +53,7 @@ const std::string color_feature::code(termmode m) {
 			m_back = 49;
 			m_fore = 39;
 			m_styles.clear();
+			m_background_ctl = false;
 			return std::string("\x1b[0m");
 		case col_white:
 			if ( !m_background_ctl ) {

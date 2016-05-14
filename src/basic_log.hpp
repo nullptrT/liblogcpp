@@ -41,7 +41,7 @@ extern "C" {
 #include <ctime>
 }
 
-#if LOGCPP_ENABLE_COLOR_SUPPORT
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
 #include "color_feature.hpp"
 #endif
 
@@ -113,7 +113,7 @@ public:
 	 * @brief Insert some function into this basic_log
 	 * @param f A function getting a basic_log and returning a basic_log
 	 */
-	inline basic_log& operator<<(basic_log& (*f)(basic_log& l)) {
+	basic_log& operator<<(basic_log& (*f)(basic_log& l)) {
 		return f(*this);
 	}
 
@@ -123,7 +123,7 @@ public:
 	 * @param t Some object to log to this basic_log
 	 */
 	template< typename T >
-	inline basic_log& operator<<(const T& t) {
+	basic_log& operator<<(const T& t) {
 		log<T>(t);
 		return *this;
 	}
@@ -152,7 +152,7 @@ protected:
 	 */
 	bool new_record;
 
-#if LOGCPP_ENABLE_COLOR_SUPPORT
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
 	bool m_color_ok;
 	color_feature* m_color;
 #endif
@@ -164,12 +164,12 @@ public:
 	 * @param outbuf A pointer to some std::streambuf where all content is logged to. Defaults to std::cout.rdbuf()
 	 */
 	explicit basic_log( std::streambuf* outbuf = std::cout.rdbuf() )
-		:	stream( outbuf )
-		,	timestamp_enabled_(false)
-		,	new_record(true)
-#if LOGCPP_ENABLE_COLOR_SUPPORT
-		,	m_color_ok(false)
-		,	m_color( new color_feature() )
+	    :	stream( outbuf )
+	    ,	timestamp_enabled_(false)
+	    ,	new_record(true)
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
+	    ,	m_color_ok(false)
+	    ,	m_color( new color_feature() )
 
 	{
 		m_color_ok = stream.sink_is_terminal();
@@ -180,16 +180,29 @@ public:
 	basic_log( const basic_log& ) = delete;
 	~basic_log() {}
 
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
+	/**
+	 * @brief Member function that controls colors and styles of the underlying sink
+	 * @param mode Some value of color
+	 */
+	template< typename T >
+	void log( const termmode& mode ) {
+		if ( m_color_ok ) {
+			stream << m_color->code(mode);
+		}
+	}
+#endif
+
 	/**
 	 * @brief Member function that inserts a newline into the buffer, flushes it and begins a new record
 	 */
 	void end_record() {
-#if LOGCPP_ENABLE_COLOR_SUPPORT
-#ifdef LOGCPP_AUTOCOLOR
-		stream << COLOR(logcpp::ctl_reset_all);
+#ifdef LOGCPP_ENABLE_COLOR_SUPPORT
+	if ( m_color_ok ) {
+		this->log<termmode>(logcpp::ctl_reset_all);
+	}
 #endif
-#endif
-		stream << "\n";
+	    stream << "\n";
 		stream.flush();
 		new_record = true;
 	}
@@ -202,7 +215,7 @@ public:
 	 * @brief Disable logging the timestamp of a log record
 	 */
 	void disable_timestamp() { timestamp_enabled_ = false; }
-	
+
 	/**
 	 * @brief Member function that inserts a newline into buffer without flushing it
 	 */
@@ -233,19 +246,6 @@ public:
 		new_record = false;
 	}
 
-#if LOGCPP_ENABLE_COLOR_SUPPORT
-	/**
-	 * @brief Member function that controls colors and styles of the underlying sink
-	 * @param mode Some value of color
-	 */
-	template< typename T >
-	void log( const termmode& mode ) {
-		if ( m_color_ok ) {
-			this->log( m_color->code(mode) );
-		}
-	}
-#endif
-	
 #ifdef LOGCPP_ENABLE_QT_SUPPORT
 	/**
 	 * @brief Member function that can handle a QString
@@ -289,5 +289,19 @@ template basic_log& endl(basic_log&);
 typedef basic_log logger;
 
 } // namespace logcpp
+
+
+/**
+ * @def ENDL
+ * @brief Insert a endrec into the log stream
+ */
+#define ENDL logcpp::endl
+
+
+/**
+ * @def ENDREC
+ * @brief Insert a endrec into the log stream
+ */
+#define ENDREC logcpp::endrec
 
 
