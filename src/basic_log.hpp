@@ -63,12 +63,11 @@ typedef std::pair< std::string, unsigned int > scope_t;
  * @param line An unsigned integer representing the line for this scope
  */
 inline scope_t scope(std::string place, unsigned int line) {
-#if LOGCPP_STRIP_SCOPE_DIRS_PREFIX
+#ifndef LOGCPP_LEAVE_SCOPE_DIRS_PREFIX
 	unsigned int dir_prefix_end = 0;
 #ifdef __unix__
 	dir_prefix_end = place.find_last_of('/');
-#endif
-#ifdef _WIN32
+#elif _WIN32
 	dir_prefix_end = place.find_last_of('\\');
 #endif
 	if ( dir_prefix_end != std::string::npos && dir_prefix_end != 0 ) {

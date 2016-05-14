@@ -71,11 +71,10 @@ Additionally to the default options CMake currently offers the following options
 
 #### Compiler options / Config variables
 
-You can define the following with your compiler by `-DOPTION=TRUE/FALSE` or cmake's `add_definitions()` function:
+You can define the following with your g++-compiler by `-DOPTION=1` or cmake's `add_definitions( -D$OPTION=1 )` function:
 
-* `LOGCPP_ENABLE_QT_SUPPORT`: Enables a function wrapper for QStrings. Needs `Qt5Core_LIBRARIES`.
 * `LOGCPP_AUTOCOLOR`: Enables colorized output of severities
-* `LOGCPP_STRIP_SCOPE_DIRS_PREFIX`: Strips everything except the filename from SCOPE (like `/path/to/` in `/path/to/compilation.cpp`) since that defaults to the path in the build environment. Defaults to true.
+* `LOGCPP_LEAVE_SCOPE_DIRS_PREFIX`: Does not strip everything except the filename from SCOPE (like `/path/to/` in `/path/to/compilation.cpp`) since that defaults to the path in the build environment. Defaults to true.
 
 As an example you could write a `logging.hpp` header like this:
 
