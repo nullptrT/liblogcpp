@@ -1,6 +1,6 @@
 # LibLogC++
 ##### A intuitive and highly customizable LGPL library for logging with C++.
-###### v1.8.0
+###### v1.8.1
 
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
@@ -35,8 +35,7 @@ Since v1.8.0 LibLogC++ is feature-complete except for colorized terminal output 
 
 ## License:
 
-This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 3 of the
-License, or (at your option) any later version.
+This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
 
 * Copyright (C) 2015 Linux Gruppe IRB, TU Dortmund <linux@irb.cs.tu-dortmund.de>
 * Copyright (C) 2015-2016 Sebastian Lau <lauseb644@gmail.com>

@@ -3,6 +3,19 @@
 ##### Changelog
 
 
+## Noteworthy changes in release 1.8.1 (2016-05-14) [stable]
+
+#### Changes in behaviour
+
+*	The directory prefix of a scope is now stripped by default. The compiler option therefore changed to `LOGCPP_LEAVE_SCOPE_DIRS_PREFIX` to prevent this behaviour
+
+#### Bug fixes
+
+*	Color codes are not logged to file logs any more
+*	LOGCPP_AUTOCOLOR is now implemented as member functions and only logs, if m_color_ok is true
+*	Resetting the Color mode also resets the ctl_foreground/ctl_background flag now
+
+
 ## Noteworthy changes in release 1.8.0 (2016-03-05) [stable]
 
 #### New features
