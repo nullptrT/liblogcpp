@@ -3,6 +3,17 @@
 ##### Changelog
 
 
+## Noteworthy changes in release next (????-??-??) [stable]
+
+#### New features
+
+*	channel_log now supports logging to all channels enabled at once
+
+#### Changes in behaviour
+
+*	For class name conveniences channellog is now called channel_log
+
+
 ## Noteworthy changes in release 1.8.1 (2016-05-14) [stable]
 
 #### Changes in behaviour

@@ -77,11 +77,15 @@ int main(int argc, char** argv) {
 
     logger << "Here we use the functionality of the channel logger" << logcpp::endrec;
 
-    logcpp::channellog< logcpp::basic_log > ch;
+    logcpp::channel_log< logcpp::basic_log > ch;
     ch.add_channel( "file", flog );
     ch.add_channel( "console", logger );
     ch["file"] << "A message to the file channel" << logcpp::endrec;
     ch["console"] << "A message to the console channel" << logcpp::endrec;
+	ch.enable_channel("console");
+	ch.enable_channel("file");
+	
+	ch << "A message directly to all enabled channels at once" << logcpp::endrec;
 
 
 
