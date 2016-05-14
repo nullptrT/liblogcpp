@@ -73,7 +73,7 @@ public:
 	 * @brief Override of severity_log::operator<< for functions
 	 * @param f Some function that takes a reference to the globallog and returns it
 	 */
-	inline logcpp::globallog& operator<<(globallog& (*f)(globallog&)) {
+	logcpp::globallog& operator<<(globallog& (*f)(globallog&)) {
 		return f(*this);
 	}
 
@@ -82,7 +82,7 @@ public:
 	 * @param t Some object of type T that can be inserted into a std::ostream
 	 */
 	template< typename T >
-	inline globallog& operator<<(const T& t) {
+	globallog& operator<<(const T& t) {
 		this->log<T>(t);
 		return *this;
 	}
