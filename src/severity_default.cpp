@@ -54,11 +54,6 @@ DefaultSeverity::DefaultSeverity()
 {}
 
 
-const unsigned int DefaultSeverity::max_name_length() {
-	return 8;
-}
-
-
 
 } // namespace logcpp
 

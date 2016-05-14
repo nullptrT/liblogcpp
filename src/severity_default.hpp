@@ -78,12 +78,6 @@ public:
 	 * @brief The names of severity_level as string array
 	 */
 	static std::array < const std::string, 1 + (int)default_severity_levels::SEVERITY_SIZE >* default_severity_names;
-
-	/**
-	 * @return The amount of characters of the longest name of all severity_level
-	 * @note Only important for alignment of severities
-	 */
-	virtual const unsigned int max_name_length();
 };
 
 } // namespace logcpp
