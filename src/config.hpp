@@ -52,6 +52,11 @@
 #undef LOGCPP_ENABLE_COLOR_SUPPORT
 #endif
 
+#endif
+
+
+#ifndef LOGCPP_ENABLE_COLOR_SUPPORT
+
 #ifdef LOGCPP_AUTOCOLOR
 #undef LOGCPP_AUTOCOLOR
 #endif
