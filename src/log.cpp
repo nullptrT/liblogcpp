@@ -53,7 +53,7 @@ globallog& globallog::get() {
 #ifdef LOGCPP_ENABLE_COLOR_SUPPORT
         stdlog << logcpp::sty_bold;
 #endif
-        stdlog << "LibLogC++ v" << LIBLOGCPP_DOTTED_VERSION << " (https://git.io/vBW7r)";
+        stdlog << "LibLogC++ v" << LIBLOGCPP_DOTTED_VERSION << " (https://git.0ptr.de/nullptr_t/liblogcpp)";
 #ifdef LOGCPP_ENABLE_COLOR_SUPPORT
         stdlog << logcpp::ctl_reset_all;
 #endif
@@ -114,7 +114,7 @@ void globallog::set_logfile_impl() {
     ofs->open( globallog::logfile, std::ofstream::out | std::ofstream::app | std::ofstream::ate);
     file_log.reset( new severity_logger( ofs->rdbuf(), this->file_severity ) );
     file_log->enable_print_severity(false);
-    *file_log << logcpp::warning << "LibLogC++ v" << LIBLOGCPP_DOTTED_VERSION << " (https://git.io/vBW7r)" << file_severity << logcpp::endrec;
+    *file_log << logcpp::warning << "LibLogC++ v" << LIBLOGCPP_DOTTED_VERSION << " (https://git.0ptr.de/nullptr_t/liblogcpp)" << file_severity << logcpp::endrec;
     file_log->enable_print_severity();
     file_log->enable_timestamp();
 }
