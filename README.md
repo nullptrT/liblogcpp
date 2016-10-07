@@ -1,6 +1,6 @@
 # LibLogC++
-##### A intuitive and highly customizable LGPL library for logging with C++.
-###### v1.8.1
+##### A intuitive and highly customizable LGPL library for logging with C++
+###### v1.9.0
 
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
@@ -11,7 +11,7 @@ It is a simple and intuitive frontend to libstdc++ turning it into a fully featu
 
 If you wrote additional datastructures or functions and you think it could be useful within this library: You are welcome to create a pull request or contact me ( lauseb644 _at_ gmail _dot_ com ).
 
-Since v1.8.0 LibLogC++ is feature-complete except for colorized terminal output on windows.
+Since v1.8.0 LibLogC++ is feature-complete except for colorized terminal output on windows. More features can be requested through issues on [GitHub](https://github.com/nullptrT/liblogcpp)
 
 
 #### Currently supported features
@@ -23,6 +23,7 @@ Since v1.8.0 LibLogC++ is feature-complete except for colorized terminal output 
 * Colorized output for UNIX
 * Specifying a streambuffer to log to (like ofstream->rdbuf() or similar; defaults to std::cout.rdbuf).
 * A channel logger, also usable via `operator<<`
+* Assertion-functions aviable via the header `assert.hpp`
 * Optionally execute a function on critical warnings or throw a `logcpp::critical_exception` (from `log_exception.hpp`).
 * Logging the scope where the logstream comes from (identified by `__FILE__` and `__LINE__`) by simply inserting `SCOPE` into a log stream.
 * Documentation
@@ -213,4 +214,3 @@ If you want your severities aligned when printed, you also have to provide a fun
 When defining an own `severity_t`, keep in mind, that backend (`severity_log`) treats the enum value `0` as `off` (this logger won't create any logs until its max_severity isn't changed to a higher value) and the enum value `1` will call the critical function at the end of a record, if it is enabled.
 
 For an example of inheritance from `basic_log` or `severity_log` and nessecary template specializations see `severity_log.hpp` and `severity_logger.hpp`.
-

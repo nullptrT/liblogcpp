@@ -7,11 +7,27 @@
 
 #### New features
 
+*	
+
+#### Changes in behavior
+
+*	
+
+#### Bug fixes
+
+*	
+
+
+## Noteworthy changes in release 1.9.0 (2016-10-07) [stable]
+
+#### New features
+
+*   Assertion functions aviable via the header `assert.hpp`
 *	channel_log now supports logging to all channels enabled at once
 
 #### Changes in behaviour
 
-*	For class name conveniences channellog is now called channel_log
+*	For class name conveniences channellog is now called channel_log. There is a typedef channellog, so you haven't to change anything
 
 
 ## Noteworthy changes in release 1.8.1 (2016-05-14) [stable]
