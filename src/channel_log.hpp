@@ -158,5 +158,12 @@ public:
 	}
 };
 
+
+/**
+ * @brief A logger with different channels of type logger_t
+ */
+template< class logger_t >
+using channellog = channel_log< logger_t >;
+
 } // namespace logcpp
 
