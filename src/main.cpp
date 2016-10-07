@@ -21,6 +21,7 @@
 
 
 #include "config.hpp"
+#include "assert.hpp"
 #include "channel_log.hpp"
 #include "severity_logger.hpp"
 #include "logmanip.hpp"
@@ -54,17 +55,24 @@ int main(int argc, char** argv) {
     logger << SCOPE << "A message with a SCOPE before" << logcpp::endrec;
 
     logger << SCOPE_SEVERITY(logcpp::error) << "A message calling SCOPE_SEVERITY(logcpp::error)" << logcpp::endrec;
+	
+	logcpp::assert( true
+				  , logger << logcpp::warning << "This assertion was evaluated true."
+				  , logger << "This will never happen due to hardcoded true." << logcpp::endrec );
+
+    logcpp::assert( false
+                  , logger << logcpp::warning << "This assertion was evaluated false." << logcpp::endrec );
 
 #if LOGCPP_ENABLE_COLOR_SUPPORT
-    logger << logcpp::ctl_background << logcpp::col_black << logcpp::sty_bold << logcpp::ctl_foreground << logcpp::col_yellow << "This is a message using the color feature" << logcpp::ctl_reset_col << logcpp::endrec;
+    logger << logcpp::ctl_background << logcpp::col_black << logcpp::sty_bold << logcpp::ctl_foreground << logcpp::col_yellow << "This is a message using the color feature." << logcpp::ctl_reset_col << logcpp::endrec;
 #endif
 
 #ifdef LOGCPP_ENABLE_QT_SUPPORT
-    QString qstr("This is a QString");
+    QString qstr("This is a QString.");
     logger << qstr << logcpp::endrec;
 #endif
 
-    std::ofstream* ofs = new std::ofstream( "./flog_test.log", std::ofstream::out | std::ofstream::app | std::ofstream::ate);
+    std::ofstream* ofs = new std::ofstream( "./flog_test.log", std::ofstream::out | std::ofstream::app | std::ofstream::ate );
 
     logcpp::logger flog( ofs->rdbuf() );
 
@@ -77,7 +85,7 @@ int main(int argc, char** argv) {
 
     logger << "Here we use the functionality of the channel logger" << logcpp::endrec;
 
-    logcpp::channel_log< logcpp::basic_log > ch;
+    logcpp::channellog< logcpp::basic_log > ch;
     ch.add_channel( "file", flog );
     ch.add_channel( "console", logger );
     ch["file"] << "A message to the file channel" << logcpp::endrec;
@@ -86,7 +94,6 @@ int main(int argc, char** argv) {
 	ch.enable_channel("file");
 	
 	ch << "A message directly to all enabled channels at once" << logcpp::endrec;
-
 
 
     logcpp::severity_logger sflog( ofs->rdbuf() );
