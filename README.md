@@ -51,10 +51,10 @@ On windows you want to use the cmake gui to generate files for MSVC 2015 or late
 
 Additionally to the default options CMake currently offers the following options (can be specified with `-DOPTION=ON`):
 
-* `LOGCPP_SHARED`: Enables building a shared library `liblogcpp.so` instead of a static one.
+* `LOGCPP_SHARED`: Enables building a shared library `liblogcpp.so`. Not using this option builds a static `liblogcpp.a` by default.
 * `LOGCPP_ENABLE_QT_SUPPORT`: Enables a function wrapper for QStrings. Needs `Qt5Core_LIBRARIES`.
 * `LOGCPP_AUTOCOLOR`: Enables colorized output of severities
-* `LOGCPP_DESTDIR`: Where are the files installed to. Defaults to `CMAKE_INSTALL_PREFIX` (`/usr/local` on UNIX and `c:/Program Files` on WIN32)
+* `LOGCPP_DESTDIR`: Where are the files installed to. Defaults to `CMAKE_INSTALL_PREFIX` (`/usr` on UNIX and `c:/Program Files` on WIN32)
 * `LOGCPP_HEADER_INSTALL_DIR`: Can be set to control, where headers are installed. Defaults to `LOGCPP_DESTDIR/include/liblogcpp`.
 * `LOGCPP_LIB_INSTALL_DIR`: Can be set to control where the library is installed. Defaults to `LOGCPP_DESTDIR/lib`.
 * `LOGCPP_INSTALL_LIBS`: Enables targets for installation of library files. Because it is useful not to install the library (e.g. when used as submodule of a project) this defaults to off. If enabled, it installs all headers to `LOGCPP_HEADER_INSTALL_DIR` and the library to `LOGCPP_LIB_INSTALL_DIR`
@@ -90,12 +90,6 @@ and for additional version checking without CMake you could have a `logging.cpp`
 #endif
 ```
 
-
-#### Packages
-
-Currently there is a package in the Arch Linux User Repository under https://aur.archlinux.org/liblogcpp/ .
-More distributions may follow or be submitted.
-
 #### Requirements
 
 * cmake>=3.0
@@ -125,7 +119,7 @@ This library is free software; you can redistribute it and/or modify it under th
 
 The included file `main.cpp` can be used and compiled as an additional example for its usage. For a more detailed reference, please read the following short documentation.
 
-However, you can use it by including `log.hpp` to your file.
+For most simple cases, you may use the globallog by including `logcpp/log.hpp` to your file.
 This will give you the ability to use stdlog, which offers you a console logger and a file logger. You can write to an enabled logger by using `<<` once:
 ```c++
 #include <log.hpp>
@@ -137,9 +131,9 @@ stdlog << logcpp::warning << "A sample message to std::cout and /path/to/file" <
 On the other hand you can create more loggers by simply passing a `std::streambuf` pointer to the constructor. If you omit this pointer, the logger will log to `std::cout`.
 
 ```c++
-#include <basic_log.hpp>
+#include <logcpp/basic_log.hpp>
 
-logcpp::logger lg;
+logcpp::logger lg; // Will be used in later examples, too
 lg << "A sample message to std::cout with the use of an own logger object";
 ```
 
@@ -148,7 +142,9 @@ Instead one may use `logcpp::endl` for buffering a `"\n"` and `logcpp::endrec` t
 
 For example
 ```c++
+// ...
 lg << "A sample message" << logcpp::endl << "A second message" << logcpp::endrec;
+// ...
 ```
 would print
 ```
@@ -157,19 +153,24 @@ A second message
 ```
 while
 ```c++
+// ...
 lg << "A sample message" << logcpp::endl;
+// ...
 ```
 would not print at all, because the logstream is not flushed with `logcpp::endrec`
 
 #### Logging with severities
 
-Simply include `severity_logger.hpp` in your file or use the global logger from `log.hpp`.
+Simply include `logcpp/severity_logger.hpp` in your file or use the global logger from `logcpp/log.hpp`.
 The usage is the same as with the simple logger, but you can do
 ```c++
-lg << "The standard severity defaults to logcpp::normal" << logcpp::endrec;
-lg << logcpp::verbose << "But it can be set to level logcpp::verbose by inserting logcpp::verbose into the stream" << logcpp::endrec;
-lg << "However, this is still a message with severity logcpp::verbose" << logcpp::endrec;
-lg << logcpp::debug << "Until changed to some other severity_level" << logcpp::endrec;
+#include <logcpp/severity_logger.hpp>
+
+logcpp::severity_logger slogger(logcpp::verbose); // Will be used in later examples, too
+slogger << "The standard severity defaults to logcpp::normal" << logcpp::endrec;
+slogger << logcpp::verbose << "But it can be set to level logcpp::verbose by inserting logcpp::verbose into the stream" << logcpp::endrec;
+slogger << "However, this is still a message with severity logcpp::verbose" << logcpp::endrec;
+slogger << logcpp::debug << "Until changed to some other severity_level" << logcpp::endrec;
 ```
 The maximal severity of a severity_logger defaults to `logcpp::normal`, but can be changed by passing a `logcpp::severity_level` to the constructor or invoking `lg->set_max_severity(logcpp::severity_level)`.
 When using stdlog, you can also use `set_max_{console,file}_severity(logcpp::severity_level)` for controlling only one of them.
@@ -180,14 +181,15 @@ Assuming the max_severity of `lg` in the example above is `logcpp::verbose`, eve
 #### Logging with channels
 
 ```c++
+#include <logcpp/channel_log.hpp>
+#include <logcpp/severity_logger.hpp>
+
 std::ofstream* ofs = new std::ofstream( "./flog_test.log", std::ofstream::out | std::ofstream::app | std::ofstream::ate);
-logcpp::logger flog( ofs->rdbuf() );
+logcpp::severity_logger flog( ofs->rdbuf() );
 
-logcpp::severity_logger logger(logcpp::verbose);
-
-logcpp::channellog< logcpp::basic_log > ch;
+logcpp::channellog< logcpp::severity_logger > ch; // Use your most common base type as template parameter
 ch.add_channel( "file", flog );
-ch.add_channel( "console", logger );
+ch.add_channel( "console", slogger );
 ch["file"] << "A message to the file channel" << logcpp::endrec;
 ch["console"] << "A message to the console channel" << logcpp::endrec;
 ```
@@ -195,21 +197,43 @@ ch["console"] << "A message to the console channel" << logcpp::endrec;
 
 #### More features
 
+* If you need simple assertions you can use the assertion header `assert.hpp`, which provides two functions:
+```c++
+#include <logcpp/assert.hpp>
+
+// One assert function only logs on failure
+logcpp::assert(false, slogger << logcpp::error << "This assertion evaluated false" << logcpp::endrec);
+// The second one can have one message for failure and one for a successful evaluation
+int num = 3;
+logcpp::assert( num >= 3
+              , slogger << logcpp::normal << "This assertion evaluated true" << logcpp::endrec
+              , slogger << logcpp::error << "This assertion evaluated false" << logcpp::endrec );
+```
+If you need a more complex conditional evaluation, you have to use if-statements.
 * You can use manipulators from `<iomanip>` like this (output: `002a`)
 ```c++
-#include <logmanip.hpp>
-...
+#include <logcpp/logmanip.hpp>
+
 lg << std::setw(4) << std::setfill('0') << std::hex << 42 << logcpp::endrec;
 ```
 * You can enable a timestamp at the beginning of each record with `enable_timestamp()`. You can disable it with `disable_timestamp()`. The file logger of stdlog has timestamps enabled by default. For controlling only one of the loggers in stdlog there are the functions `use_timestamps_{console,file}(bool)`.  If you need a timestamp in your log message, you can insert the `TIME` macro into any logger.
 * You can pass a function to all instances of `severity_log`. If this function is not a `nullptr`, it will be executed at the end of a record with a severity value of 1. For a better usability its a `nullptr` by default, but it can be enabled with `set_critical_log_function(void(*crit_f)(void))` on each severity_log. A useful function could be `std::abort`.
+* The color functionality is only available on UNIX and all functions are stripped from files on WIN32. `basic_log` only logs colors, if the sink is a terminal. If you want to log some text in colors, you can do something like this:
+```c++
+// ...
+#include <logcpp/color_feature.hpp>
+
+lg << logcpp::col_red << "This text would be logged in red." << logcpp::endrec;
+lg << "Each 'logcpp::endrec' resets the current style, so this would be logged normal";
+lg << logcpp::ctl_background << logcpp::col_yellow << "[Yellow Background] By using the ctl_* you can control specific parts of your record.[/Yellow Background] " << logcpp::ctl_reset_all << logcpp::sty_bold << "This is logged uncolored in bold." << logcpp::endrec
+```
+Note that some background operations may cause undefined results (like `lg << logcpp::ctl_background << logcpp::sty_bold`), so use them carefully.
 
 
-### Creating own loggers
+### Creating own logger and severity classes
 
-Simply inherit from `basic_log` (in `basic_log.hpp`) or `severity_log< typename severity_t, const std::string (*severity_name)(severity_t), const uint (*max_name_length)(void) = nullptr >`, where `severity_t` is an enum type of your own severity and `severity_name` is a corresponding function taking your `severity_t` and returning a stream-qualified string.
-If you want your severities aligned when printed, you also have to provide a function which returns the number of characters in the longest severity name. Otherwise the default option 'noalign' is used.
+Simply inherit from `basic_log` (in `logcpp/basic_log.hpp`), `severity_logger` (in `logcpp/severity_logger.hpp`) or `severity_log< typename severity_t >` (in `logcpp/severity_log.hpp`), where `severity_t` is an severity class type like `DefaultSeverity` which defined in `logcpp/severity_default.hpp`.
 
-When defining an own `severity_t`, keep in mind, that backend (`severity_log`) treats the enum value `0` as `off` (this logger won't create any logs until its max_severity isn't changed to a higher value) and the enum value `1` will call the critical function at the end of a record, if it is enabled.
+When defining an own `severity_t`, keep in mind, that backend (`severity_log`) threats the enum value `0` as `off` (this logger won't create any logs until its max_severity isn't changed to a higher value) and the enum value `1` will call the critical function at the end of a record, if it is enabled. If you want to define your own severity, simply inherit from `AbstractSeverity< severity_t >` (defined in `logcpp/severity.hpp`) like done in `severity_default.hpp`. At least your enum type `severity_t` has to have a specified array defining the severity names in your inheriting class (more on defining own severity classes have a look at `severity_default.cpp`).
 
 For an example of inheritance from `basic_log` or `severity_log` and nessecary template specializations see `severity_log.hpp` and `severity_logger.hpp`.
