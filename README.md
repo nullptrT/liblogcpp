@@ -5,7 +5,7 @@
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
 
-* [Online api documentation](https://doc.0ptr.de/liblogcpp/files.html)
+* [Online api documentation](https://doc.0ptr.de/liblogcpp/annotated.html)
 * Packages can be found for ArchLinux in [Arch User Repository](https://aur.archlinux.org/liblogcpp) and with QString support enabled [here](https://aur.archlinux.org/liblogcpp-qt).
 * How to use it is documented lower on this page.
 
