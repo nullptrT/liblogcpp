@@ -1,3 +1,52 @@
+liblogcpp (1.9.0-1) stable; urgency=low
+
+  * Assertion functions aviable via the header `assert.hpp`
+  *	channel_log now supports logging to all channels enabled at once
+  *	For class name conveniences channellog is now called channel_log. There is a typedef channellog, so you haven't to change anything
+
+ -- Sebastian Lau <lauseb644@gmail.com>  Fri, 07 Oct 2016 13:54:32 +0100
+
+
+liblogcpp (1.8.1-1) stable; urgency=low
+
+  *	The directory prefix of a scope is now stripped by default. The compiler option therefore changed to `LOGCPP_LEAVE_SCOPE_DIRS_PREFIX` to prevent this behaviour
+  *	Color codes are not logged to file logs any more
+  *	LOGCPP_AUTOCOLOR is now implemented as member functions and only logs, if m_color_ok is true
+  *	Resetting the Color mode also resets the ctl_foreground/ctl_background flag now
+
+
+ -- Sebastian Lau <lauseb644@gmail.com>  Thu, 04 May 2016 13:54:32 +0100
+
+
+liblogcpp (1.8.0-1) stable; urgency=low
+
+  *	liblogcpp has now a channel logger that is able to handle a set of named loggers that can be selected by operator[]
+
+ -- Sebastian Lau <lauseb644@gmail.com>  Sat, 05 Mar 2016 14:54:32 +0100
+
+
+liblogcpp (1.7.3-1) stable; urgency=low
+
+  *	liblogcpp now supports MSVC 2015 and later (Tested on Windows 8.1). There is still no solution for colors on Windows.
+
+ -- Sebastian Lau <lauseb644@gmail.com>  Sat, 05 Mar 2016 13:54:32 +0100
+
+
+liblogcpp (1.7.2-1) stable; urgency=low
+
+  *	liblogcpp can now be build as shared library by passing `-DLOGCPP_SHARED=ON` to cmake. Default behaviour is to build a static library.
+  *	Severities are not defined in global namespace anymore, but in classes that can be inherited from.
+  *	The cmake options AUTOCOLOR, ENABLE_QT_SUPPORT and INSTALL_LIBS are now also prefixed with LOGCPP_ (LOGCPP_AUTOCOLOR, LOGCPP_ENABLE_QT_SUPPORT, LOGCPP_INSTALL_LIBS) for better compatibility with other libraries when used as a submodule.
+  *	The make target for Doxygen is now called 'doc_logcpp' for compatibility when using this as a submodule.
+  *	The make target is now enabled automatically when Doxygen is found.
+  *	Less templating, less compile time
+  *	Don't make it possible to use AUTOCOLOR on WIN32 yet
+  *	Color support is now explicitly disabled for WIN32 in config.hpp, even if CMake sets this macro
+  *	The file liblogcpp.pc is now configured according to the environment
+
+ -- Sebastian Lau <lauseb644@gmail.com>  Fri, 04 Mar 2016 13:54:32 +0100
+
+
 liblogcpp (1.7.1-1) stable; urgency=low
 
   * The compile options AUTOCOLOR and ENABLE_QT_SUPPORT are now prefixed with LOGCPP_ (LOGCPP_AUTOCOLOR, LOGCPP_ENABLE_QT_SUPPORT) for better compatibility with other libraries

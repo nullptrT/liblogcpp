@@ -5,13 +5,13 @@
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
 
-* [Online api documentation](https://doc.0ptr.de/liblogcpp/classes.html)
-* Packages can be found for ArchLinux in [Arch User Repository](https://aur.archlinux.org/liblogcpp).
+* [Online api documentation](https://doc.0ptr.de/liblogcpp/files.html)
+* Packages can be found for ArchLinux in [Arch User Repository](https://aur.archlinux.org/liblogcpp) and with QString support enabled [here](https://aur.archlinux.org/liblogcpp-qt).
 * How to use it is documented lower on this page.
 
 If you wrote additional datastructures or functions and you think it could be useful within this library: You are welcome to create a pull request or contact me ( lauseb644 _at_ gmail _dot_ com ).
 
-Since v1.8.0 LibLogC++ is feature-complete except for colorized terminal output on windows. More features can be requested through issues on [GitHub](https://github.com/nullptrT/liblogcpp)
+Since v1.8.0 LibLogC++ supports the most log features except for colorized terminal output on windows. More features can be requested through issues on [GitHub](https://github.com/nullptrT/liblogcpp)
 
 
 #### Currently supported features
@@ -30,16 +30,6 @@ Since v1.8.0 LibLogC++ is feature-complete except for colorized terminal output 
 * A `find_package` module for cmake
 * Packaging scripts for Arch Linux
 
-#### Features for future releases
-
-* Better README.md and documentation
-
-## License:
-
-This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
-
-* Copyright (C) 2015 Linux Gruppe IRB, TU Dortmund <linux@irb.cs.tu-dortmund.de>
-* Copyright (C) 2015-2016 Sebastian Lau <lauseb644@gmail.com>
 
 ## Building
 
@@ -61,6 +51,7 @@ On windows you want to use the cmake gui to generate files for MSVC 2015 or late
 
 Additionally to the default options CMake currently offers the following options (can be specified with `-DOPTION=ON`):
 
+* `LOGCPP_SHARED`: Enables building a shared library `liblogcpp.so` instead of a static one.
 * `LOGCPP_ENABLE_QT_SUPPORT`: Enables a function wrapper for QStrings. Needs `Qt5Core_LIBRARIES`.
 * `LOGCPP_AUTOCOLOR`: Enables colorized output of severities
 * `LOGCPP_DESTDIR`: Where are the files installed to. Defaults to `CMAKE_INSTALL_PREFIX` (`/usr/local` on UNIX and `c:/Program Files` on WIN32)
@@ -120,6 +111,14 @@ The included `LibLogCPPConfig.cmake` module enables you to use `find_package(Lib
 * `LIBLOGCPP_INCLUDE_DIR`: The directory, where the headers are located in `liblogcpp/` (usually `/usr/include`)
 * `LIBLOGCPP_LIBRARY`: The static library you can link into your program. It's only useful, if you use `stdlog`
 * `LIBLOGCPP_VERSION_STRING`: The current version of liblogcpp.
+
+
+## License:
+
+This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
+
+* Copyright (C) 2015 Linux Gruppe IRB, TU Dortmund <linux@irb.cs.tu-dortmund.de>
+* Copyright (C) 2015-2016 Sebastian Lau <lauseb644@gmail.com>
 
 
 ## Usage
