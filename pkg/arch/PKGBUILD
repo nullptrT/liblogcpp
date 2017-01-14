@@ -1,13 +1,13 @@
 # Maintainer: Sebastian Lau <lauseb644 _at_ gmail _dot_ com>
-pkgname="liblogcpp-local"
-pkgver=1.9.0.r0.g188de4f
+pkgname="liblogcpp-git"
+pkgver=1.9.0.r3.g1c14fec
 pkgrel=1
 pkgdesc="A intuitive and highly customizable LGPL library for logging with C++. (with support for QString and static)"
 arch=('x86_64' 'i686' 'armv6h' 'armv7h')
 url="https://github.com/nullptrT/liblogcpp"
 license=('LGPL3')
 conflicts=('liblogcpp' 'liblogcpp-qt')
-provides=('liblogcpp=$pkgver')
+provides=('liblogcpp')
 depends=()
 makedepends=('cmake' 'qt5-base')
 
@@ -22,13 +22,14 @@ prepare() {
 	[[ -e build ]] && rm -r build
 	mkdir liblogcpp
 	mkdir build
-	cp -rv ../../../{Doxyfile.in,CMakeLists.txt,lib,src,.git} liblogcpp
+	cp -r ../../../{Doxyfile.in,CMakeLists.txt,lib,src,.git} liblogcpp
 }
 
 build() {
 	cd "$srcdir/build"
 
 	cmake -DCMAKE_INSTALL_PREFIX:PATH="/usr" \
+   		-DLOGCPP_SHARED=1 \
 		-DLOGCPP_INSTALL_LIBS=ON \
 		-DLOGCPP_ENABLE_QT_SUPPORT=ON \
 		-DBUILD_LOGCPP_TEST=ON \

@@ -15,7 +15,7 @@
 #
 #
 #	liblogcpp: A simple, but highly customizable and intuitive LGPL library for logging with C++.
-#	Copyright (C) 2015 Sebastian Lau
+#	Copyright (C) 2015-2017 Sebastian Lau
 #
 #	This library is free software; you can redistribute it and/or
 #	modify it under the terms of the GNU Lesser General Public

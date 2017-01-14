@@ -13,15 +13,12 @@ extern "C" {
 #endif
 
 
-#define LIBLOGCPP_DOTTED_VERSION "1.8.1"
-#define LIBLOGCPP_VERSION 10801
-#define LIBLOGCPP_VERSION_STRING "10801"
+#define LIBLOGCPP_DOTTED_VERSION "1.9.0"
+#define LIBLOGCPP_VERSION 10900
+#define LIBLOGCPP_VERSION_STRING "10900"
 #define LIBLOGCPP_VERSION_EXTRA ""
 
 
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
-
-
-
