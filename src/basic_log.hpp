@@ -45,9 +45,6 @@ extern "C" {
 #include "color_feature.hpp"
 #endif
 
-#ifdef LOGCPP_ENABLE_QT_SUPPORT
-#include <QString>
-#endif
 
 
 
@@ -244,17 +241,6 @@ public:
 		stream << t;
 		new_record = false;
 	}
-
-#ifdef LOGCPP_ENABLE_QT_SUPPORT
-	/**
-	 * @brief Member function that can handle a QString
-	 * @param str A QString to log
-	 */
-	template< typename T >
-	void log( const QString& str ) {
-		this->log(str.toStdString());
-	}
-#endif
 };
 
 /**
@@ -302,5 +288,3 @@ typedef basic_log logger;
  * @brief Insert a endrec into the log stream
  */
 #define ENDREC logcpp::endrec
-
-

@@ -4,7 +4,7 @@ cmake_minimum_required( VERSION 3.0 )
 
 set( LIBLOGCPP_STABLE_VERSION 1 )
 set( LIBLOGCPP_RELEASE 9 )
-set( LIBLOGCPP_PATCH_VERSION 0 )
+set( LIBLOGCPP_PATCH_VERSION 1 )
 set( LIBLOGCPP_VERSION "${LIBLOGCPP_STABLE_VERSION}.${LIBLOGCPP_RELEASE}.${LIBLOGCPP_PATCH_VERSION}" )
 
 set( LIBLOGCPP_SRC_DIR ${PROJECT_SOURCE_DIR}/src )
@@ -14,22 +14,10 @@ if( UNIX )
 endif()
 add_definitions(-DLOGCPP_SRC_DIR=${LIBLOGCPP_SRC_DIR})
 
-if( LOGCPP_ENABLE_QT_SUPPORT )
-	add_definitions( -DLOGCPP_ENABLE_QT_SUPPORT=1 )
-	# Instruct CMake to run moc automatically when needed.
-	set(CMAKE_AUTOMOC ON)
-	# Find the QtCore library
-	find_package(Qt5Core)
-	message("-- Compiling with support for QString")
-endif()
 
 if( LOGCPP_DESTDIR )
 else()
 	set( LOGCPP_DESTDIR "${CMAKE_INSTALL_PREFIX}" )
-endif()
-
-if( BUILD_LOGCPP_TEST )
-	set( LOGCPP_AUTOCOLOR 1 )
 endif()
 
 file (GLOB LIBLOGCPP_HEADERS ${LIBLOGCPP_SRC_DIR}/*.hpp )
@@ -38,9 +26,7 @@ set ( LIBLOGCPP_SOURCE ${LIBLOGCPP_SRC_DIR}/log.cpp ${LIBLOGCPP_SRC_DIR}/severit
 if( UNIX )
 	set( LIBLOGCPP_SOURCE ${LIBLOGCPP_SOURCE} ${LIBLOGCPP_SRC_DIR}/color_feature.cpp )
 	message("-- Compiling with support for ANSI Color codes")
-	if(LOGCPP_AUTOCOLOR)
-		add_definitions( -DLOGCPP_AUTOCOLOR=1 )
-	endif()
+    add_definitions( -DLOGCPP_AUTOCOLOR=1 )
 else()
 #	list(REMOVE_ITEM ${LIBLOGCPP_HEADERS} "${LIBLOGCPP_SRC_DIR}/color_feature.hpp")
 endif()
@@ -53,13 +39,15 @@ else()
 	set( LOGCPP_PKGCONFIG_LIBNAME "liblogcpp.a" )
 endif()
 
-if( LOGCPP_ENABLE_QT_SUPPORT )
-	target_link_libraries( logcpp ${Qt5Core_LIBRARIES} )
-endif()
 
 if( BUILD_LOGCPP_TEST )
+    # Instruct CMake not to run moc automatically when needed.
+	set(CMAKE_AUTOMOC OFF)
+	# Find the QtCore library
+	find_package(Qt5Core)
+	# Build the test binary
 	add_executable( logcpp_test ${LIBLOGCPP_SRC_DIR}/main.cpp )
-	target_link_libraries( logcpp_test logcpp )
+	target_link_libraries( logcpp_test logcpp ${Qt5Core_LIBRARIES} )
 endif()
 
 if( LOGCPP_HEADER_INSTALL_DIR )
@@ -89,4 +77,3 @@ if( UNIX )
 		add_custom_target(doc_logcpp ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} COMMENT "Generating documentation with Doxygen")
 	endif()
 endif()
-

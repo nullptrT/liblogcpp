@@ -1,6 +1,6 @@
 # LibLogC++
 ##### A intuitive and highly customizable LGPL library for logging with C++
-###### v1.9.0
+###### v1.9.1
 
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
@@ -28,6 +28,7 @@ Since v1.8.0 LibLogC++ supports the most log features except for colorized termi
 * Logging the scope where the logstream comes from (identified by `__FILE__` and `__LINE__`) by simply inserting `SCOPE` into a log stream.
 * Documentation
 * A `find_package` module for cmake
+* Support for QString
 * Packaging scripts for Arch Linux
 
 
@@ -37,7 +38,7 @@ You can simply build this with:
 
 ```
  % cd /path/to/clone/in
- % git clone https://git.0ptr.de/nullptr_t/liblogcpp.git
+ % git clone https://github.com/nullptrT/liblogcpp.git
  % mkdir liblogcpp/build # or some other build directory
  % cd /path/to/builddir
  % cmake /path/to/cloned/directory
@@ -52,8 +53,6 @@ On windows you want to use the cmake gui to generate files for MSVC 2015 or late
 Additionally to the default options CMake currently offers the following options (can be specified with `-DOPTION=ON`):
 
 * `LOGCPP_SHARED`: Enables building a shared library `liblogcpp.so`. Not using this option builds a static `liblogcpp.a` by default.
-* `LOGCPP_ENABLE_QT_SUPPORT`: Enables a function wrapper for QStrings. Needs `Qt5Core_LIBRARIES`.
-* `LOGCPP_AUTOCOLOR`: Enables colorized output of severities
 * `LOGCPP_DESTDIR`: Where are the files installed to. Defaults to `CMAKE_INSTALL_PREFIX` (`/usr` on UNIX and `c:/Program Files` on WIN32)
 * `LOGCPP_HEADER_INSTALL_DIR`: Can be set to control, where headers are installed. Defaults to `LOGCPP_DESTDIR/include/liblogcpp`.
 * `LOGCPP_LIB_INSTALL_DIR`: Can be set to control where the library is installed. Defaults to `LOGCPP_DESTDIR/lib`.
@@ -64,7 +63,6 @@ Additionally to the default options CMake currently offers the following options
 
 You can define the following with your g++-compiler by `-DOPTION=1` or cmake's `add_definitions( -D$OPTION=1 )` function:
 
-* `LOGCPP_AUTOCOLOR`: Enables colorized output of severities
 * `LOGCPP_LEAVE_SCOPE_DIRS_PREFIX`: Does not strip everything except the filename from SCOPE (like `/path/to/` in `/path/to/compilation.cpp`) since that defaults to the path in the build environment. Defaults to true.
 
 As an example you could write a `logging.hpp` header like this:
@@ -72,6 +70,7 @@ As an example you could write a `logging.hpp` header like this:
 ```c++
 #include <liblogcpp/log.hpp>			/* If you want to use the global logger
 											(like stdlog << logcpp::warning << "some text" << logcpp::endrec) */
+#include <liblogcpp/logcpp-qt.hpp>      /* If you want to pass QStrings to your loggers */
 
 namespace myNamespace {
 namespace log = logcpp;
@@ -94,7 +93,6 @@ and for additional version checking without CMake you could have a `logging.cpp`
 
 * cmake>=3.0
 * a c++ compiler (tested for gcc)
-* qt5-base (optional for building with support for QString)
 * doxygen (optional for building the [html documentation](https://doc.0ptr.de/liblogcpp/))
 
 
@@ -194,6 +192,26 @@ ch["file"] << "A message to the file channel" << logcpp::endrec;
 ch["console"] << "A message to the console channel" << logcpp::endrec;
 ```
 
+#### QString and passing own types to loggers
+
+In order to make liblogcpp not depend on `qt-core` there is a compatibility header `liblogcpp/logcpp-qt.hpp` shipped since v1.9.1, which has to be included in some file of your program (in addition to the regular library headers). This header enables the basic logging buffer to handle QString passed to it. You have to link your Program to `${Qt5Core_LIBRARIES}`!
+
+If you want to make your own types be able to be passed to a logger you can look at `liblogcpp/logcpp-qt.hpp` for an example conversion function. Here is an example for your own compatibility header:
+
+```c++
+#include <liblogcpp/logstream.hpp>
+
+struct A {
+    std::string name;
+    std::string description;
+    A() : name(""), description("") {}
+};
+
+logstreambuf& operator<<(logstreambuf& out, const A& myClass) {
+    out << myClass.name << "\n" << myClass.description << "\n";
+    return out;
+}
+```
 
 #### More features
 

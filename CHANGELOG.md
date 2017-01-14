@@ -3,19 +3,16 @@
 ##### Changelog
 
 
-## Noteworthy changes in release next (????-??-??) [stable]
-
-#### New features
-
-*	
+## Noteworthy changes in release 1.9.1 (2017-01-14) [stable]
 
 #### Changes in behavior
 
-*	
+*	The way, `QString` is handled changed: The core library is not linked against `Qt5Core` anymore. Instead there is a conversion header `logcpp-qt.hpp` included in the release that enables the log buffer to handle `QString`. This header has to be included in some of your files that want to pass `QString`s to loggers. The CMake-Option `LOGCPP_ENABLE_QT_SUPPORT` does not exist anymore.
+*	`severity_logger` now colors severities by default, if on unix. The CMake-Option `LOGCPP_AUTOCOLOR` does not exist anymore.
 
 #### Bug fixes
 
-*	
+*	`QString` can be handled properly when liblogcpp is not used as a git submodule and its compilation does not react to the own flags
 
 
 ## Noteworthy changes in release 1.9.0 (2016-10-07) [stable]

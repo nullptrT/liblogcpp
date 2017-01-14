@@ -1,6 +1,6 @@
 # Maintainer: Sebastian Lau <lauseb644 _at_ gmail _dot_ com>
 pkgname="liblogcpp-git"
-pkgver=1.9.0.r3.g1c14fec
+pkgver=1.9.0.r0.gc2bf89f
 pkgrel=1
 pkgdesc="A intuitive and highly customizable LGPL library for logging with C++. (with support for QString and static)"
 arch=('x86_64' 'i686' 'armv6h' 'armv7h')
@@ -9,7 +9,7 @@ license=('LGPL3')
 conflicts=('liblogcpp' 'liblogcpp-qt')
 provides=('liblogcpp')
 depends=()
-makedepends=('cmake' 'qt5-base')
+makedepends=('cmake')
 
 pkgver() {
 	cd "$srcdir/liblogcpp"
@@ -31,9 +31,6 @@ build() {
 	cmake -DCMAKE_INSTALL_PREFIX:PATH="/usr" \
    		-DLOGCPP_SHARED=1 \
 		-DLOGCPP_INSTALL_LIBS=ON \
-		-DLOGCPP_ENABLE_QT_SUPPORT=ON \
-		-DBUILD_LOGCPP_TEST=ON \
-		-DLOGCPP_AUTOCOLOR=ON \
 		"../liblogcpp"
 
 	make
