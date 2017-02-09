@@ -43,6 +43,7 @@ namespace logcpp {
 class severity_logger
     :	public severity_log< default_severity_levels >
 {
+protected:
     /**
      * @brief Function that optionally inserts colors for severities
      * @param severity Severity level severity level to log

@@ -43,12 +43,14 @@ namespace logcpp {
 class logstreambuf
 	:	public std::ostream
 {
+protected:
 	/**
 	 * @brief The buffer of a log stream buffer
 	 */
 	class logbuffer
 		:	public std::stringbuf
 	{
+    protected:
 		std::ostream out;
 	public:
 		/**

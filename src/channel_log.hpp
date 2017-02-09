@@ -38,7 +38,7 @@ namespace logcpp {
  */
 template< class logger_t >
 class channel_log {
-
+protected:
 	basic_log* m_default_channel;
 	std::map< const std::string, logger_t* > m_channels;
 	std::set< std::string > m_channels_enabled;

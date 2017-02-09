@@ -71,11 +71,12 @@ enum termmode {
  * @brief Class that implements the color feature for one logger
  */
 class color_feature {
-	
+protected:
 	bool m_background_ctl;
 	unsigned int m_back;
 	unsigned int m_fore;
 	std::vector< unsigned int > m_styles;
+    
 public:
 	/**
 	 * @brief Constructor

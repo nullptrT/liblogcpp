@@ -67,6 +67,7 @@ protected:
 	 * @brief Optional function to be called on critical severity
 	 */
 	void(*abort_f)(void);
+    
 public:
 	/**
 	 * @brief Override for basic_log::operator<<

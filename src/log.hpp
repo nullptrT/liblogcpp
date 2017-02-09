@@ -45,17 +45,19 @@ private:
 	static std::unique_ptr< globallog > log_;
 
 	static std::string logfile;
-	std::unique_ptr< severity_logger > console_log;
+	
+	globallog();
+	globallog(globallog const& another) = delete;
+	globallog& operator=(globallog const& another);
+
+protected:
+    std::unique_ptr< severity_logger > console_log;
 
 	bool file_log_enabled_;
 	std::ofstream* ofs;
 	std::unique_ptr< severity_logger > file_log;
 	default_severity_levels file_severity;
-
-	globallog();
-	globallog(globallog const& another) = delete;
-	globallog& operator=(globallog const& another);
-
+    
 	void enable_console_log_impl();
 	void disable_console_log_impl();
 	void enable_file_log_impl();
