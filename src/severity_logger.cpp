@@ -52,6 +52,9 @@ severity_logger::severity_logger( std::streambuf* stream, default_severity_level
 }
 
 
+severity_logger::~severity_logger() {}
+
+
 /**
  * @brief Function that optionally inserts colors for severities
  * @param severity Severity level severity level to log

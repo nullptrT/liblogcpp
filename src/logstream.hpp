@@ -60,6 +60,8 @@ protected:
 		logbuffer(std::streambuf* outbuf)
 			:	out( outbuf )
 		{}
+		
+		virtual ~logbuffer() {}
 
 		/**
 		 * @brief Write the rest of the buffered content to the target stream and flush it

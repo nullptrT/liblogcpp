@@ -93,6 +93,8 @@ public:
      */
     severity_logger( default_severity_levels max_severity = normal );
 
+    virtual ~severity_logger();
+    
     /**
      * @brief Creates severity_logger logging to a specific streambuf
      * @param stream A pointer to some std::streambuf where all content is logged to.

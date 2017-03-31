@@ -103,6 +103,8 @@ public:
 	    ,	abort_f(nullptr)
 	{}
 	severity_log( const severity_log& ) = delete;
+    
+    virtual ~severity_log() {}
 
 	/**
 	 * @brief Override of basic_log::end_record that only logs when it is enabled by severity
