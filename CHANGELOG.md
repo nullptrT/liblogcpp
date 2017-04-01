@@ -3,6 +3,17 @@
 ##### Changelog
 
 
+## Noteworthy changes in release 1.9.2 (2017-04-01) [stable]
+
+#### Changes in behavior
+
+*	More member functions are protected now
+
+#### Bug fixes
+
+*	Patched destructors that should be virtual causing compilation errors on windows (msvc2015)
+
+
 ## Noteworthy changes in release 1.9.1 (2017-01-14) [stable]
 
 #### Changes in behavior
