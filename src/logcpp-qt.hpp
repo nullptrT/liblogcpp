@@ -39,7 +39,7 @@ namespace logcpp {
  * @param str A QString to log
  * @returns A reference to the sink
  */
-logstreambuf& operator<<(logstreambuf& out, const QString& str) {
+inline logstreambuf& operator<<(logstreambuf& out, const QString& str) {
   out << str.toStdString();
   return out;
 }
