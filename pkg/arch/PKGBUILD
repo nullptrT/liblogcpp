@@ -2,7 +2,7 @@
 pkgname="liblogcpp-git"
 pkgver=1.9.2.r1.g3d9c94f
 pkgrel=1
-pkgdesc="A intuitive and highly customizable LGPL library for logging with C++. (with support for QString and static)"
+pkgdesc="An intuitive and highly customizable LGPL library for logging with C++ (with support for QString and static libraries)"
 arch=('x86_64' 'i686' 'armv6h' 'armv7h')
 url="https://github.com/nullptrT/liblogcpp"
 license=('LGPL3')

@@ -2,7 +2,7 @@ libdir=@LOGCPP_LIB_INSTALL_DIR@
 includedir=@LOGCPP_HEADER_INSTALL_DIR@
 
 Name: LibLogC++
-Description: A simple, but highly customizable and intuitive LGPL library for logging in C++
+Description: An intuitive and highly customizable LGPL library for logging with C++
 Version: @LIBLOGCPP_VERSION@
 Libs: ${libdir}/@LOGCPP_PKGCONFIG_LIBNAME@
 Cflags: -I${includedir}

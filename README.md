@@ -1,5 +1,5 @@
 # LibLogC++
-##### A intuitive and highly customizable LGPL library for logging with C++
+##### An intuitive and highly customizable LGPL library for logging with C++
 ###### v1.9.3
 
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.

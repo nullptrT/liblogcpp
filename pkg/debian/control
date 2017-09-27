@@ -10,4 +10,4 @@ Package: liblogcpp
 Architecture: amd64 arm64 armel armhf i386
 Depends:
 Suggests:
-Description: A simple, intuitive and highly customizable LGPL library for logging with C++.
+Description: An intuitive and highly customizable LGPL library for logging with C++

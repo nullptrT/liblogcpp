@@ -4,7 +4,7 @@
  * @author Sebastian Lau <lauseb644 [at] gmail [dot] com>
  **/
 /*
-	LibLogC++: A intuitive and highly customizable LGPL library for logging with C++.
+	LibLogC++: An intuitive and highly customizable LGPL library for logging with C++.
 	Copyright (C) 2017 Sebastian Lau <lauseb644@gmail.com>
 
 
