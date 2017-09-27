@@ -1,6 +1,6 @@
 # LibLogC++
 ##### A intuitive and highly customizable LGPL library for logging with C++
-###### v1.9.2
+###### v1.9.3
 
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
@@ -40,8 +40,8 @@ You can simply build this with:
  % cd /path/to/clone/in
  % git clone https://github.com/nullptrT/liblogcpp.git
  % mkdir liblogcpp/build # or some other build directory
- % cd /path/to/builddir
- % cmake /path/to/cloned/directory
+ % cd liblogcpp/build
+ % cmake .. # You may add CMake options here (see below)
  % make
 ```
 
@@ -82,10 +82,10 @@ and for additional version checking without CMake you could have a `logging.cpp`
 ```c++
 #include <liblogcpp/logcppversion.hpp>
 
-#if LIBLOGCPP_VERSION < 10700
-#error LibLogC++ needs to be at least at version 1.7
+#if LIBLOGCPP_VERSION < 10903
+#error LibLogC++ needs to be at least at version 1.9.3
 #else
-#pragma message ("Found LibLogC++ at required version 1.7 or more")
+#pragma message ("Found LibLogC++ at required version 1.9.3 or more")
 #endif
 ```
 
@@ -194,7 +194,7 @@ ch["console"] << "A message to the console channel" << logcpp::endrec;
 
 #### QString and passing own types to loggers
 
-In order to make liblogcpp not depend on `qt-core` there is a compatibility header `liblogcpp/logcpp-qt.hpp` shipped since v1.9.1, which has to be included in some file of your program (in addition to the regular library headers). This header enables the basic logging buffer to handle QString passed to it. You have to link your Program to `${Qt5Core_LIBRARIES}`!
+In order to make liblogcpp not depend on `qt-core` there is a compatibility header `liblogcpp/logcpp-qt.hpp` shipped since v1.9.1, which has to be included in some file of your program (in addition to the regular library headers). This header enables the basic logging buffer to handle QString passed to it. You makes your program to be needed to be linked to `${Qt5Core_LIBRARIES}`!
 
 If you want to make your own types be able to be passed to a logger you can look at `liblogcpp/logcpp-qt.hpp` for an example conversion function. Here is an example for your own compatibility header:
 
@@ -202,12 +202,12 @@ If you want to make your own types be able to be passed to a logger you can look
 #include <liblogcpp/logstream.hpp>
 
 struct A {
-    std::string name;
-    std::string description;
-    A() : name(""), description("") {}
+    std::string m_name;
+    std::string m_description;
+    A(std::string name, std::string description) : m_name(name), m_description(description)) {}
 };
 
-logstreambuf& operator<<(logstreambuf& out, const A& myClass) {
+inline logstreambuf& operator<<(logstreambuf& out, const A& myClass) {
     out << myClass.name << "\n" << myClass.description << "\n";
     return out;
 }
