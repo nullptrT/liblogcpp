@@ -3,6 +3,13 @@
 ##### Changelog
 
 
+## Noteworthy changes in release 1.9.3 (2017-09-27) [stable]
+
+#### Patches
+
+*       Add missing inline to QString compatibility function
+
+
 ## Noteworthy changes in release 1.9.2 (2017-04-01) [stable]
 
 #### Changes in behavior
