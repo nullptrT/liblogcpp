@@ -45,7 +45,7 @@ You can simply build this with:
  % make
 ```
 
-On windows you want to use the cmake gui to generate files for MSVC 2015 or later and build it afterwards.
+On windows you may use the `cmake-gui` or `qtcreator` to create build files for MSVC 2015 or later.
 
 
 #### CMake options

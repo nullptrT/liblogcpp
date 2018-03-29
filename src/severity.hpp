@@ -42,7 +42,7 @@ template< typename severity_t >
 class AbstractSeverity {
 
 	const std::array< const std::string, 1 + (int)severity_t::SEVERITY_SIZE >* m_names;
-	uint m_max_name_length;
+	unsigned int m_max_name_length;
 
 protected:
 	/**
@@ -75,7 +75,7 @@ public:
 	 */
 	const unsigned int max_name_length() {
 		if ( m_max_name_length == 0 && m_names->size() > 1 ) {
-			for ( uint i = 0; i < m_names->size()-1; i++ ) { // SKIP last element (SIZE_T)
+			for ( size_t i = 0; i < m_names->size()-1; i++ ) { // SKIP last element (SIZE_T)
 				if ( m_names[i].size() > m_max_name_length ) {
 					m_max_name_length = m_names[i].size();
 				}
