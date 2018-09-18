@@ -52,6 +52,7 @@ On windows you may use the `cmake-gui` or `qtcreator` to create build files for 
 Additionally to the default options CMake currently offers the following options (can be specified with `-DOPTION=ON`):
 
 * `LOGCPP_SHARED`: Enables building a shared library `liblogcpp.so`. Not using this option builds a static `liblogcpp.a` by default.
+* `LOGCPP_DISABLE_VERSION_PROMPT`: Disable the initial version and URL prompt.
 * `LOGCPP_DESTDIR`: Where are the files installed to. Defaults to `CMAKE_INSTALL_PREFIX` (`/usr` on UNIX and `c:/Program Files` on WIN32)
 * `LOGCPP_HEADER_INSTALL_DIR`: Can be set to control, where headers are installed. Defaults to `LOGCPP_DESTDIR/include/liblogcpp`.
 * `LOGCPP_LIB_INSTALL_DIR`: Can be set to control where the library is installed. Defaults to `LOGCPP_DESTDIR/lib`.
