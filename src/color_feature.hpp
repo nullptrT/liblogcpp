@@ -26,8 +26,6 @@
 */
 
 
-/** File Version: 0.0.1-1 **/
-
 #pragma once
 
 #include "config.hpp"
