@@ -57,12 +57,12 @@ int main(int argc, char** argv) {
 
     logger << SCOPE_SEVERITY(logcpp::error) << "A message calling SCOPE_SEVERITY(logcpp::error)" << logcpp::endrec;
 
-	logcpp::assert( true
-				  , logger << logcpp::warning << "This assertion was evaluated true."
-				  , logger << "This will never happen due to hardcoded true." << logcpp::endrec );
+	logcpp::assert< logcpp::severity_logger >( true
+                                             , logger << logcpp::warning << "This assertion was evaluated true."
+                                             , logger << "This will never happen due to hardcoded true." << logcpp::endrec );
 
-    logcpp::assert( false
-                  , logger << logcpp::warning << "This assertion was evaluated false." << logcpp::endrec );
+    logcpp::assert< logcpp::severity_logger >( false
+                                             , logger << logcpp::warning << "This assertion was evaluated false." << logcpp::endrec );
 
 #if LOGCPP_ENABLE_COLOR_SUPPORT
     logger << logcpp::ctl_background << logcpp::col_black << logcpp::sty_bold << logcpp::ctl_foreground << logcpp::col_yellow << "This is a message using the color feature." << logcpp::ctl_reset_col << logcpp::endrec;
