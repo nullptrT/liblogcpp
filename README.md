@@ -20,7 +20,6 @@ Since v1.8.0 LibLogC++ supports the most log features except for colorized termi
 * A global default logger (stdlog), which manages a console log and a file log. Both can be enabled and disabled.
 * Logging by severity. There is a fully functional default severity_logger, but you also can use your own severities.
 * Using formatters from <iomanip>
-* Colorized output for UNIX
 * Specifying a streambuffer to log to (like ofstream->rdbuf() or similar; defaults to std::cout.rdbuf).
 * A channel logger, also usable via `operator<<`
 * Assertion-functions aviable via the header `assert.hpp`
