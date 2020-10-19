@@ -20,7 +20,7 @@
 #	This library is free software; you can redistribute it and/or
 #	modify it under the terms of the GNU Lesser General Public
 #	License as published by the Free Software Foundation; either
-#	version 2.1 of the License, or (at your option) any later version.
+#	version 3.0 of the License, or (at your option) any later version.
 #
 #	This library is distributed in the hope that it will be useful,
 #	but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -36,6 +36,7 @@
 
 find_path(LIBLOGCPP_INCLUDE_DIR NAMES liblogcpp/log.hpp)
 find_library(LIBLOGCPP_LIBRARY NAMES logcpp)
+find_library(LIBLOGCPP_LIBRARY_STATIC NAMES logcpp.a)
 
 if(LIBLOGCPP_INCLUDE_DIR AND EXISTS "${LIBLOGCPP_INCLUDE_DIR}/liblogcpp/logcppversion.hpp")
     file(STRINGS "${LIBLOGCPP_INCLUDE_DIR}/liblogcpp/logcppversion.hpp" liblogcpp_version_str
@@ -50,7 +51,7 @@ endif()
 # all listed variables are TRUE
 include(FindPackageHandleStandardArgs)
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(LibLogCPP
-                                  REQUIRED_VARS LIBLOGCPP_LIBRARY LIBLOGCPP_INCLUDE_DIR
+                                  REQUIRED_VARS LIBLOGCPP_LIBRARY LIBLOGCPP_LIBRARY_STATIC LIBLOGCPP_INCLUDE_DIR
                                   VERSION_VAR LIBLOGCPP_VERSION_STRING)
 
-mark_as_advanced(LIBLOGCPP_INCLUDE_DIR LIBLOGCPP_LIBRARY)
+mark_as_advanced(LIBLOGCPP_INCLUDE_DIR LIBLOGCPP_LIBRARY LIBLOGCPP_LIBRARY_STATIC)

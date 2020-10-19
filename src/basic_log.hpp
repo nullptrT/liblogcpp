@@ -189,6 +189,11 @@ public:
 	}
 #endif
 
+    template< typename T >
+    void log( const std::string str ) {
+        stream << str.c_str();
+    }
+
 	/**
 	 * @brief Member function that inserts a newline into the buffer, flushes it and begins a new record
 	 */

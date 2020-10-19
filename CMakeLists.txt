@@ -70,7 +70,7 @@ if( LOGCPP_INSTALL_LIBS )
 endif()
 
 
-if( UNIX )
+if( UNIX AND ENABLE_DOC_LOGCPP )
 	find_package(Doxygen)
 	if(DOXYGEN_FOUND)
 		message("-- Enabled doc_logcpp target for make")

@@ -44,7 +44,8 @@
 
 #ifdef __unix__
 
-#define LOGCPP_ENABLE_COLOR_SUPPORT false
+//#define LOGCPP_ENABLE_COLOR_SUPPORT false
+#undef LOGCPP_ENABLE_COLOR_SUPPORT
 
 #else
 
