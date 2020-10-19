@@ -31,6 +31,7 @@
 
 #include "config.hpp"
 
+#include "basic_log_input.hpp"
 #include "severity_logger.hpp"
 
 namespace logcpp {
@@ -39,7 +40,7 @@ namespace logcpp {
  * @brief A global singleton logger with severities that has a console and a file channel
  */
 class globallog
-	:	public severity_log< default_severity_levels >
+	:  public severity_log< default_severity_levels >
 {
 private:
 	static std::unique_ptr< globallog > log_;
@@ -52,6 +53,7 @@ private:
 
 protected:
     std::unique_ptr< severity_logger > console_log;
+    std::unique_ptr< basic_log_input > console_input_log;
 
 	bool file_log_enabled_;
 	std::ofstream* ofs;
@@ -75,9 +77,7 @@ public:
 	 * @brief Override of severity_log::operator<< for functions
 	 * @param f Some function that takes a reference to the globallog and returns it
 	 */
-	logcpp::globallog& operator<<(globallog& (*f)(globallog&)) {
-		return f(*this);
-	}
+	logcpp::globallog& operator<<(globallog& (*f)(globallog&));
 
 	/**
 	 * @brief Override of severity_log::operator<< for generic objects
@@ -88,6 +88,29 @@ public:
 		this->log<T>(t);
 		return *this;
 	}
+    
+	/**
+	 * @brief Forward declaration of basic_log_input::operator>> for functions
+	 * @param f Some function that takes a reference to the globallog and returns it
+	 */
+	globallog& operator>>(globallog& (*f)(globallog& l));
+    
+	/**
+	 * @brief Forward declaration of basic_log_input::operator>> for generic objects
+	 * @note The function basic_log_input::log<T>(const T& t) has to be defined for this operator to work
+	 * @param t Some object to log to this basic_log_input
+	 */
+    template< typename T >
+	globallog& operator>>(const T& t) {
+        *console_input_log >> t;
+		return *this;
+	}
+	
+	/**
+     * @brief Forward declaration of basic_log_input::operator>> for input_flag objects
+     * @param iflag The input flag to set for the next input
+     */
+    globallog& operator>>( const logcpp::input_flag iflag );
 
 
 	/**
@@ -178,6 +201,18 @@ public:
 	 * @brief Override of severity_log::end_record to insert end_line into both channels
 	 */
 	void end_line();
+    
+    
+	/**
+     * @brief Forward declaration of basic_log_input::finalize
+     */
+    void finalize();
+	
+	/**
+     * @brief Forward declaration of basic_log_input::input
+     */
+    void input();
+    
 
 	/**
 	 * @brief Override of severity_log::log that inserts t into both channels (console and file)
@@ -220,6 +255,19 @@ public:
 		this->log< default_severity_levels >(sev_scope.first);
 		this->log< scope_t >(sev_scope.second);
 	}
+    
+    /**
+     * @brief Forward declaration of basic_log_input::get_input
+     * @param key The input flag key to look for
+     * @returns The input for key or an empty string, if the key does not exist in the input collection
+     */
+    const basic_log_input::input_t get_input( const basic_log_input::input_flag_t key ) const;
+    
+    /**
+     * @brief Forward declaration of basic_log_input::get_input_current
+     * @returns The last input or an empty string, if there is no current input value
+     */
+    const basic_log_input::input_t get_input_current() const;
 	
 #ifdef LOGCPP_ENABLE_COLOR_SUPPORT
 	/**
@@ -245,6 +293,16 @@ template globallog& endl(globallog&);
  * @brief Template specialization for endrec and globallog
  */
 template globallog& endrec(globallog&);
+
+/**
+ * @brief Template specialization for input and globallog
+ */
+template globallog& input(globallog&);
+
+/**
+ * @brief Template specialization for finalize and globallog
+ */
+template globallog& finalize(globallog&);
 
 
 } // namespace logcpp

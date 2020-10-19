@@ -154,6 +154,13 @@ protected:
 #endif
 
 public:
+    
+    /**
+     * @brief Check, if the current record is newly created
+     */
+    bool is_new_record() const {
+        return new_record;
+    }
 
 	/**
 	 * @brief Contructor. Specify, where to log to.

@@ -36,12 +36,13 @@ std::unique_ptr< globallog > globallog::log_;
 
 
 globallog::globallog()
-    :	severity_log< default_severity_levels >( new DefaultSeverity(), normal ),
-        console_log( new severity_logger() ),
-        file_log_enabled_(false),
-        ofs( new std::ofstream ),
-        file_log( nullptr ),
-        file_severity( normal )
+    :   severity_log< default_severity_levels >( new DefaultSeverity(), normal )
+    ,   console_log( new severity_logger() )
+    ,   console_input_log( new basic_log_input(*console_log) )
+    ,   file_log_enabled_(false)
+    ,   ofs( new std::ofstream )
+    ,   file_log( nullptr )
+    ,   file_severity( normal )
 {}
 
 globallog& globallog::get() {
@@ -65,6 +66,22 @@ globallog& globallog::get() {
 
     return *log_;
 }
+
+
+logcpp::globallog& globallog::operator<<( globallog& (*f)(globallog&) ) {
+    return f(*this);
+}
+
+globallog& globallog::operator>>( globallog& (*f)(globallog& l) ) {
+    return f(*this);
+}
+
+globallog& globallog::operator>>( const logcpp::input_flag iflag ) {
+    *console_input_log >> iflag;
+    return *this;
+}
+
+
 
 void globallog::end_record() {
     *console_log << stream.get_buf() << endrec;
@@ -208,6 +225,21 @@ bool globallog::file_log_enabled() const {
             && file_log->severity_max() != off );
 }
 
+void globallog::finalize() {
+    console_input_log->finalize();
+}
+
+void globallog::input() {
+    console_input_log->input();
+}
+
+const basic_log_input::input_t globallog::get_input( const basic_log_input::input_flag_t key ) const {
+    return console_input_log->get_input( key );
+}
+
+const basic_log_input::input_t globallog::get_input_current() const {
+    return console_input_log->get_input_current();
+}
 
 
 

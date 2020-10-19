@@ -1,6 +1,6 @@
 # LibLogC++
 ##### An intuitive and highly customizable LGPL library for logging with C++
-###### v1.9.4
+###### v1.10.0
 
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
@@ -25,6 +25,7 @@ Since v1.8.0 LibLogC++ supports the most log features except for colorized termi
 * Assertion-functions aviable via the header `assert.hpp`
 * Optionally execute a function on critical warnings or throw a `logcpp::critical_exception` (from `log_exception.hpp`).
 * Logging the scope where the logstream comes from (identified by `__FILE__` and `__LINE__`) by simply inserting `SCOPE` into a log stream.
+* An input log functionality for interactive user input
 * Documentation
 * A `find_package` module for cmake
 * Support for QString
