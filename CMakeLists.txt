@@ -21,7 +21,7 @@ else()
 endif()
 
 file (GLOB LIBLOGCPP_HEADERS ${LIBLOGCPP_SRC_DIR}/*.hpp )
-set ( LIBLOGCPP_SOURCE ${LIBLOGCPP_SRC_DIR}/log.cpp ${LIBLOGCPP_SRC_DIR}/severity_default.cpp ${LIBLOGCPP_SRC_DIR}/severity_logger.cpp )
+set ( LIBLOGCPP_SOURCE ${LIBLOGCPP_SRC_DIR}/basic_log_input.cpp ${LIBLOGCPP_SRC_DIR}/log.cpp ${LIBLOGCPP_SRC_DIR}/severity_default.cpp ${LIBLOGCPP_SRC_DIR}/severity_logger.cpp )
 
 ## COLOR CODES ARE NOT WORKING ANYMORE
 #if( UNIX )

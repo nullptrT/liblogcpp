@@ -3,6 +3,14 @@
 ##### Changelog
 
 
+## Important changes in release 1.10.0 (2020-10-19) [stable]
+
+### Changes in behavior
+
+* Add input log functionality. The input log functionality can handle user input and input queries.
+
+
+
 ## Important changes in release 1.9.4 (2018-09-18) [stable]
 
 ### Changes in behavior

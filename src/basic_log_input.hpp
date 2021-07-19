@@ -86,65 +86,44 @@ protected:
     input_t input_str;
     input_collection_t input_collection;
     
-    void set_input_flag( const input_flag_t iflag ) {
-        input_flag = iflag;
-    }
+    void set_input_flag( const input_flag_t iflag );
     
 public:
     /**
      * @brief Constructor
      * @param logger A basic_log based logger for log output
      */
-    explicit basic_log_input( basic_log& logger)
-        :   log( logger )
-        ,   input_str()
-        ,   input_collection()
-    {}
+    explicit basic_log_input( basic_log& logger);
     
     /**
      * @brief Clear the current buffer values
      */
-    void clear() {
-        input_str.clear();
-    }
+    void clear();
     
     /**
      * @brief Get the input for a specified key
      * @param key The input flag key to look for
      * @returns The input for key or an empty string, if the key does not exist in the input collection
      */
-    const input_t get_input( const input_flag_t key ) const {
-        try {
-            return input_collection.at( key );
-        } catch ( std::out_of_range& oor ) {
-            return input_t("");
-        }
-    }
+    const input_t get_input( const input_flag_t key ) const;
     
     /**
      * @brief Get the current input value
      * @returns The last input or an empty string, if there is no current input value
      */
-    const input_t get_input_current() const {
-        return input_str;
-    }
+    const input_t get_input_current() const;
     
 	/**
 	 * @brief Insert some function into this basic_log_input
 	 * @param f A function getting a basic_log_input and returning a basic_log_input
 	 */
-	basic_log_input& operator>>(basic_log_input& (*f)(basic_log_input& l)) {
-		return f(*this);
-	}
+	basic_log_input& operator>>(basic_log_input& (*f)(basic_log_input& l));
 	
 	/**
      * @brief Flag the next input with a string
      * @param f A function getting a basic_log_input and returning a basic_log_input
      */
-    basic_log_input& operator>>( const logcpp::input_flag iflag ) {
-        set_input_flag( iflag() );
-        return *this;
-    }
+    basic_log_input& operator>>( const logcpp::input_flag iflag );
     
 	/**
 	 * @brief Insert some object into this basic_log_input
@@ -163,67 +142,19 @@ public:
 	/**
      * @brief Save the current input to the input collection, clear the input variables and end the log output record
      */
-	void finalize() {
-        input_flag_t iflag = input_flag;
-        if ( iflag.length() == 0 ) {
-            iflag = std::to_string( input_collection.size() );
-        }
-        
-        if ( input_str.length() > 0 ) {
-            input_resource_t ires = input_resource_t( iflag, input_str );
-            
-            input_collection.insert( ires );
-            
-            log.log<std::string>( input_str );
-            
-            input_str.clear();
-            input_flag.clear();
-        }
-        
-        log.end_record();
-    }
+	void finalize();
     
     /**
      * @brief Wait for input from std::cin, finalize the input and end the current record
      */
-    void input() {
-        if ( input_str.length() == 0 ) {
-            std::cin >> input_str;
-            finalize();
-            log.end_record();
-        } else {
-            finalize();
-        }
-    }
+    void input();
     
     /**
      * @brief Query a set of values
      * @param iquery_list The list of input flags that issue one value per flag
      * @returns A map by flag with the issued values
      */
-    std::map< std::string, std::string > query_input_values( const input_query iquery ) {
-        std::map< std::string, std::string > result;
-        
-        clear();
-        
-        for ( size_t i = 0; i < iquery.size(); i++ ) {
-            std::string iflag = iquery.at( i );
-            
-            log << iflag << " [] ~> ";
-            log.flush();
-            
-            std::cin >> input_str;
-            
-            finalize();
-            log.end_record();
-            
-            input_collection_t::const_reverse_iterator last_element = input_collection.crbegin();
-            result.insert( std::make_pair( last_element->first, last_element->second ) );
-        }
-        
-        
-        return result;
-    }
+    input_collection_t query_input_values( const input_query iquery );
 };
 
 
