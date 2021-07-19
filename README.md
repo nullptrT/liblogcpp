@@ -1,6 +1,6 @@
 # LibLogC++
 ##### An intuitive and highly customizable LGPL library for logging with C++
-###### v1.10.0
+###### v1.10.1
 
 This library aims to be simple, but highly usable and customizable without having a bunch of other unused dependencies, libraries or code.
 It is a simple and intuitive frontend to libstdc++ turning it into a fully featured and easy to use general purpose logger.
@@ -111,7 +111,7 @@ The included `LibLogCPPConfig.cmake` module enables you to use `find_package(Lib
 This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
 
 * Copyright (C) 2015 Linux Gruppe IRB, TU Dortmund <linux@irb.cs.tu-dortmund.de>
-* Copyright (C) 2015-2017 Sebastian Lau <lauseb644@gmail.com>
+* Copyright (C) 2015-2021 Sebastian Lau <lauseb644@gmail.com>
 
 
 ## Usage
@@ -256,3 +256,36 @@ Simply inherit from `basic_log` (in `logcpp/basic_log.hpp`), `severity_logger` (
 When defining an own `severity_t`, keep in mind, that backend (`severity_log`) threats the enum value `0` as `off` (this logger won't create any logs until its max_severity isn't changed to a higher value) and the enum value `1` will call the critical function at the end of a record, if it is enabled. If you want to define your own severity, simply inherit from `AbstractSeverity< severity_t >` (defined in `logcpp/severity.hpp`) like done in `severity_default.hpp`. At least your enum type `severity_t` has to have a specified array defining the severity names in your inheriting class (more on defining own severity classes have a look at `severity_default.cpp`).
 
 For an example of inheritance from `basic_log` or `severity_log` and nessecary template specializations see `severity_log.hpp` and `severity_logger.hpp`.
+
+
+
+### User input
+
+Since version 1.10.1 liblogcpp provides the functionality for input given by the user (in `logcpp/basic_log_input.hpp`). 
+The functionality is similar to the `basic_log` and shown below.
+
+```c++
+// ...
+#include <logcpp/basic_log_input.hpp>
+
+lg << logcpp::normal << "In this example we will show how to handle user input." << logcpp::endrec;
+
+logcpp::basic_log_input lg_in( lg );
+
+lg_in >> "Firstly, ask for a simple input value by passing a 'logcpp::input_flag' question to the log." << logcpp::endl;
+lg_in >> "What is the current lesson on liblogcpp?" >> logcpp::input_flag("current_first") >> logcpp::input();
+
+basic_log_input::input_t input_current = lv_in.get_input_current();
+lg << "Your answer was: " << input_current << logcpp::endrec;
+
+lg_in.clear();
+lg << logcpp::endl << "Next, get a collection of input values by asking once..." << logcpp::endrec;
+
+logcpp::input_query iquery { "project_name", "project_version", "project_owner" };
+lg_in >> "To create a simple project, please answer a few questions.";
+logcpp::basic_log_input::input_collection_t in_collection = lg_in.query_input_values( iquery );
+
+lg << "You provided the following values: { 'project_name': '" << lg_in.get_input("project_name") << "', 'project_version': '";
+lg << lg_in.get_input("project_version") << "', 'project_owner': '" << lg_in.get_input("project_owner") << "' }.";
+lg << logcpp::endrec;
+```

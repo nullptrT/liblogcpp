@@ -3,6 +3,19 @@
 ##### Changelog
 
 
+## Important changes in release 1.10.1 (2021-07-18) [stable]
+
+### Updates
+
+* Add example for the input log functionality
+* Update CMakeLists.txt and documentation's Doxyfile.in
+
+#### Patches
+
+* Create function for logstreambuf that accepts char arrays (like const char*)
+
+
+
 ## Important changes in release 1.10.0 (2020-10-19) [stable]
 
 ### Changes in behavior

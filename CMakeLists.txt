@@ -4,13 +4,17 @@ cmake_minimum_required( VERSION 3.0 )
 
 set( LIBLOGCPP_STABLE_VERSION 1 )
 set( LIBLOGCPP_RELEASE 10 )
-set( LIBLOGCPP_PATCH_VERSION 0 )
+set( LIBLOGCPP_PATCH_VERSION 1 )
 set( LIBLOGCPP_VERSION "${LIBLOGCPP_STABLE_VERSION}.${LIBLOGCPP_RELEASE}.${LIBLOGCPP_PATCH_VERSION}" )
 
 set( LIBLOGCPP_SRC_DIR ${PROJECT_SOURCE_DIR}/src )
 
+set ( PROJECT_NAME "${CMAKE_PROJECT_NAME}" )
+set ( PROJECT_VERSION "${LIBLOGCPP_VERSION}" )
+set ( PROJECT_DESCRIPTION "An intuitive and highly customizable LGPL library for logging with C++." )
+
 if( UNIX )
-	add_definitions( -std=c++11 )
+	add_definitions( -std=c++17 )
 endif()
 add_definitions(-DLOGCPP_SRC_DIR=${LIBLOGCPP_SRC_DIR})
 

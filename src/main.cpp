@@ -22,6 +22,7 @@
 
 #include "config.hpp"
 #include "assert.hpp"
+#include "basic_log_input.hpp"
 #include "channel_log.hpp"
 #include "severity_logger.hpp"
 #include "logmanip.hpp"
@@ -145,6 +146,29 @@ int main(int argc, char** argv) {
 
     stdlog << logcpp::critical << "That's it for now (aborted with critical log function)." << logcpp::endrec;
 
+
+    lg << logcpp::normal << "In this example we will show how to handle user input." << logcpp::endrec;
+
+    logcpp::basic_log_input lg_in( lg );
+
+    lg_in >> "Firstly, ask for a simple input value by passing a 'logcpp::input_flag' question to the log." << logcpp::endl;
+    lg_in >> "What is the current lesson on liblogcpp?" >> logcpp::input_flag("current_first") >> logcpp::input();
+
+    basic_log_input::input_t input_current = lv_in.get_input_current();
+    lg << "Your answer was: " << input_current << logcpp::endrec;
+
+    lg_in.clear();
+    lg << logcpp::endl << "Next, get a collection of input values by asking once..." << logcpp::endrec;
+
+    logcpp::input_query iquery { "project_name", "project_version", "project_owner" };
+    lg_in >> "To create a simple project, please answer a few questions.";
+    logcpp::basic_log_input::input_collection_t in_collection = lg_in.query_input_values( iquery );
+
+    lg << "You provided the following values: { 'project_name': '" << lg_in.get_input("project_name") << "', 'project_version': '";
+    lg << lg_in.get_input("project_version") << "', 'project_owner': '" << lg_in.get_input("project_owner") << "' }.";
+    lg << logcpp::endrec;
+
+    lg << logcpp::endl << "Finished." << logcpp::endrec;
 
     return 0;
 }

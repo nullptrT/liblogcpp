@@ -93,12 +93,17 @@ public:
      * @brief Constructor
      * @param logger A basic_log based logger for log output
      */
-    explicit basic_log_input( basic_log& logger);
+    explicit basic_log_input( basic_log& logger );
     
     /**
      * @brief Clear the current buffer values
      */
     void clear();
+
+    /**
+     * @brief Reset the whole input collection and all flags.
+     */
+     void reset();
     
     /**
      * @brief Get the input for a specified key
@@ -127,7 +132,6 @@ public:
     
 	/**
 	 * @brief Insert some object into this basic_log_input
-	 * @note The function basic_log_input::log<T>(const T& t) has to be defined for this operator to work
 	 * @param t Some object to log to this basic_log_input
 	 */
     template< typename T >

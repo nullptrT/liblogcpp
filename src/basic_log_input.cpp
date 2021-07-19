@@ -58,13 +58,22 @@ void basic_log_input::set_input_flag( const input_flag_t iflag ) {
 
 basic_log_input::basic_log_input( basic_log &logger )
     :   log( logger )
+    ,   input_flag()
     ,   input_str()
     ,   input_collection()
 {}
 
 
 void basic_log_input::clear() {
+    input_flag.clear();
     input_str.clear();
+}
+
+
+void basic_log_input::reset() {
+    input_flag.clear();
+    input_str.clear();
+    input_collection.clear();
 }
 
 
@@ -136,6 +145,7 @@ basic_log_input::input_collection_t  basic_log_input::query_input_values( const 
         log << iflag << " [] ~> ";
         log.flush();
 
+        set_input_flag( iflag );
         std::cin >> input_str;
 
         finalize();
