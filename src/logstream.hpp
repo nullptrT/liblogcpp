@@ -6,7 +6,7 @@
 /*
 	LibLogC++: An intuitive and highly customizable LGPL library for logging with C++.
 	Copyright (C) 2015 Linux Gruppe IRB, TU Dortmund <linux@irb.cs.tu-dortmund.de>
-	Copyright (C) 2015-2018 Sebastian Lau <lauseb644@gmail.com>
+	Copyright (C) 2015-2021 Sebastian Lau <lauseb644@gmail.com>
 
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
@@ -126,6 +126,14 @@ public:
 		return buf.sink_is_terminal();
 	}
 };
+
+
+inline logstreambuf& operator<<(  logstreambuf& out, const char* characters ) {
+    std::istringstream input( characters );
+    out << input.rdbuf();
+    return out;
+}
+
 
 } // namespace logcpp
 
