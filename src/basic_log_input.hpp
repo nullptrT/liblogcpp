@@ -6,7 +6,7 @@
 /*
 	LibLogC++: An intuitive and highly customizable LGPL library for logging with C++.
 	Copyright (C) 2015 Linux Gruppe IRB, TU Dortmund <linux@irb.cs.tu-dortmund.de>
-	Copyright (C) 2015-2018 Sebastian Lau <lauseb644@gmail.com>
+	Copyright (C) 2015-2021 Sebastian Lau <lauseb644@gmail.com>
 
 
 	This library is free software; you can redistribute it and/or
@@ -36,6 +36,7 @@
 #include <iostream>
 #include <map>
 #include <utility>
+#include <vector>
 
 
 
@@ -48,13 +49,24 @@ protected:
     std::string in_flag;
     
 public:
-    input_flag( const std::string iflag )
-        :   in_flag( iflag )
-    {}
+    input_flag( const std::string iflag );
     
-    const std::string operator()() const {
-        return in_flag;
-    }
+    const std::string operator()() const;
+};
+
+
+class input_query
+    :   public std::vector< std::string >
+{
+public:
+    typedef std::vector< std::string > list_t;
+    typedef list_t::allocator_type allocator_t;
+    
+protected:
+    std::vector< std::string > m_input_queries;
+    
+public:
+    input_query( const allocator_t alloc ) noexcept;
 };
 
 
@@ -88,6 +100,13 @@ public:
         ,   input_str()
         ,   input_collection()
     {}
+    
+    /**
+     * @brief Clear the current buffer values
+     */
+    void clear() {
+        input_str.clear();
+    }
     
     /**
      * @brief Get the input for a specified key
@@ -177,6 +196,34 @@ public:
         }
     }
     
+    /**
+     * @brief Query a set of values
+     * @param iquery_list The list of input flags that issue one value per flag
+     * @returns A map by flag with the issued values
+     */
+    std::map< std::string, std::string > query_input_values( const input_query iquery ) {
+        std::map< std::string, std::string > result;
+        
+        clear();
+        
+        for ( size_t i = 0; i < iquery.size(); i++ ) {
+            std::string iflag = iquery.at( i );
+            
+            log << iflag << " [] ~> ";
+            log.flush();
+            
+            std::cin >> input_str;
+            
+            finalize();
+            log.end_record();
+            
+            input_collection_t::const_reverse_iterator last_element = input_collection.crbegin();
+            result.insert( std::make_pair( last_element->first, last_element->second ) );
+        }
+        
+        
+        return result;
+    }
 };
 
 
